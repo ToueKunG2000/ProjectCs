@@ -1,4 +1,18 @@
-.p-button{
+.login{
     position: absolute;
     background: #2196F3;
+    width: 200px;
+}
+.div{
+    position: relative; 
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 15%;
+}
+.label{
+    align-items: center;
+    justify-items: center;
+
 }
