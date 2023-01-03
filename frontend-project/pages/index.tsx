@@ -1,13 +1,11 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import React from 'react'
+import LayoutLogin from '../component/login/template'
 
 
 export default function Home() {
   return (
     <>
-      <h1>Login Page</h1>
-      <h2>Hello</h2>
+      <LayoutLogin />
     </>
   )
 }
