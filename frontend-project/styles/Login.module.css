@@ -12,7 +12,9 @@
     padding-top: 15%;
 }
 .label{
+    padding-right: 20%;
+}
+.label{
     align-items: center;
     justify-items: center;
-
 }
