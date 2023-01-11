@@ -1,8 +1,10 @@
 import Test from './user.json'
+import instance from "./../axios";
 
 export class UserServices{
-    async getUser(){
-        const response = await require('./user.json');
-        return response;
+    async getUser(username:string){
+        const res = instance.get("/user");
+        return  (await res).data;
+
     }
 }

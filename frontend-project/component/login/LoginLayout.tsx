@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { UserServices } from "../../services/user.service";
 import PopupPage from "../common/PopupPage";
-import { OverlayPanel } from 'primereact/overlaypanel';
+
 
 
 interface User{
@@ -19,16 +19,23 @@ const LayoutLogin = () => {
   const op = useRef(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [result, setResult] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
 
   const CheckLogin = () => {
-    if(username.includes("abc123") && password.includes("123")){
-        GoToHome();
+    if(password === result){
+          console.log("OK");
+          GoToHome();
     }
     else{
       setPopupVisible(true)
     }
   };
+
+  useEffect(()=>{
+    const test = service.getUser(username);
+    test.then((res) => setResult(res.passcode));
+  },[]);
 
 
   const GoToHome = () => {
