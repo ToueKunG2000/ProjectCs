@@ -1,12 +1,10 @@
 package com.kaset.backendProject.controller;
 
-import com.kaset.backendProject.entity.TbUsers;
+import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @Log4j2

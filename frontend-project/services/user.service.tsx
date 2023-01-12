@@ -1,4 +1,3 @@
-import Test from './user.json'
 import instance from "./../axios";
 
 export class UserServices{

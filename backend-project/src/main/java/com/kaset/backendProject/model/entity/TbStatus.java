@@ -1,14 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.kaset.backendProject.entity;
+package com.kaset.backendProject.model.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Objects;
 
 @Entity
+@Data
 @Table(name = "TB_STATUS", schema = "dbo", catalog = "Navsho")
 public class TbStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,22 +26,6 @@ public class TbStatus {
 
     public void setStatusId(int statusId) {
         this.statusId = statusId;
-    }
-
-    public String getStatusCode() {
-        return statusCode;
-    }
-
-    public void setStatusCode(String statusCode) {
-        this.statusCode = statusCode;
-    }
-
-    public String getStatusDesc() {
-        return statusDesc;
-    }
-
-    public void setStatusDesc(String statusDesc) {
-        this.statusDesc = statusDesc;
     }
 
     @Override

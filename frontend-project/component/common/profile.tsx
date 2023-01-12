@@ -1,8 +1,15 @@
+import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import styles from '../../styles/Profile.module.css'
 
 const Profile = () => {
+
+    const router = useRouter();
+    const GoBack = () => {
+        router.push("/");
+    };
+    
     return (
         <>
             <div className={styles.right}>
@@ -13,7 +20,7 @@ const Profile = () => {
                         <h1> ลุงตู่ </h1>
                     </div>
                     <div className={styles.button}>
-                        <Button className="p-button-danger" icon="pi pi-sign-out"/>
+                        <Button className="p-button-danger" icon="pi pi-sign-out" onClick={GoBack} />
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import LayoutLogin from '../component/login/LoginLayout'
+import LayoutLogin from '../component/login/loginLayout'
 
 
 export default function Home() {

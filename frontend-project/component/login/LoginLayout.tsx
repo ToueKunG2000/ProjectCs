@@ -5,9 +5,8 @@ import styles from "../../styles/Login.module.css";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
 import { UserServices } from "../../services/user.service";
-import PopupPage from "../common/PopupPage";
-
-
+import PopupPage from "../common/popupPage";
+import { Password } from 'primereact/password';
 
 interface User{
     username:string;
@@ -59,7 +58,7 @@ const LayoutLogin = () => {
         </div>
         <div className="flex justify-content-center p-2">
           <label>Password : </label>
-          <InputText
+          <Password
             placeholder="123456"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

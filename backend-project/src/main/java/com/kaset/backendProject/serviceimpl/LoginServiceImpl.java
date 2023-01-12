@@ -1,6 +1,6 @@
 package com.kaset.backendProject.serviceimpl;
 
-import com.kaset.backendProject.entity.TbUsers;
+import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.repository.UserRepository;
 import com.kaset.backendProject.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;

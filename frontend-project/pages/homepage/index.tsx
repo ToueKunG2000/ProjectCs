@@ -1,10 +1,10 @@
-import React from 'react'
-import HomePageLayout from '../../component/homepage/Homepage'
+import React from "react";
+import HomePageLayout from "../../component/homepage/homepage";
 
 export default function HomePage() {
   return (
     <>
-        <HomePageLayout />
+      <HomePageLayout />
     </>
-  )
+  );
 }

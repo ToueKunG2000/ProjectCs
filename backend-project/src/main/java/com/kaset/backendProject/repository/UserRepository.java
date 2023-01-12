@@ -1,6 +1,6 @@
 package com.kaset.backendProject.repository;
 
-import com.kaset.backendProject.entity.TbUsers;
+import com.kaset.backendProject.model.entity.TbUsers;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
