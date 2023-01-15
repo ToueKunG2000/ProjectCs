@@ -36,6 +36,7 @@ export interface DynamicInputItem {
     | "number"
 }
 
-export interface DataInput {
-
+export interface DynamicInputFields extends FieldProps {
+  dynamicInputItems: DynamicInputItem[];
+  control: any;
 }

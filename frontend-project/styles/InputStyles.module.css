@@ -1,0 +1,12 @@
+.line{
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: space-between;
+}
+.field{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

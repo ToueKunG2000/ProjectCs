@@ -1,14 +1,14 @@
 import { FieldProps } from "./interface";
-import DynamicInput from "./dynamicInput";
-
+import styles from '../../styles/InputStyles.module.css'
 
 const HorizontalField = (props: FieldProps) => {
-    const {children, fieldID, isRequired, label} = props;
+    const {children, fieldID, isRequired, label } = props;
     return (
-        <div>
-            <label></label>
+        <div className={styles.field}>
+            <label>{label}</label>
             {children}
         </div>
+        
     );
 
 }

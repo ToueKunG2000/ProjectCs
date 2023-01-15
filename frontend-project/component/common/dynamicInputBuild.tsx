@@ -8,7 +8,7 @@ interface InputBuilderProps{
     control: Control<any>;
 }
 
-const DynamicInput = (props: InputBuilderProps) => {
+const DynamicInputBuild = (props: InputBuilderProps) => {
     const {control, field} = props;
     const InputBuilderSwitch = (
         field: DynamicInputItem,
@@ -28,4 +28,4 @@ const DynamicInput = (props: InputBuilderProps) => {
         </div>
     );
 }
-export default DynamicInput;
+export default DynamicInputBuild;
