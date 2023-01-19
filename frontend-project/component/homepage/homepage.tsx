@@ -22,7 +22,7 @@ const HomePageLayout = (props: HomePageProps) => {
       )}
       {page == 2 && (
         <div>
-            <AddPanelShow />
+            <AddPanelShow setPage={setPage}/>
         </div>
       )}
     </>

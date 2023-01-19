@@ -6,4 +6,7 @@ export class VesselService{
             data: data
         });
     }
+    async getDataVessel(userId:number){
+        return instance.get('/checkUser',{data:userId});
+    }
 }

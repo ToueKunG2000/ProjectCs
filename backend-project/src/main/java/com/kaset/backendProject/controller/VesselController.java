@@ -4,6 +4,7 @@ import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.repository.VesselRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,4 +22,10 @@ public class VesselController {
         TbVessels vessel = vesselRepository.getReferenceById(1);
         log.info(vessel);
     }
+
+    @GetMapping("/getUser")
+    public TbVessels getUser(){
+        return null;
+    }
+
 }

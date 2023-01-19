@@ -110,7 +110,266 @@ public class TbVessels {
     @Basic
     @Column(name = "cdr_id")
     private Integer cdrId;
+    @Basic
+    @Column(name = "current_position")
+    private Integer currentPosition;
+    @Basic
+    @Column(name = "ves_status")
+    private Integer vesStatus;
+    @Basic
+    @Column(name = "used_of_diesel")
+    private BigInteger usedOfDiesel;
+    @Basic
+    @Column(name = "used_of_benzine")
+    private BigInteger usedOfBenzine;
+    @Basic
+    @Column(name = "used_of_gadinia")
+    private BigInteger usedOfGadinia;
+    @Basic
+    @Column(name = "used_of_tellus")
+    private BigInteger usedOfTellus;
+    @Basic
+    @Column(name = "used_of_fresh_water")
+    private BigInteger usedOfFreshWater;
+    @Basic
+    @Column(name = "left_of_diesel")
+    private BigInteger leftOfDiesel;
+    @Basic
+    @Column(name = "left_of_benzine")
+    private BigInteger leftOfBenzine;
+    @Basic
+    @Column(name = "left_of_gadinia")
+    private BigInteger leftOfGadinia;
+    @Basic
+    @Column(name = "left_of_tellus")
+    private BigInteger leftOfTellus;
+    @Basic
+    @Column(name = "left_of_fresh_water")
+    private BigInteger leftOfFreshWater;
 
+    public int getVesId() {
+        return vesId;
+    }
+
+    public void setVesId(int vesId) {
+        this.vesId = vesId;
+    }
+
+    public String getVesNameEn() {
+        return vesNameEn;
+    }
+
+    public void setVesNameEn(String vesNameEn) {
+        this.vesNameEn = vesNameEn;
+    }
+
+    public String getVesNameTh() {
+        return vesNameTh;
+    }
+
+    public void setVesNameTh(String vesNameTh) {
+        this.vesNameTh = vesNameTh;
+    }
+
+    public Integer getBigMachineNum() {
+        return bigMachineNum;
+    }
+
+    public void setBigMachineNum(Integer bigMachineNum) {
+        this.bigMachineNum = bigMachineNum;
+    }
+
+    public Integer getElectricMachineNum() {
+        return electricMachineNum;
+    }
+
+    public void setElectricMachineNum(Integer electricMachineNum) {
+        this.electricMachineNum = electricMachineNum;
+    }
+
+    public Integer getBigMachineUsed() {
+        return bigMachineUsed;
+    }
+
+    public void setBigMachineUsed(Integer bigMachineUsed) {
+        this.bigMachineUsed = bigMachineUsed;
+    }
+
+    public Integer getElectricMachineUsed() {
+        return electricMachineUsed;
+    }
+
+    public void setElectricMachineUsed(Integer electricMachineUsed) {
+        this.electricMachineUsed = electricMachineUsed;
+    }
+
+    public Integer getAirConditioner() {
+        return airConditioner;
+    }
+
+    public void setAirConditioner(Integer airConditioner) {
+        this.airConditioner = airConditioner;
+    }
+
+    public Integer getAirCompressor() {
+        return airCompressor;
+    }
+
+    public void setAirCompressor(Integer airCompressor) {
+        this.airCompressor = airCompressor;
+    }
+
+    public Integer getFreezer() {
+        return freezer;
+    }
+
+    public void setFreezer(Integer freezer) {
+        this.freezer = freezer;
+    }
+
+    public Integer getShipEngine() {
+        return shipEngine;
+    }
+
+    public void setShipEngine(Integer shipEngine) {
+        this.shipEngine = shipEngine;
+    }
+
+    public Integer getPump() {
+        return pump;
+    }
+
+    public void setPump(Integer pump) {
+        this.pump = pump;
+    }
+
+    public Integer getRudder() {
+        return rudder;
+    }
+
+    public void setRudder(Integer rudder) {
+        this.rudder = rudder;
+    }
+
+    public Integer getWaterPurifier() {
+        return waterPurifier;
+    }
+
+    public void setWaterPurifier(Integer waterPurifier) {
+        this.waterPurifier = waterPurifier;
+    }
+
+    public Integer getDieselOilSeparator() {
+        return dieselOilSeparator;
+    }
+
+    public void setDieselOilSeparator(Integer dieselOilSeparator) {
+        this.dieselOilSeparator = dieselOilSeparator;
+    }
+
+    public Integer getGear() {
+        return gear;
+    }
+
+    public void setGear(Integer gear) {
+        this.gear = gear;
+    }
+
+    public BigInteger getGetOfDiesel() {
+        return getOfDiesel;
+    }
+
+    public void setGetOfDiesel(BigInteger getOfDiesel) {
+        this.getOfDiesel = getOfDiesel;
+    }
+
+    public BigInteger getGetOfBenzine() {
+        return getOfBenzine;
+    }
+
+    public void setGetOfBenzine(BigInteger getOfBenzine) {
+        this.getOfBenzine = getOfBenzine;
+    }
+
+    public BigInteger getGetOfGadinia() {
+        return getOfGadinia;
+    }
+
+    public void setGetOfGadinia(BigInteger getOfGadinia) {
+        this.getOfGadinia = getOfGadinia;
+    }
+
+    public BigInteger getGetOfTellus() {
+        return getOfTellus;
+    }
+
+    public void setGetOfTellus(BigInteger getOfTellus) {
+        this.getOfTellus = getOfTellus;
+    }
+
+    public BigInteger getGetOfFreshWater() {
+        return getOfFreshWater;
+    }
+
+    public void setGetOfFreshWater(BigInteger getOfFreshWater) {
+        this.getOfFreshWater = getOfFreshWater;
+    }
+
+    public BigInteger getGiveOfDiesel() {
+        return giveOfDiesel;
+    }
+
+    public void setGiveOfDiesel(BigInteger giveOfDiesel) {
+        this.giveOfDiesel = giveOfDiesel;
+    }
+
+    public BigInteger getGiveOfBenzine() {
+        return giveOfBenzine;
+    }
+
+    public void setGiveOfBenzine(BigInteger giveOfBenzine) {
+        this.giveOfBenzine = giveOfBenzine;
+    }
+
+    public BigInteger getGiveOfGadinia() {
+        return giveOfGadinia;
+    }
+
+    public void setGiveOfGadinia(BigInteger giveOfGadinia) {
+        this.giveOfGadinia = giveOfGadinia;
+    }
+
+    public BigInteger getGiveOfTellus() {
+        return giveOfTellus;
+    }
+
+    public void setGiveOfTellus(BigInteger giveOfTellus) {
+        this.giveOfTellus = giveOfTellus;
+    }
+
+    public BigInteger getGiveOfFreshWater() {
+        return giveOfFreshWater;
+    }
+
+    public void setGiveOfFreshWater(BigInteger giveOfFreshWater) {
+        this.giveOfFreshWater = giveOfFreshWater;
+    }
+
+    public String getMonthYear() {
+        return monthYear;
+    }
+
+    public void setMonthYear(String monthYear) {
+        this.monthYear = monthYear;
+    }
+
+    public String getCounsel() {
+        return counsel;
+    }
+
+    public void setCounsel(String counsel) {
+        this.counsel = counsel;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -122,5 +381,101 @@ public class TbVessels {
     @Override
     public int hashCode() {
         return Objects.hash(getVesId(), getVesNameEn(), getVesNameTh(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeparator(), getGear(), getGetOfDiesel(), getGetOfBenzine(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfDiesel(), getGiveOfBenzine(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getMonthYear(), getCounsel(), getCurrentRole(), getCeId(), getCoId(), getTechId(), getCdrId());
+    }
+
+    public Integer getCurrentPosition() {
+        return currentPosition;
+    }
+
+    public void setCurrentPosition(Integer currentPosition) {
+        this.currentPosition = currentPosition;
+    }
+
+    public Integer getVesStatus() {
+        return vesStatus;
+    }
+
+    public void setVesStatus(Integer vesStatus) {
+        this.vesStatus = vesStatus;
+    }
+
+    public BigInteger getUsedOfDiesel() {
+        return usedOfDiesel;
+    }
+
+    public void setUsedOfDiesel(BigInteger usedOfDiesel) {
+        this.usedOfDiesel = usedOfDiesel;
+    }
+
+    public BigInteger getUsedOfBenzine() {
+        return usedOfBenzine;
+    }
+
+    public void setUsedOfBenzine(BigInteger usedOfBenzine) {
+        this.usedOfBenzine = usedOfBenzine;
+    }
+
+    public BigInteger getUsedOfGadinia() {
+        return usedOfGadinia;
+    }
+
+    public void setUsedOfGadinia(BigInteger usedOfGadinia) {
+        this.usedOfGadinia = usedOfGadinia;
+    }
+
+    public BigInteger getUsedOfTellus() {
+        return usedOfTellus;
+    }
+
+    public void setUsedOfTellus(BigInteger usedOfTellus) {
+        this.usedOfTellus = usedOfTellus;
+    }
+
+    public BigInteger getUsedOfFreshWater() {
+        return usedOfFreshWater;
+    }
+
+    public void setUsedOfFreshWater(BigInteger usedOfFreshWater) {
+        this.usedOfFreshWater = usedOfFreshWater;
+    }
+
+    public BigInteger getLeftOfDiesel() {
+        return leftOfDiesel;
+    }
+
+    public void setLeftOfDiesel(BigInteger leftOfDiesel) {
+        this.leftOfDiesel = leftOfDiesel;
+    }
+
+    public BigInteger getLeftOfBenzine() {
+        return leftOfBenzine;
+    }
+
+    public void setLeftOfBenzine(BigInteger leftOfBenzine) {
+        this.leftOfBenzine = leftOfBenzine;
+    }
+
+    public BigInteger getLeftOfGadinia() {
+        return leftOfGadinia;
+    }
+
+    public void setLeftOfGadinia(BigInteger leftOfGadinia) {
+        this.leftOfGadinia = leftOfGadinia;
+    }
+
+    public BigInteger getLeftOfTellus() {
+        return leftOfTellus;
+    }
+
+    public void setLeftOfTellus(BigInteger leftOfTellus) {
+        this.leftOfTellus = leftOfTellus;
+    }
+
+    public BigInteger getLeftOfFreshWater() {
+        return leftOfFreshWater;
+    }
+
+    public void setLeftOfFreshWater(BigInteger leftOfFreshWater) {
+        this.leftOfFreshWater = leftOfFreshWater;
     }
 }
