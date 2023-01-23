@@ -11,7 +11,7 @@ interface NumberInputProps extends InputNumberProps {
 }
 
 const InputNumberField = (props: NumberInputProps) => {
-  const { control, controllerName, rules } = props;
+  const { control, controllerName, rules, ...inputNumberProps } = props;
   return (
     <>
       <Controller
@@ -22,6 +22,7 @@ const InputNumberField = (props: NumberInputProps) => {
           <InputNumber
             value={field.value}
             onValueChange={(e) => field.onChange(e.value)}
+            {...inputNumberProps}
           />
         )}
       />

@@ -40,3 +40,44 @@ export interface DynamicInputFields extends FieldProps {
   dynamicInputItems: DynamicInputItem[];
   control: any;
 }
+
+export interface VesselForm {
+  vesId: number;
+  vesNameTh: string;
+  bigMachineNum?: number;
+  electricMachineNum?: number;
+  bigMachineUsed: number;
+  electricMachineUsed: number;
+  airConditioner: number;
+  airCompressor: number;
+  freezer: number;
+  shipEngine: number;
+  pump: number;
+  rudder: number;
+  waterPurifier: number;
+  dieselOilSeparator: number;
+  gear: number;
+  getOfDiesel: number;
+  getOfBenzine: number;
+  getOfGadinia: number;
+  getOfTellus: number;
+  getOfFreshWater: number;
+  giveOfDiesel: number;
+  giveOfBenzine: number;
+  giveOfGadinia: number;
+  giveOfTellus: number;
+  giveOfFreshWater: number;
+  monthYear: string;
+  counsel?: string;
+  currentPosition: number;
+  usedOfDiesel: number;
+  usedOfBenzine: number;
+  usedOfGadinia: number;
+  usedOfTellus: number;
+  usedOfFreshWater: number;
+  leftOfDiesel: number;
+  leftOfBenzine: number;
+  leftOfGadinia: number;
+  leftOfTellus: number;
+  leftOfFreshWater: number;
+}

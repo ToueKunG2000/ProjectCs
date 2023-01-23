@@ -1,13 +1,12 @@
 package com.kaset.backendProject.controller;
 
 import com.kaset.backendProject.model.entity.TbVessels;
+import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.repository.VesselRepository;
+import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Log4j2
@@ -15,17 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class VesselController {
 
     @Autowired
-    private VesselRepository vesselRepository;
+    private VesselServiceImpl vesselService;
 
-    @PostMapping("/createReport")
-    public void updateToReport(){
-        TbVessels vessel = vesselRepository.getReferenceById(1);
-        log.info(vessel);
-    }
-
-    @GetMapping("/getUser")
-    public TbVessels getUser(){
-        return null;
+    @PutMapping("/createReport")
+    public void updateToReport(@RequestBody Vessel vessel){
+        vesselService.updateToTbVessel(vessel);
     }
 
 }

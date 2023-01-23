@@ -1,90 +1,47 @@
 package com.kaset.backendProject.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "TB_POSITIONS", schema = "dbo", catalog = "Navsho")
-public class TbPositions {
+public class TbPositions implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "position_id")
+    @Column(name = "position_id", nullable = false)
     private int positionId;
     @Basic
-    @Column(name = "position_name_th")
+    @Column(name = "position_name_th", nullable = true, length = 100)
     private String positionNameTh;
     @Basic
-    @Column(name = "position_name_en")
+    @Column(name = "position_name_en", nullable = true, length = 100)
     private String positionNameEn;
     @Basic
-    @Column(name = "position_desc")
+    @Column(name = "position_desc", nullable = true, length = 100)
     private String positionDesc;
     @Basic
-    @Column(name = "rank_th")
+    @Column(name = "rank_th", nullable = true, length = 20)
     private String rankTh;
     @Basic
-    @Column(name = "rank_en")
+    @Column(name = "rank_en", nullable = true, length = 20)
     private String rankEn;
 
-    public int getPositionId() {
-        return positionId;
-    }
-
-    public void setPositionId(int positionId) {
-        this.positionId = positionId;
-    }
-
-    public String getPositionNameTh() {
-        return positionNameTh;
-    }
-
-    public void setPositionNameTh(String positionNameTh) {
-        this.positionNameTh = positionNameTh;
-    }
-
-    public String getPositionNameEn() {
-        return positionNameEn;
-    }
-
-    public void setPositionNameEn(String positionNameEn) {
-        this.positionNameEn = positionNameEn;
-    }
-
-    public String getPositionDesc() {
-        return positionDesc;
-    }
-
-    public void setPositionDesc(String positionDesc) {
-        this.positionDesc = positionDesc;
-    }
-
-    public String getRankTh() {
-        return rankTh;
-    }
-
-    public void setRankTh(String rankTh) {
-        this.rankTh = rankTh;
-    }
-
-    public String getRankEn() {
-        return rankEn;
-    }
-
-    public void setRankEn(String rankEn) {
-        this.rankEn = rankEn;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TbPositions that = (TbPositions) o;
-        return positionId == that.positionId && Objects.equals(positionNameTh, that.positionNameTh) && Objects.equals(positionNameEn, that.positionNameEn) && Objects.equals(positionDesc, that.positionDesc) && Objects.equals(rankTh, that.rankTh) && Objects.equals(rankEn, that.rankEn);
+        if (!(o instanceof TbPositions that)) return false;
+        return getPositionId() == that.getPositionId() && Objects.equals(getPositionNameTh(), that.getPositionNameTh()) && Objects.equals(getPositionNameEn(), that.getPositionNameEn()) && Objects.equals(getPositionDesc(), that.getPositionDesc()) && Objects.equals(getRankTh(), that.getRankTh()) && Objects.equals(getRankEn(), that.getRankEn());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(positionId, positionNameTh, positionNameEn, positionDesc, rankTh, rankEn);
+        return Objects.hash(getPositionId(), getPositionNameTh(), getPositionNameEn(), getPositionDesc(), getRankTh(), getRankEn());
     }
 }

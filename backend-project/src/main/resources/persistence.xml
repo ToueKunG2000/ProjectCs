@@ -3,12 +3,19 @@
   <persistence-unit name="com.kaset_projectcs_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <class>com.kaset.backendProject.model.entity.TbUsers</class>
     <class>com.kaset.backendProject.model.entity.TbStatus</class>
-    <class>com.kaset.backendProject.model.entity.TbRoles</class>
+    <class>com.kaset.backendProject.model.entity.TbPositions</class>
+    <class>com.kaset.backendProject.model.entity.TbVessels</class>
+    <class>org.springframework.orm.hibernate5.LocalSessionFactoryBean</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://localhost:1433;databaseName=Navsho;encrypt=true;trustServerCertificate=true;"/>
       <property name="javax.persistence.jdbc.user" value="admin"/>
       <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
       <property name="javax.persistence.jdbc.password" value="abc123"/>
+      <property name="hibernate.connection.url" value="jdbc:sqlserver://localhost:1433;database=Navsho"/>
+      <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="hibernate.connection.username" value="admin"/>
+      <property name="hibernate.connection.password" value="abc123"/>
     </properties>
   </persistence-unit>
 </persistence>

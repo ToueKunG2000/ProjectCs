@@ -21,21 +21,14 @@ const LayoutLogin = () => {
   const [result, setResult] = useState("");
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const CheckLogin = () => {
-    if(password === result){
-          console.log("OK");
+  const CheckLogin = async () => {
+    if(await service.checkUser(username,password)){
           GoToHome();
     }
     else{
       setPopupVisible(true)
     }
   };
-
-  useEffect(()=>{
-    const test = service.getUser(username);
-    test.then((res) => setResult(res.passcode));
-  },[]);
-
 
   const GoToHome = () => {
     router.push("/homepage");
