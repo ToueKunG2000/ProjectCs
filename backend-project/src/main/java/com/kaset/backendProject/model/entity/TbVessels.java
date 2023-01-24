@@ -3,6 +3,7 @@ package com.kaset.backendProject.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Value;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -117,19 +118,19 @@ public class TbVessels implements Serializable {
     @Column(name = "used_of_fresh_water", nullable = true, precision = 0)
     private BigInteger usedOfFreshWater;
     @Basic
-    @Column(name = "left_of_diesel", nullable = true, precision = 0)
+    @Column(name = "left_of_diesel", precision = 0)
     private BigInteger leftOfDiesel;
     @Basic
-    @Column(name = "left_of_benzine", nullable = true, precision = 0)
+    @Column(name = "left_of_benzine", precision = 0)
     private BigInteger leftOfBenzine;
     @Basic
-    @Column(name = "left_of_gadinia", nullable = true, precision = 0)
+    @Column(name = "left_of_gadinia", precision = 0)
     private BigInteger leftOfGadinia;
     @Basic
-    @Column(name = "left_of_tellus", nullable = true, precision = 0)
+    @Column(name = "left_of_tellus", precision = 0)
     private BigInteger leftOfTellus;
     @Basic
-    @Column(name = "left_of_fresh_water", nullable = true, precision = 0)
+    @Column(name = "left_of_fresh_water", precision = 0)
     private BigInteger leftOfFreshWater;
 
     @Override

@@ -14,13 +14,12 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public boolean checkUser(String username, String password){
+    public TbUsers checkUser(String username, String password){
         TbUsers user = userRepository.findByUsername(username);
-        log.info(user.getPasscode());
         if(user.getPasscode().equals(password)){
-            return true;
+            return user;
         }
-        return false;
+        return null;
     }
 
 }

@@ -19,7 +19,7 @@ export interface DynamicInputItem {
   fieldID: any;
   label?: string;
   placeholder?: string;
-  data?: any[];
+  data?: any;
   options?: any;
   isRequired?: boolean;
   inputTextProps?: InputTextProps;

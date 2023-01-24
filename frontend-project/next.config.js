@@ -5,4 +5,8 @@ const nextConfig = {
   
 }
 
-module.exports = nextConfig
+module.exports = nextConfig,{
+  env:{
+    images:"logo.png"
+  }
+}

@@ -1,5 +1,6 @@
 package com.kaset.backendProject.controller;
 
+import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
 import com.kaset.backendProject.serviceimpl.UserServiceImpl;
@@ -7,6 +8,7 @@ import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,19 +28,20 @@ public class UserController {
     private VesselServiceImpl vesselService;
 
     @GetMapping("/login")
-    public HttpStatus getUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
-        if (loginService.checkUser(username,password)){
-            return HttpStatus.OK;
+    public ResponseEntity<TbUsers> getUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+        TbUsers user = loginService.checkUser(username,password);
+        if (user != null){
+            return new ResponseEntity<>(user,HttpStatus.OK);
         }
-        return HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/checkUser")
-    public List<TbVessels> getUser(@RequestParam(value = "userId") Integer userId) {
+    public ResponseEntity<List<TbVessels>> getUser(@RequestParam(value = "userId") Integer userId) {
         Integer vesId = userService.getVesselFromUserId(userId);
         if(vesId == null){
-            return vesselService.getAllVessel();
+            return new ResponseEntity<>(vesselService.getAllVessel(),HttpStatus.OK);
         }
-        return (vesselService.getVesselFromVesId(vesId));
+        return new ResponseEntity<>(vesselService.getVesselFromVesId(vesId), HttpStatus.OK);
     }
 }

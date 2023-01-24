@@ -22,8 +22,10 @@ const LayoutLogin = () => {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const CheckLogin = async () => {
-    if(await service.checkUser(username,password)){
-          GoToHome();
+    const user = await service.checkUser(username,password)
+    if(user != null){
+      localStorage.setItem("user",JSON.stringify(user.data));
+      GoToHome();
     }
     else{
       setPopupVisible(true)
@@ -55,6 +57,7 @@ const LayoutLogin = () => {
             placeholder="123456"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            toggleMask
           />
         </div>
         <div className="flex justify-content-center">

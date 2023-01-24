@@ -2,7 +2,9 @@
     background-color: aqua;
     border-radius: 30px;
     height: fit-content;
-    width: fit-content;
+    width: 60%;
+    display: flex;
+    justify-content: center;
 }
 .card:hover{
     background-color: aliceblue;
@@ -15,6 +17,7 @@
     row-gap: 40px;
     justify-items: center;
 }
-.container{
-    
+.img{
+    display: flex;
+    justify-content: center;
 }

@@ -17,6 +17,4 @@ public interface VesselRepository extends JpaRepository<TbVessels, Integer>, Cus
     public List<TbVessels> getVesselByVesId(@Param(value = "vesId")Integer vesId);
 
 
-    @Query("UPDATE TbVessels SET vesId = :vesId ")
-    public void updateHere();
 }

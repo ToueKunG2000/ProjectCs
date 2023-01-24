@@ -20,7 +20,7 @@ const InputNumberField = (props: NumberInputProps) => {
         rules={rules}
         render={({ field, fieldState }) => (
           <InputNumber
-            value={field.value}
+            value={field.value==null? 0:field.value}
             onValueChange={(e) => field.onChange(e.value)}
             {...inputNumberProps}
           />

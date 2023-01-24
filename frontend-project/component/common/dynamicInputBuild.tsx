@@ -21,6 +21,9 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
                 {...field.inputNumberProps}
             />
         }
+        if(field.type == "label"){
+            return <label>{field.data}</label>
+        }
     }
     return (
         <div>

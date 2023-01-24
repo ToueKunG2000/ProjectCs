@@ -14,7 +14,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
-//@ImportResource({ "com.kaset.backendProject.resources:persistence.xml" })
 @Log4j2
 public class ProjectApplication implements CommandLineRunner {
 	public static void main(String[] args) {

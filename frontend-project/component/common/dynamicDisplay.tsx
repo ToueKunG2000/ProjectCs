@@ -21,9 +21,9 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
             {data.map((vessel)=>{
                 return (
                 <>
-                    <div className="col-4">
+                    <div className="col-4 flex justify-content-center">
                         <Card className={styles.card} onClick={(e)=>AddOrEdit(e,vessel)}>
-                            <Image src="BEASTARS_logo.svg.png" width="200" height="200" />
+                            <Image className={styles.img} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
                             <h2>{vessel.vesNameEn}</h2>
                             <h2>{vessel.vesNameTh}</h2>
                             <h3>{vessel.vesStatus==1?"Active":"Not Active"}</h3>
