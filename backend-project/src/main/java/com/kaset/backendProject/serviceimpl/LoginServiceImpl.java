@@ -1,6 +1,7 @@
 package com.kaset.backendProject.serviceimpl;
 
 import com.kaset.backendProject.model.entity.TbUsers;
+import com.kaset.backendProject.model.payload.UserPayload;
 import com.kaset.backendProject.repository.UserRepository;
 import com.kaset.backendProject.service.LoginService;
 import lombok.extern.log4j.Log4j2;
@@ -14,9 +15,10 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private UserRepository userRepository;
 
-    public TbUsers checkUser(String username, String password){
-        TbUsers user = userRepository.findByUsername(username);
-        if(user.getPasscode().equals(password)){
+    public UserPayload checkUser(String username, String password){
+        UserPayload user = userRepository.findUserByUsername(username);
+        if(user.getPassword().equals(password)){
+            user.setPassword(null);
             return user;
         }
         return null;

@@ -2,8 +2,10 @@ import { VesselForm } from "../component/common/interface";
 import instance from "./../axios";
 
 export class VesselService {
-  async createReport(data: any) {
-    console.log(data);
+  async createReport(data: VesselForm) {
+    const dateNow = new Date();
+    data.monthYear = dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" });
+    data.currentPosition = 2;
     const res = await instance({
         method: 'put',
         url: '/createReport',

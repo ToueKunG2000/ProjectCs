@@ -1,6 +1,12 @@
-
-.main{
-    width: 100%;
+/* .html{
+    width: 100% !important;
+    min-height: 100vh !important;
+} */
+body{
+    min-height: 100% !important;
+}
+div#__next{
+    height: 100%;
 }
 
 @media screen and (max-width: 100px) {

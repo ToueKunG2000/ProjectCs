@@ -2,6 +2,7 @@ package com.kaset.backendProject.controller;
 
 import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.model.entity.TbVessels;
+import com.kaset.backendProject.model.payload.UserPayload;
 import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
 import com.kaset.backendProject.serviceimpl.UserServiceImpl;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
@@ -28,8 +29,8 @@ public class UserController {
     private VesselServiceImpl vesselService;
 
     @GetMapping("/login")
-    public ResponseEntity<TbUsers> getUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
-        TbUsers user = loginService.checkUser(username,password);
+    public ResponseEntity<UserPayload> getUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
+        UserPayload user = loginService.checkUser(username,password);
         if (user != null){
             return new ResponseEntity<>(user,HttpStatus.OK);
         }

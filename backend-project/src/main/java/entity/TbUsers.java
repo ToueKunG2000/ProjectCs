@@ -27,7 +27,7 @@ public class TbUsers {
     @Column(name = "status_id", nullable = true)
     private Integer statusId;
     @Basic
-    @Column(name = "role_id", nullable = true)
+    @Column(name = "position_id", nullable = true)
     private Integer roleId;
     @Basic
     @Column(name = "ves_id", nullable = true)

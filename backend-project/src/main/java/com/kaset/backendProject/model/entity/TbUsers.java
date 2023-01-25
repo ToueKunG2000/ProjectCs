@@ -1,6 +1,7 @@
 package com.kaset.backendProject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kaset.backendProject.model.payload.UserPayload;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -11,6 +12,26 @@ import java.util.Objects;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @Table(name = "TB_USERS", schema = "dbo", catalog = "Navsho")
+@NamedNativeQueries({
+    @NamedNativeQuery(
+            name = "TbUsers.findUserByUsername",
+            query = "SELECT ves_id, user_id, CONCAT(first_name,' ',last_name) as userName , " +
+                    " TP.position_name_th, passcode as [password] FROM TB_USERS TU INNER JOIN TB_POSITIONS" +
+                    " TP on TP.position_id = TU.position_id WHERE username = :username ",
+            resultSetMapping = "userMapping")
+})
+@SqlResultSetMappings({
+        @SqlResultSetMapping(name = "userMapping",classes = {
+                @ConstructorResult(targetClass = UserPayload.class, columns = {
+                        @ColumnResult(name = "user_id",type = Integer.class),
+                        @ColumnResult(name = "ves_id",type = Integer.class),
+                        @ColumnResult(name = "userName",type = String.class),
+                        @ColumnResult(name = "position_name_th",type = String.class),
+                        @ColumnResult(name = "[password]", type = String.class)
+                })
+        })
+})
+
 public class TbUsers implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -32,8 +53,8 @@ public class TbUsers implements Serializable {
     @Column(name = "status_id", nullable = true)
     private Integer statusId;
     @Basic
-    @Column(name = "role_id", nullable = true)
-    private Integer roleId;
+    @Column(name = "position_id", nullable = true)
+    private Integer positionId;
     @Basic
     @Column(name = "ves_id", nullable = true)
     private Integer vesId;
@@ -43,11 +64,11 @@ public class TbUsers implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbUsers tbUsers)) return false;
-        return getUserId() == tbUsers.getUserId() && Objects.equals(getUsername(), tbUsers.getUsername()) && Objects.equals(getPasscode(), tbUsers.getPasscode()) && Objects.equals(getFirstName(), tbUsers.getFirstName()) && Objects.equals(getLastName(), tbUsers.getLastName()) && Objects.equals(getStatusId(), tbUsers.getStatusId()) && Objects.equals(getRoleId(), tbUsers.getRoleId()) && Objects.equals(getVesId(), tbUsers.getVesId());
+        return getUserId() == tbUsers.getUserId() && Objects.equals(getUsername(), tbUsers.getUsername()) && Objects.equals(getPasscode(), tbUsers.getPasscode()) && Objects.equals(getFirstName(), tbUsers.getFirstName()) && Objects.equals(getLastName(), tbUsers.getLastName()) && Objects.equals(getStatusId(), tbUsers.getStatusId()) && Objects.equals(getPositionId(), tbUsers.getPositionId()) && Objects.equals(getVesId(), tbUsers.getVesId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getUsername(), getPasscode(), getFirstName(), getLastName(), getStatusId(), getRoleId(), getVesId());
+        return Objects.hash(getUserId(), getUsername(), getPasscode(), getFirstName(), getLastName(), getStatusId(), getPositionId(), getVesId());
     }
 }

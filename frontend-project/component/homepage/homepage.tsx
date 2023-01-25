@@ -23,7 +23,7 @@ const HomePageLayout = (props: HomePageProps) => {
       localStorage.setItem("vesData",JSON.stringify(vessel.data));
     }
     fetchData();
-  },[vesselList]);
+  },[]);
 
   return (
     <>

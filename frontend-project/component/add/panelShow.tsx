@@ -8,6 +8,7 @@ import InputNumberField from "../common/input/inputNumber";
 import { DynamicInputItem, VesselForm } from "../common/interface";
 import DynamicHorizonInput from "./../common/dynamicHorizonInput";
 import { VesselService } from "./../../services/vessel.service";
+import PopupPage from "../common/popupPage";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -17,7 +18,8 @@ interface AddPageProps {
 const AddPanelShow = (props: AddPageProps) => {
   const { setPage, defaultValues } = props;
   const [isAdd, setIsAdd] = useState(true);
-  const [isEdit, setIsEdit] = useState(false);
+  const [isShowWarning, setIsShowWarning] = useState(false);
+  const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [dateTime, setDateTime] = useState("");
   const vesselService = new VesselService();
   const {
@@ -32,18 +34,42 @@ const AddPanelShow = (props: AddPageProps) => {
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
   const [totalLeftOfTellus, setTotalLeftOfTellus] = useState(0);
   const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState(0);
-  const benzineWatch = watch(["usedOfBenzine","leftOfBenzine","getOfBenzine","giveOfBenzine"]);
-  const dieselWatch = watch(["getOfDiesel", "giveOfDiesel", "usedOfDiesel", "leftOfDiesel"]);
-  const gadiniaWatch = watch(["getOfGadinia","leftOfGadinia","usedOfGadinia","giveOfGadinia"]);
-  const tellusWatch = watch(["getOfTellus","giveOfTellus","leftOfTellus","usedOfTellus"]);
-  const freshWaterWatch = watch(["getOfFreshWater","giveOfFreshWater","leftOfFreshWater","usedOfFreshWater"]);
+  const benzineWatch = watch([
+    "usedOfBenzine",
+    "leftOfBenzine",
+    "getOfBenzine",
+    "giveOfBenzine",
+  ]);
+  const dieselWatch = watch([
+    "getOfDiesel",
+    "giveOfDiesel",
+    "usedOfDiesel",
+    "leftOfDiesel",
+  ]);
+  const gadiniaWatch = watch([
+    "getOfGadinia",
+    "leftOfGadinia",
+    "usedOfGadinia",
+    "giveOfGadinia",
+  ]);
+  const tellusWatch = watch([
+    "getOfTellus",
+    "giveOfTellus",
+    "leftOfTellus",
+    "usedOfTellus",
+  ]);
+  const freshWaterWatch = watch([
+    "getOfFreshWater",
+    "giveOfFreshWater",
+    "leftOfFreshWater",
+    "usedOfFreshWater",
+  ]);
 
   useEffect(() => {
     const dateNow = new Date();
     setDateTime(
       dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })
     );
-    console.log(defaultValues);
     if (defaultValues?.currentPosition == 1) {
       setIsAdd(false);
     } else {
@@ -96,13 +122,26 @@ const AddPanelShow = (props: AddPageProps) => {
     setTotalLeftOfFreshWater(total);
   }, [freshWaterWatch]);
 
-
   const onSubmitForm = (e: VesselForm) => {
-    e.monthYear = dateTime;
-    e.currentPosition = 2;
     vesselService.createReport(e);
+    window.location.reload();
     setPage(1);
   };
+
+  const CheckForm = (e:any) => {
+    e.preventDefault();
+    if (
+      totalLeftOfBenzine >= 0 &&
+      totalLeftOfDiesel >= 0 &&
+      totalLeftOfFreshWater >= 0 &&
+      totalLeftOfGadinia >= 0 &&
+      totalLeftOfTellus >= 0
+    ) {
+      setIsShowConfirm(true);
+    }else{
+      setIsShowWarning(true);
+    }
+  }
 
   const onGoBack = () => {
     setPage(1);
@@ -328,10 +367,25 @@ const AddPanelShow = (props: AddPageProps) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmitForm)}>
+      <form>
         <Button icon="pi pi-out" label="ย้อนกลับ" onClick={onGoBack} />
         <h1> ส่งข้อมูลเรือ : {defaultValues!.vesNameTh}</h1>
         <h1>รอบที่ {dateTime}</h1>
+        <PopupPage
+          setVisible={setIsShowWarning}
+          header="คำเตือน"
+          message="โปรดตรวจสอบให้แน่ใจว่าค่า คงเหลือ มากกว่า 0"
+          visible={isShowWarning}
+        />
+        <PopupPage
+          header="ยืนยัน"
+          message="คุณยืนยันที่จะส่งข้อมูลในเดือนนี้หรือไม่"
+          setVisible={setIsShowConfirm}
+          visible={isShowConfirm}
+        >
+          <Button label="ยืนยัน" className="p-button-success" onClick={handleSubmit(onSubmitForm)} />
+          <Button label="ยกเลิก" className="p-button-cancel" onClick={(e)=>{console.log(e);setIsShowConfirm(false)}}/>
+        </PopupPage>
         <div className={styles.panel}>
           <Card>
             <div className={styles.card}>
@@ -406,7 +460,7 @@ const AddPanelShow = (props: AddPageProps) => {
         </div>
         <div>
           <Button
-            type="submit"
+            onClick={(e)=>CheckForm(e)}
             className="p-button-success"
             label="ยืนยันแบบฟอร์มและส่งต่อ"
           />

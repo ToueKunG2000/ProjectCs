@@ -23,6 +23,7 @@ const LayoutLogin = () => {
 
   const CheckLogin = async () => {
     const user = await service.checkUser(username,password)
+    console.log(user);
     if(user != null){
       localStorage.setItem("user",JSON.stringify(user.data));
       GoToHome();
@@ -39,7 +40,7 @@ const LayoutLogin = () => {
   return (
     <>
       <div className={styles.div}>
-        <PopupPage setVisible={setPopupVisible} visible={popupVisible}/>
+        <PopupPage header="Warning" message="Your username or password incorrect" setVisible={setPopupVisible} visible={popupVisible}/>
         <div className="flex justify-content-center p-2">
           <Image src="BEASTARS_logo.svg.png" width="200" height="100" />
         </div>

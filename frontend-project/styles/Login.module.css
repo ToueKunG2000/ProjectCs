@@ -4,12 +4,12 @@
     width: 200px;
 }
 .div{
-    position: relative; 
+    position: inherit; 
     flex-direction: column;
     justify-items: center;
     justify-content: center;
     display: flex;
-    padding-top: 15%;
+    margin-top: 40vh;
 }
 .label{
     padding-right: 20%;
@@ -17,4 +17,8 @@
 .label{
     align-items: center;
     justify-items: center;
+}
+.img{
+    background-image:url('../public/login_page.png');
+
 }

@@ -4,10 +4,13 @@ import { Dispatch, SetStateAction } from 'react';
 interface PopupProps{
     setVisible: Dispatch<SetStateAction<boolean>>;
     visible: boolean;
+    header: string;
+    message: string;
+    children?: React.ReactNode;
 }
 
 const PopupPage = (props : PopupProps) => {
-    const { setVisible, visible} = props;
+    const { setVisible, visible, header, message, children} = props;
 
     const onHide = () => {
         setVisible(false);
@@ -15,8 +18,9 @@ const PopupPage = (props : PopupProps) => {
     
     return (
         <>
-            <Dialog header="Header" visible={visible} onHide={onHide} >
-                <h1>Username or Password not correct</h1>
+            <Dialog header={header} visible={visible} onHide={onHide} >
+                <h1>{message}</h1>
+                {children}
             </Dialog>
         </>
     );
