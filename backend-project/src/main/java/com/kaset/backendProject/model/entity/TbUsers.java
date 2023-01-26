@@ -16,7 +16,7 @@ import java.util.Objects;
     @NamedNativeQuery(
             name = "TbUsers.findUserByUsername",
             query = "SELECT ves_id, user_id, CONCAT(first_name,' ',last_name) as userName , " +
-                    " TP.position_name_th, passcode as [password] FROM TB_USERS TU INNER JOIN TB_POSITIONS" +
+                    " TP.position_name_th, passcode as [password], TU.position_id as positionId FROM TB_USERS TU INNER JOIN TB_POSITIONS" +
                     " TP on TP.position_id = TU.position_id WHERE username = :username ",
             resultSetMapping = "userMapping")
 })
@@ -27,6 +27,7 @@ import java.util.Objects;
                         @ColumnResult(name = "ves_id",type = Integer.class),
                         @ColumnResult(name = "userName",type = String.class),
                         @ColumnResult(name = "position_name_th",type = String.class),
+                        @ColumnResult(name = "positionId",type = Integer.class),
                         @ColumnResult(name = "[password]", type = String.class)
                 })
         })

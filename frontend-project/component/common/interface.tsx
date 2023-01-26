@@ -1,6 +1,7 @@
 import { InputNumberProps } from "primereact/inputnumber";
 import { InputTextProps } from "primereact/inputtext";
 import { RegisterOptions, DeepMap, FieldError } from "react-hook-form";
+import { StringLiteral } from "typescript";
 
 
 export interface FieldProps {
@@ -16,7 +17,7 @@ export interface DynamicInputItem {
   isView?: boolean;
   isChecked?: boolean;
   suffix?: string;
-  fieldID: any;
+  fieldID?: any;
   label?: string;
   placeholder?: string;
   data?: any;
@@ -28,7 +29,7 @@ export interface DynamicInputItem {
     RegisterOptions,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
   >;
-  errors: DeepMap<any, FieldError>;
+  errors?: DeepMap<any, FieldError>;
   type:
     | "label"
     | "text"
@@ -38,7 +39,16 @@ export interface DynamicInputItem {
 
 export interface DynamicInputFields extends FieldProps {
   dynamicInputItems: DynamicInputItem[];
-  control: any;
+  control?: any;
+}
+
+export interface UserForm{
+  password: string;
+  positionId: number;
+  vesId: number;
+  userName: string;
+  userId: number;
+  positionName: string;
 }
 
 export interface VesselForm {

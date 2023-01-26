@@ -5,8 +5,52 @@
 body{
     min-height: 100% !important;
 }
+h1{
+    display: flex;
+    justify-content: center;
+}
+label{
+    font-size: 30px;
+}
+.linecenter{
+    display: flex;
+    justify-content: center;
+}
+.line{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.p-card.card-display{
+    min-width: 500px !important;
+    min-height: 450px !important;
+    background-color: aliceblue;
+    border-radius: 30px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
+
+.p-card.card-display:hover{
+    background-color: #000080;
+    color: white;
+}
+
+.p-tabview{
+    color: black;
+}
+
+.p-card{
+    min-width: 750px !important;
+    min-height: 500px !important;
+}
+
 div#__next{
     height: 100%;
+}
+.p-inputtext{
+    font-size: 20px !important;
 }
 
 @media screen and (max-width: 100px) {

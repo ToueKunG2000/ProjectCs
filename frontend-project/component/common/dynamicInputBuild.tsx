@@ -22,13 +22,13 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
             />
         }
         if(field.type == "label"){
-            return <label>{field.data}</label>
+            return <label className={field.inputClassName} >{field.data}</label>
         }
     }
     return (
-        <div>
+        <>
             {InputBuilderSwitch(field,control)}
-        </div>
+        </>
     );
 }
 export default DynamicInputBuild;

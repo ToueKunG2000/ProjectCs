@@ -6,8 +6,8 @@ import { useForm } from "react-hook-form";
 import styles from "../../styles/AddPage.module.css";
 import InputNumberField from "../common/input/inputNumber";
 import { DynamicInputItem, VesselForm } from "../common/interface";
-import DynamicHorizonInput from "./../common/dynamicHorizonInput";
-import { VesselService } from "./../../services/vessel.service";
+import DynamicHorizonInput from "../common/dynamicHorizonInput";
+import { VesselService } from "../../services/vessel.service";
 import PopupPage from "../common/popupPage";
 
 interface AddPageProps {
@@ -15,7 +15,7 @@ interface AddPageProps {
   defaultValues?: VesselForm;
 }
 
-const AddPanelShow = (props: AddPageProps) => {
+const PanelReportVessel = (props: AddPageProps) => {
   const { setPage, defaultValues } = props;
   const [isAdd, setIsAdd] = useState(true);
   const [isShowWarning, setIsShowWarning] = useState(false);
@@ -128,7 +128,7 @@ const AddPanelShow = (props: AddPageProps) => {
     setPage(1);
   };
 
-  const CheckForm = (e:any) => {
+  const CheckForm = (e: any) => {
     e.preventDefault();
     if (
       totalLeftOfBenzine >= 0 &&
@@ -138,10 +138,10 @@ const AddPanelShow = (props: AddPageProps) => {
       totalLeftOfTellus >= 0
     ) {
       setIsShowConfirm(true);
-    }else{
+    } else {
       setIsShowWarning(true);
     }
-  }
+  };
 
   const onGoBack = () => {
     setPage(1);
@@ -364,6 +364,24 @@ const AddPanelShow = (props: AddPageProps) => {
       data: totalLeftOfFreshWater,
     },
   ];
+  const bigMachineResource: DynamicInputItem[] = [
+    {
+      inputClassName: "center",
+      type: "number",
+      fieldID: "bigMachineUsed",
+      errors: ["bigMachineUsed"],
+      inputNumberProps: { disabled: isAdd },
+    },
+  ];
+  const electricMachineResource: DynamicInputItem[] = [
+    {
+      inputClassName: "center",
+      type: "number",
+      fieldID: "electricMachineUsed",
+      errors: ["electricMachineUsed"],
+      inputNumberProps: { disabled: isAdd },
+    },
+  ];
 
   return (
     <>
@@ -383,27 +401,36 @@ const AddPanelShow = (props: AddPageProps) => {
           setVisible={setIsShowConfirm}
           visible={isShowConfirm}
         >
-          <Button label="ยืนยัน" className="p-button-success" onClick={handleSubmit(onSubmitForm)} />
-          <Button label="ยกเลิก" className="p-button-cancel" onClick={(e)=>{console.log(e);setIsShowConfirm(false)}}/>
+          <Button
+            label="ยืนยัน"
+            className="p-button-success"
+            onClick={handleSubmit(onSubmitForm)}
+          />
+          <Button
+            label="ยกเลิก"
+            className="p-button-cancel"
+            onClick={(e) => {
+              console.log(e);
+              setIsShowConfirm(false);
+            }}
+          />
         </PopupPage>
         <div className={styles.panel}>
           <Card>
             <div className={styles.card}>
               <h1>ชั่วโมงการใช้งาน</h1>
-              <h1>เครื่องจักรใหญ่</h1>
-              <h1>{defaultValues!.bigMachineNum}</h1>
-              <InputNumberField
+              <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
+              <h1>{`จำนวน ${defaultValues!.bigMachineNum} เครื่อง`}</h1>
+              <DynamicHorizonInput
+                dynamicInputItems={bigMachineResource}
                 control={control}
-                controllerName={"bigMachineUsed"}
-                disabled={isAdd}
               />
               <h1>ชั่วโมง</h1>
-              <h1>เครื่องจักรใหญ่</h1>
-              <h1>{defaultValues!.electricMachineNum}</h1>
-              <InputNumberField
+              <h1>{process.env.NEXT_PUBLIC_ELECTRIC_MACHINE}</h1>
+              <h1>{`จำนวน ${defaultValues!.electricMachineNum} เครื่อง`}</h1>
+              <DynamicHorizonInput
+                dynamicInputItems={electricMachineResource}
                 control={control}
-                controllerName={"electricMachineUsed"}
-                disabled={isAdd}
               />
               <h1>ชั่วโมง</h1>
             </div>
@@ -458,9 +485,9 @@ const AddPanelShow = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        <div>
+        <div className="flex justify-content-center">
           <Button
-            onClick={(e)=>CheckForm(e)}
+            onClick={(e) => CheckForm(e)}
             className="p-button-success"
             label="ยืนยันแบบฟอร์มและส่งต่อ"
           />
@@ -469,4 +496,4 @@ const AddPanelShow = (props: AddPageProps) => {
     </>
   );
 };
-export default AddPanelShow;
+export default PanelReportVessel;

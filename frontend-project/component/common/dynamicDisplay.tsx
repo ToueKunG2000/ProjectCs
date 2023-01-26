@@ -12,8 +12,15 @@ interface DynamicDisplayProps{
 const DynamicDisplay = (props: DynamicDisplayProps) => {
     const {setPage, data, setVesselSelected} = props;
     const AddOrEdit = (e:any, vessel:any) => {
-        setPage(2);
-        setVesselSelected(vessel);
+        const user = JSON.parse(localStorage.getItem("user"));
+        if(user.positionId == 1){
+            setPage(2);
+            setVesselSelected(vessel);
+        }
+        else{
+            setPage(3);
+            setVesselSelected(vessel);
+        }
     }
 
     return (
@@ -22,7 +29,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                 return (
                 <>
                     <div className="col-4 flex justify-content-center">
-                        <Card className={styles.card} onClick={(e)=>AddOrEdit(e,vessel)}>
+                        <Card className={"card-display"} onClick={(e)=>AddOrEdit(e,vessel)}>
                             <Image className={styles.img} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
                             <h2>{vessel.vesNameEn}</h2>
                             <h2>{vessel.vesNameTh}</h2>

@@ -11,7 +11,7 @@ const DynamicHorizonInput = (props: DynamicInputFields) => {
             {dynamicInputItems.map((fields) => {
                 return (
                     <>
-                    <div className={styles.line}>
+                    <div className={`line${fields.inputClassName==undefined?"":fields.inputClassName}`}>
                         <HorizontalField 
                         fieldID={fieldID}
                         label={fields.label}
