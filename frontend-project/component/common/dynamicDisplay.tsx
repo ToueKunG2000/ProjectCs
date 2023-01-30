@@ -28,7 +28,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
             {data.map((vessel)=>{
                 return (
                 <>
-                    <div className="col-4 flex justify-content-center">
+                    <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
                         <Card className={"card-display"} onClick={(e)=>AddOrEdit(e,vessel)}>
                             <Image className={styles.img} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
                             <h2>{vessel.vesNameEn}</h2>

@@ -7,8 +7,11 @@ import java.math.BigDecimal;
 @Data
 public class Vessel {
     private Integer vesId;
+    private String vesNameTh;
     private Integer bigMachineUsed;
+    private Integer bigMachineNum;
     private Integer electricMachineUsed;
+    private Integer electricMachineNum;
     private Integer airConditioner;
     private Integer airCompressor;
     private Integer freezer;

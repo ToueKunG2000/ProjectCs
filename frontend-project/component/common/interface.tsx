@@ -51,6 +51,12 @@ export interface UserForm{
   positionName: string;
 }
 
+export interface UpdateForm{
+  vesId: number;
+  currentPosition: number;
+  counsel?: string;
+}
+
 export interface VesselForm {
   vesId: number;
   vesNameTh: string;

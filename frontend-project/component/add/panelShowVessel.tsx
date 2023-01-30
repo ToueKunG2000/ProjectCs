@@ -5,9 +5,10 @@ import { useForm } from "react-hook-form";
 import { VesselService } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import InputNumberField from "../common/input/inputNumber";
-import { DynamicInputItem, VesselForm } from "../common/interface";
+import { DynamicInputItem, UserForm, VesselForm } from "../common/interface";
 import PopupPage from "../common/popupPage";
 import styles from "../../styles/AddPage.module.css";
+import { UpdateForm } from "./../common/interface";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -16,10 +17,9 @@ interface AddPageProps {
 
 const PanelShowVessel = (props: AddPageProps) => {
   const { setPage, defaultValues } = props;
-  const [isShowWarning, setIsShowWarning] = useState(false);
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
-  const [dateTime, setDateTime] = useState("");
+  const [isShowButton, setIsShowButton] = useState(false);
   const vesselService = new VesselService();
+  const [user, setUser] = useState<UserForm>();
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
   const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState(0);
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
@@ -71,6 +71,14 @@ const PanelShowVessel = (props: AddPageProps) => {
     setTotalLeftOfFreshWater(total);
   }, []);
 
+  useEffect(()=>{
+    const user: UserForm = JSON.parse(localStorage.getItem("user"));
+    setUser(user);
+    if( user.positionId == defaultValues?.currentPosition ){
+      setIsShowButton(true);
+    }
+  },[]);
+
   // const onSubmitForm = (e: VesselForm) => {
   //   vesselService.createReport(e);
   //   window.location.reload();
@@ -80,6 +88,37 @@ const PanelShowVessel = (props: AddPageProps) => {
   const onGoBack = () => {
     setPage(1);
   };
+
+  const UpdateApprove = (e:any) =>{
+    e.preventDefault();
+    if(user!.positionId == 5){
+      defaultValues!.leftOfBenzine = totalLeftOfBenzine;
+      defaultValues!.leftOfDiesel = totalLeftOfDiesel;
+      defaultValues!.leftOfGadinia = totalLeftOfGadinia;
+      defaultValues!.leftOfTellus = totalLeftOfTellus;
+      defaultValues!.leftOfFreshWater = totalLeftOfFreshWater;
+      vesselService.addToLogVessel(defaultValues!);
+      vesselService.resetReport(defaultValues!);
+      window.location.reload();
+    }
+    else if(user!.positionId == 4){
+      const data:UpdateForm = {
+        counsel: undefined,
+        currentPosition :user!.positionId+1,
+        vesId: defaultValues!.vesId}
+      vesselService.updateReport(data);
+      window.location.reload();
+    }
+    else{
+      const data:UpdateForm = {
+        counsel: undefined,
+        currentPosition :user!.positionId+1,
+        vesId: user!.vesId}
+      vesselService.updateReport(data);
+      window.location.reload();
+    }
+  
+  }
 
   const dynamicInputItemsPanel2: DynamicInputItem[] = [
     {
@@ -380,10 +419,13 @@ const PanelShowVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        <div className="flex justify-content-center">
-          <Button label="ส่งต่อ" className="p-button-success" />
-          <Button label="กลับไปแก้ไข" className="p-button-danger" />
-        </div>
+        { isShowButton == true && 
+          <div className="flex justify-content-center">
+            <Button label="ส่งต่อ" className="p-button-success" onClick={(e)=>UpdateApprove(e)} />
+            <Button label="กลับไปแก้ไข" className="p-button-danger" />
+          </div>  
+        }
+        
       </form>
     </>
   );
