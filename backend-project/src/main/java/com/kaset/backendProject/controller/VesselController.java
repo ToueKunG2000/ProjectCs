@@ -1,8 +1,6 @@
 package com.kaset.backendProject.controller;
 
-import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.Vessel;
-import com.kaset.backendProject.repository.VesselRepository;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

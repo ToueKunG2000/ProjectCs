@@ -3,7 +3,7 @@ package com.kaset.backendProject.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Value;
+
 
 import java.io.Serializable;
 import java.math.BigInteger;

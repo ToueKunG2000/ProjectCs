@@ -14,8 +14,6 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
 
     @PersistenceContext
     private EntityManager entityManager;
-//
-//
     @Modifying
     @Transactional
     public void updateToTbVessel(Vessel vessel){

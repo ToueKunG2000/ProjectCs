@@ -1,6 +1,5 @@
 package com.kaset.backendProject.controller;
 
-import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.UserPayload;
 import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
