@@ -4,11 +4,11 @@ import { Card } from "primereact/card";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../../styles/AddPage.module.css";
-import InputNumberField from "../common/input/inputNumber";
-import { DynamicInputItem, VesselForm } from "../common/interface";
+import { CheckLogMonthYearForm, DynamicInputItem, VesselForm } from "../common/interface";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { VesselService } from "../../services/vessel.service";
 import PopupPage from "../common/popupPage";
+import { DateRangeTwoTone } from "@mui/icons-material";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -22,6 +22,8 @@ const PanelReportVessel = (props: AddPageProps) => {
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [dateTime, setDateTime] = useState("");
   const vesselService = new VesselService();
+  const [isShowCounsel, setIsShowCounsel] = useState(false);
+  const [isShowReport, setIsShowReport] = useState(false);
   const {
     control,
     watch,
@@ -70,6 +72,12 @@ const PanelReportVessel = (props: AddPageProps) => {
     setDateTime(
       dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })
     );
+    const test:CheckLogMonthYearForm = {
+      monthYear: dateTime,
+      vesId: defaultValues!.vesId
+    }
+   const te = vesselService.checkLogMonthYear(test);
+   te.then((e) => setIsShowReport(e.data));
     if (defaultValues?.currentPosition == 1) {
       setIsAdd(false);
     } else {
@@ -123,9 +131,17 @@ const PanelReportVessel = (props: AddPageProps) => {
   }, [freshWaterWatch]);
 
   const onSubmitForm = (e: VesselForm) => {
-    vesselService.createReport(e);
-    window.location.reload();
-    setPage(1);
+    if(e.monthYear !== null){
+      vesselService.createReport(e);
+      window.location.reload();
+      setPage(1);
+    }
+    else{
+      e.monthYear = dateTime;
+      vesselService.createReport(e);
+      window.location.reload();
+      setPage(1);
+    }
   };
 
   const CheckForm = (e: any) => {
@@ -386,7 +402,7 @@ const PanelReportVessel = (props: AddPageProps) => {
   return (
     <>
       <form>
-        <Button icon="pi pi-out" label="ย้อนกลับ" onClick={onGoBack} />
+        <Button icon="pi pi-out" label="ย้อนกลับ" className="p-button-danger" onClick={onGoBack} />
         <h1> ส่งข้อมูลเรือ : {defaultValues!.vesNameTh}</h1>
         <h1>รอบที่ {dateTime}</h1>
         <PopupPage
@@ -415,6 +431,17 @@ const PanelReportVessel = (props: AddPageProps) => {
             }}
           />
         </PopupPage>
+        { defaultValues?.counsel != undefined && <div className={styles.counsel}>
+          { isShowCounsel === false && 
+            <Card className={styles.hidden} onClick={(e)=>setIsShowCounsel(true)}>
+              <i className={"pi pi-exclamation-circle text-white text-4xl flex justify-content-center"}></i>
+            </Card>
+          }
+          {isShowCounsel === true && 
+          <Card className={styles.show} onClick={(e)=>setIsShowCounsel(false)}>
+            <h2 className={styles.text}>เหตุผลที่ถูกตีกลับ : {defaultValues!.counsel}</h2>
+          </Card>}
+        </div>}
         <div className={styles.panel}>
           <Card>
             <div className={styles.card}>
@@ -485,13 +512,13 @@ const PanelReportVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        <div className="flex justify-content-center">
+        {isAdd !== true && <div className="flex justify-content-center">
           <Button
             onClick={(e) => CheckForm(e)}
             className="p-button-success"
             label="ยืนยันแบบฟอร์มและส่งต่อ"
           />
-        </div>
+        </div>}
       </form>
     </>
   );

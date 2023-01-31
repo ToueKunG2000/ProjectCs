@@ -1,5 +1,6 @@
 package com.kaset.backendProject.controller;
 
+import com.kaset.backendProject.model.payload.MonthYearVesIdPayload;
 import com.kaset.backendProject.model.payload.UpdateVesselPayload;
 import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.repository.LogVesselRepository;
@@ -15,7 +16,6 @@ public class VesselController {
 
     @Autowired
     private VesselServiceImpl vesselService;
-
 
     @PutMapping("/createReport")
     public void updateToReport(@RequestBody Vessel vessel){
@@ -35,6 +35,16 @@ public class VesselController {
     @PostMapping("/addToLog")
     public void addToTbLogVessel(@RequestBody Vessel vessel){
         vesselService.insertToTbLogVessel(vessel);
+    }
+
+    @PostMapping("/checkLogMonthYear")
+    public boolean checkMonthYearLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
+        return vesselService.checkMonthYearLog(monthYearVesIdPayload);
+    }
+
+    @PostMapping("getDataLog")
+    public Vessel getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
+        return vesselService.getDataLog(monthYearVesIdPayload);
     }
 
 }

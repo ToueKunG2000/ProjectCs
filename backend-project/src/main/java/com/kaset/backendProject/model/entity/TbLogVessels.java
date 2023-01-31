@@ -1,14 +1,87 @@
 package com.kaset.backendProject.model.entity;
 
+import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
 @Data
 @Table(name = "TB_LOG_VESSELS", schema = "dbo", catalog = "Navsho")
+@NamedNativeQueries(
+    {
+            @NamedNativeQuery(name = "TbLogVessels.findMonthYear",
+                resultSetMapping = "monthYearList",
+                query = "SELECT month_year FROM TB_LOG_VESSELS WHERE ves_id = :vesId"
+            ),
+            @NamedNativeQuery(name = "TbLogVessels.getDataLog",
+                resultSetMapping = "LogVessel",
+                query = "SELECT ves_name_th, big_machine_used, big_machine_num," +
+                        " electric_machine_used, electric_machine_num, " +
+                        "air_conditioner, air_compressor, freezer, ship_engine, pump, rudder," +
+                        "water_purifier, diesel_oil_seperator, gear, " +
+                        " month_year," +
+                        " get_of_diesel ," +
+                        "get_of_benzine, get_of_gadinia, get_of_tellus, get_of_fresh_water ," +
+                        "give_of_diesel," +
+                        "give_of_benzine, give_of_gadinia, give_of_tellus, give_of_fresh_water, left_of_diesel," +
+                        "left_of_benzine, left_of_gadinia, left_of_tellus, left_of_fresh_water," +
+                        " used_of_diesel, used_of_benzine" +
+                        ",used_of_gadinia, used_of_tellus, used_of_fresh_water" +
+                        "  FROM TB_LOG_VESSELS" +
+                        " WHERE ves_id = :vesId AND month_year LIKE :monthYear "
+            )
+
+    }
+)
+@SqlResultSetMappings({
+    @SqlResultSetMapping(name = "monthYearList", columns = {
+            @ColumnResult(name = "month_year", type = String.class)
+    }),
+    @SqlResultSetMapping(name = "LogVessel",classes = {
+            @ConstructorResult(targetClass = Vessel.class, columns = {
+                    @ColumnResult(name = "ves_name_th",type = String.class),
+                    @ColumnResult(name = "big_machine_used",type = Integer.class),
+                    @ColumnResult(name = "big_machine_num",type = Integer.class),
+                    @ColumnResult(name = "electric_machine_used",type = Integer.class),
+                    @ColumnResult(name = "electric_machine_num",type = Integer.class),
+                    @ColumnResult(name = "air_conditioner",type = Integer.class),
+                    @ColumnResult(name = "air_compressor",type = Integer.class),
+                    @ColumnResult(name = "freezer",type = Integer.class),
+                    @ColumnResult(name = "ship_engine",type = Integer.class),
+                    @ColumnResult(name = "pump",type = Integer.class),
+                    @ColumnResult(name = "rudder",type = Integer.class),
+                    @ColumnResult(name = "water_purifier",type = Integer.class),
+                    @ColumnResult(name = "diesel_oil_seperator",type = Integer.class),
+                    @ColumnResult(name = "gear",type = Integer.class),
+                    @ColumnResult(name = "month_year",type = String.class),
+                    @ColumnResult(name = "get_of_diesel",type = BigDecimal.class),
+                    @ColumnResult(name = "get_of_benzine",type = BigDecimal.class),
+                    @ColumnResult(name = "get_of_gadinia",type = BigDecimal.class),
+                    @ColumnResult(name = "get_of_tellus",type = BigDecimal.class),
+                    @ColumnResult(name = "get_of_fresh_water",type = BigDecimal.class),
+                    @ColumnResult(name = "give_of_diesel",type = BigDecimal.class),
+                    @ColumnResult(name = "give_of_benzine",type = BigDecimal.class),
+                    @ColumnResult(name = "give_of_gadinia",type = BigDecimal.class),
+                    @ColumnResult(name = "give_of_tellus",type = BigDecimal.class),
+                    @ColumnResult(name = "give_of_fresh_water",type = BigDecimal.class),
+                    @ColumnResult(name = "left_of_diesel",type = BigDecimal.class),
+                    @ColumnResult(name = "left_of_benzine",type = BigDecimal.class),
+                    @ColumnResult(name = "left_of_gadinia",type = BigDecimal.class),
+                    @ColumnResult(name = "left_of_tellus",type = BigDecimal.class),
+                    @ColumnResult(name = "left_of_fresh_water",type = BigDecimal.class),
+                    @ColumnResult(name = "used_of_diesel",type = BigDecimal.class),
+                    @ColumnResult(name = "used_of_benzine",type = BigDecimal.class),
+                    @ColumnResult(name = "used_of_gadinia",type = BigDecimal.class),
+                    @ColumnResult(name = "used_of_tellus",type = BigDecimal.class),
+                    @ColumnResult(name = "used_of_fresh_water",type = BigDecimal.class),
+
+            })
+    })
+})
 public class TbLogVessels {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id

@@ -13,6 +13,7 @@ const HomePageLayout = (props: HomePageProps) => {
   const [page, setPage] = useState(1);
   const [vesselList,setVesselList] = useState([]);
   const [showPosition, setShowPosition] = useState();
+  const [isSendReport, setIsSendReport] = useState(false);
   const vesselService = new VesselService();
   const [vesselSelected, setVesselSelected] = useState<VesselForm>();
   

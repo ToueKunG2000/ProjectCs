@@ -59,6 +59,7 @@ const LayoutLogin = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             toggleMask
+            feedback={false}
           />
         </div>
         <div className="flex justify-content-center">

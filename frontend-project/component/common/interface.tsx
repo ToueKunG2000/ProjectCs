@@ -1,7 +1,6 @@
 import { InputNumberProps } from "primereact/inputnumber";
-import { InputTextProps } from "primereact/inputtext";
+import { InputTextareaProps } from "primereact/inputtextarea";
 import { RegisterOptions, DeepMap, FieldError } from "react-hook-form";
-import { StringLiteral } from "typescript";
 
 
 export interface FieldProps {
@@ -23,7 +22,7 @@ export interface DynamicInputItem {
   data?: any;
   options?: any;
   isRequired?: boolean;
-  inputTextProps?: InputTextProps;
+  inputTextProps?: InputTextareaProps;
   inputNumberProps?: InputNumberProps;
   rules?: Omit<
     RegisterOptions,
@@ -55,6 +54,11 @@ export interface UpdateForm{
   vesId: number;
   currentPosition: number;
   counsel?: string;
+}
+
+export interface CheckLogMonthYearForm {
+  monthYear: string;
+  vesId: number;
 }
 
 export interface VesselForm {

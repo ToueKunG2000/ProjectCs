@@ -1,14 +1,14 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import { InputTextarea } from "primereact/inputtextarea";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { VesselService } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
-import InputNumberField from "../common/input/inputNumber";
 import { DynamicInputItem, UserForm, VesselForm } from "../common/interface";
-import PopupPage from "../common/popupPage";
 import styles from "../../styles/AddPage.module.css";
 import { UpdateForm } from "./../common/interface";
+import PopupPage from "./../common/popupPage";
+import { useForm } from "react-hook-form";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -18,6 +18,7 @@ interface AddPageProps {
 const PanelShowVessel = (props: AddPageProps) => {
   const { setPage, defaultValues } = props;
   const [isShowButton, setIsShowButton] = useState(false);
+  const [isShowPopup, setIsShowPopup] = useState(false);
   const vesselService = new VesselService();
   const [user, setUser] = useState<UserForm>();
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
@@ -25,6 +26,13 @@ const PanelShowVessel = (props: AddPageProps) => {
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
   const [totalLeftOfTellus, setTotalLeftOfTellus] = useState(0);
   const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState(0);
+  const {
+    control,
+    watch,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
 
   useEffect(() => {
     const total =
@@ -71,27 +79,36 @@ const PanelShowVessel = (props: AddPageProps) => {
     setTotalLeftOfFreshWater(total);
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     const user: UserForm = JSON.parse(localStorage.getItem("user"));
     setUser(user);
-    if( user.positionId == defaultValues?.currentPosition ){
+    if (user.positionId == defaultValues?.currentPosition) {
       setIsShowButton(true);
     }
-  },[]);
-
-  // const onSubmitForm = (e: VesselForm) => {
-  //   vesselService.createReport(e);
-  //   window.location.reload();
-  //   setPage(1);
-  // };
+  }, []);
 
   const onGoBack = () => {
     setPage(1);
   };
 
-  const UpdateApprove = (e:any) =>{
+  const onSubmitForm = (e: any) => {
+    const data: UpdateForm = {
+      counsel: e.counsel,
+      currentPosition: 1,
+      vesId: defaultValues!.vesId,
+    };
+    vesselService.updateReport(data);
+    window.location.reload();
+  };
+
+  const RejectReport = (e: any) => {
     e.preventDefault();
-    if(user!.positionId == 5){
+    setIsShowPopup(true);
+  };
+
+  const UpdateApprove = (e: any) => {
+    e.preventDefault();
+    if (user!.positionId == 5) {
       defaultValues!.leftOfBenzine = totalLeftOfBenzine;
       defaultValues!.leftOfDiesel = totalLeftOfDiesel;
       defaultValues!.leftOfGadinia = totalLeftOfGadinia;
@@ -100,25 +117,24 @@ const PanelShowVessel = (props: AddPageProps) => {
       vesselService.addToLogVessel(defaultValues!);
       vesselService.resetReport(defaultValues!);
       window.location.reload();
-    }
-    else if(user!.positionId == 4){
-      const data:UpdateForm = {
+    } else if (user!.positionId == 4) {
+      const data: UpdateForm = {
         counsel: undefined,
-        currentPosition :user!.positionId+1,
-        vesId: defaultValues!.vesId}
+        currentPosition: user!.positionId + 1,
+        vesId: defaultValues!.vesId,
+      };
+      vesselService.updateReport(data);
+      window.location.reload();
+    } else {
+      const data: UpdateForm = {
+        counsel: undefined,
+        currentPosition: user!.positionId + 1,
+        vesId: user!.vesId,
+      };
       vesselService.updateReport(data);
       window.location.reload();
     }
-    else{
-      const data:UpdateForm = {
-        counsel: undefined,
-        currentPosition :user!.positionId+1,
-        vesId: user!.vesId}
-      vesselService.updateReport(data);
-      window.location.reload();
-    }
-  
-  }
+  };
 
   const dynamicInputItemsPanel2: DynamicInputItem[] = [
     {
@@ -312,6 +328,15 @@ const PanelShowVessel = (props: AddPageProps) => {
     },
   ];
 
+  const counsel: DynamicInputItem[] = [
+    {
+      label: "เหตุผลที่ไม่ยินยอม",
+      type: "text",
+      fieldID: "counsel",
+      errors: ["counsel"],
+    },
+  ];
+
   const leftResource: DynamicInputItem[] = [
     {
       label: "น้ำมัน ดีเซล (กล.)",
@@ -363,7 +388,32 @@ const PanelShowVessel = (props: AddPageProps) => {
   return (
     <>
       <form>
-        <Button icon="pi pi-out" label="ย้อนกลับ" onClick={onGoBack} />
+        <PopupPage
+          header="Warning"
+          message=""
+          setVisible={setIsShowPopup}
+          visible={isShowPopup}
+        >
+          <DynamicHorizonInput control={control} dynamicInputItems={counsel} />
+          <Button
+            label="ยืนยัน"
+            className="p-button-success"
+            onClick={handleSubmit(onSubmitForm)}
+          />
+          <Button
+            label="ยกเลิก"
+            className="p-button-cancel"
+            onClick={(e) => {
+              setIsShowPopup(false);
+            }}
+          />
+        </PopupPage>
+        <Button
+          icon="pi pi-out"
+          label="ย้อนกลับ"
+          className="p-button-danger"
+          onClick={onGoBack}
+        />
         <h1> ส่งข้อมูลเรือ : {defaultValues!.vesNameTh}</h1>
         <h1>รอบที่ {defaultValues!.monthYear}</h1>
         <div className={styles.panel}>
@@ -419,13 +469,20 @@ const PanelShowVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        { isShowButton == true && 
+        {isShowButton == true && (
           <div className="flex justify-content-center">
-            <Button label="ส่งต่อ" className="p-button-success" onClick={(e)=>UpdateApprove(e)} />
-            <Button label="กลับไปแก้ไข" className="p-button-danger" />
-          </div>  
-        }
-        
+            <Button
+              label="ส่งต่อ"
+              className="p-button-success"
+              onClick={(e) => UpdateApprove(e)}
+            />
+            <Button
+              label="กลับไปแก้ไข"
+              className="p-button-danger"
+              onClick={(e) => RejectReport(e)}
+            />
+          </div>
+        )}
       </form>
     </>
   );

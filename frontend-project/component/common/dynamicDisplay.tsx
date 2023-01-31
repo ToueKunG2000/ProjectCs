@@ -28,14 +28,26 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
             {data.map((vessel)=>{
                 return (
                 <>
+                { vessel.vesStatus == 1 &&
                     <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
-                        <Card className={"card-display"} onClick={(e)=>AddOrEdit(e,vessel)}>
-                            <Image className={styles.img} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
-                            <h2>{vessel.vesNameEn}</h2>
-                            <h2>{vessel.vesNameTh}</h2>
-                            <h3>{vessel.vesStatus==1?"Active":"Not Active"}</h3>
-                        </Card>
+                    <Card className={"card-display"} onClick={(e)=>AddOrEdit(e,vessel)}>
+                        <Image className={styles.img} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
+                        <h2>{vessel.vesNameTh}</h2>
+                        <h3>{vessel.vesStatus==1?"Active":"Not Active"}</h3>
+                    </Card>
                     </div>
+                }
+                { vessel.vesStatus == 2 &&
+                <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
+                <Card className={"card-not-active"}>
+                    <Image className={styles.grayimg} alt='profile' src={process.env.NEXT_PUBLIC_IMAGE} width="200" height="200" />
+                    <h2>{vessel.vesNameTh}</h2>
+                    <h3>{"ซ่อมบำรุงอยู่โว้ยยยย"}</h3>
+                </Card>
+                </div>
+
+                }
+                
                 </>
                 )
             })}

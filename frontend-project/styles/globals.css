@@ -4,10 +4,15 @@
 } */
 body{
     min-height: 100% !important;
+    margin: 0px !important;
 }
 h1{
     display: flex;
     justify-content: center;
+}
+h3{
+    margin: 0;
+    font-size: 25px;
 }
 label{
     font-size: 30px;
@@ -31,6 +36,15 @@ label{
     display: flex;
     justify-content: center;
 }
+.p-card.card-not-active{
+    min-width: 500px !important;
+    min-height: 450px !important;
+    background-color: #C5C5C5;
+    border-radius: 30px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+}
 
 .p-card.card-display:hover{
     background-color: #000080;
@@ -44,6 +58,7 @@ label{
 .p-card{
     min-width: 750px !important;
     min-height: 500px !important;
+    color: black !important;
 }
 
 div#__next{

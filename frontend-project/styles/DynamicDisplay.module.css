@@ -9,6 +9,11 @@
     row-gap: 40px;
     justify-items: center;
 }
+.grayimg{
+    display: flex;
+    justify-content: center;
+    filter: grayscale(80%);
+}
 .img{
     display: flex;
     justify-content: center;
