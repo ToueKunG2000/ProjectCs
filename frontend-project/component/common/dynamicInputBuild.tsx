@@ -18,6 +18,15 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
         if(field.type == "number"){
             return <InputNumberField 
                 control={control}
+                fraction={0}
+                controllerName={field.fieldID}
+                {...field.inputNumberProps}
+            />
+        }
+        if(field.type == "fraction"){
+            return <InputNumberField 
+                control={control}
+                fraction={2}
                 controllerName={field.fieldID}
                 {...field.inputNumberProps}
             />

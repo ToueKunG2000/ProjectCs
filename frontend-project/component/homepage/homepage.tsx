@@ -19,11 +19,10 @@ const HomePageLayout = (props: HomePageProps) => {
   
   useEffect(() => {
     async function fetchData(){
-      const data = JSON.parse(localStorage.getItem("user"));
-      const vessel = await vesselService.getDataVessel(data.userId);
+      const user = JSON.parse(localStorage.getItem("user"));
+      const vessel = await vesselService.getDataVessel(user.userId);
       setVesselList(vessel.data);
-      setShowPosition(data.positionId)
-      localStorage.setItem("vesData",JSON.stringify(vessel.data));
+      setShowPosition(user.positionId)
     }
     fetchData();
   },[]);
@@ -41,7 +40,7 @@ const HomePageLayout = (props: HomePageProps) => {
       )}
       {page == 2 && (showPosition == 1 || showPosition == 2 || showPosition == 3) && (
         <div>
-            <PanelReportVessel setPage={setPage} defaultValues={vesselSelected}/>
+            <PanelReportVessel setPage={setPage} />
         </div>
       )}
       {page == 3 && (showPosition == 2 || showPosition == 3 || showPosition == 4 || showPosition == 5) && 

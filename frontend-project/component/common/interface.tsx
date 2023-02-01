@@ -34,6 +34,7 @@ export interface DynamicInputItem {
     | "text"
     | "password"
     | "number"
+    | "fraction"
 }
 
 export interface DynamicInputFields extends FieldProps {

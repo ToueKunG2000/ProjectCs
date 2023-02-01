@@ -206,7 +206,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.getOfDiesel == undefined
           ? "0"
-          : defaultValues!.getOfDiesel,
+          : defaultValues!.getOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
@@ -214,7 +214,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.getOfBenzine == undefined
           ? "0"
-          : defaultValues!.getOfBenzine,
+          : defaultValues!.getOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -222,7 +222,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.getOfGadinia == undefined
           ? "0"
-          : defaultValues!.getOfGadinia,
+          : defaultValues!.getOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -230,7 +230,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.getOfTellus == undefined
           ? "0"
-          : defaultValues!.getOfTellus,
+          : defaultValues!.getOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
@@ -238,7 +238,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.getOfFreshWater == undefined
           ? "0"
-          : defaultValues!.getOfFreshWater,
+          : defaultValues!.getOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -249,7 +249,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.giveOfDiesel == undefined
           ? "0"
-          : defaultValues!.giveOfDiesel,
+          : defaultValues!.giveOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
@@ -257,7 +257,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.giveOfBenzine == undefined
           ? "0"
-          : defaultValues!.giveOfBenzine,
+          : defaultValues!.giveOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -265,7 +265,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.giveOfGadinia == undefined
           ? "0"
-          : defaultValues!.giveOfGadinia,
+          : defaultValues!.giveOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -273,7 +273,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.giveOfTellus == undefined
           ? "0"
-          : defaultValues!.giveOfTellus,
+          : defaultValues!.giveOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
@@ -281,7 +281,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.giveOfFreshWater == undefined
           ? "0"
-          : defaultValues!.giveOfFreshWater,
+          : defaultValues!.giveOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -292,7 +292,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.usedOfDiesel == undefined
           ? "0"
-          : defaultValues!.usedOfDiesel,
+          : defaultValues!.usedOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
@@ -300,7 +300,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.usedOfBenzine == undefined
           ? "0"
-          : defaultValues!.usedOfBenzine,
+          : defaultValues!.usedOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -308,7 +308,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.usedOfGadinia == undefined
           ? "0"
-          : defaultValues!.usedOfGadinia,
+          : defaultValues!.usedOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -316,7 +316,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.usedOfTellus == undefined
           ? "0"
-          : defaultValues!.usedOfTellus,
+          : defaultValues!.usedOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
@@ -324,7 +324,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data:
         defaultValues!.usedOfFreshWater == undefined
           ? "0"
-          : defaultValues!.usedOfFreshWater,
+          : defaultValues!.usedOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -341,27 +341,27 @@ const PanelShowVessel = (props: AddPageProps) => {
     {
       label: "น้ำมัน ดีเซล (กล.)",
       type: "label",
-      data: totalLeftOfDiesel,
+      data: totalLeftOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
       type: "label",
-      data: totalLeftOfBenzine,
+      data: totalLeftOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
       type: "label",
-      data: totalLeftOfGadinia,
+      data: totalLeftOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
       type: "label",
-      data: totalLeftOfTellus,
+      data: totalLeftOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
       type: "label",
-      data: totalLeftOfFreshWater,
+      data: totalLeftOfFreshWater.toPrecision(3),
     },
   ];
   const bigMachineResource: DynamicInputItem[] = [

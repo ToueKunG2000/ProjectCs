@@ -1,22 +1,23 @@
 import { useRouter } from "next/router";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../../styles/AddPage.module.css";
 import { CheckLogMonthYearForm, DynamicInputItem, VesselForm } from "../common/interface";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { VesselService } from "../../services/vessel.service";
 import PopupPage from "../common/popupPage";
-import { DateRangeTwoTone } from "@mui/icons-material";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
-  defaultValues?: VesselForm;
 }
 
 const PanelReportVessel = (props: AddPageProps) => {
-  const { setPage, defaultValues } = props;
+  const { setPage } = props;
+  const dateNow = new Date();
+  const [requestForm, setRequestForm] = useState<CheckLogMonthYearForm>();
+  const [data,setData] = useState<VesselForm>();
   const [isAdd, setIsAdd] = useState(true);
   const [isShowWarning, setIsShowWarning] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
@@ -30,12 +31,12 @@ const PanelReportVessel = (props: AddPageProps) => {
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm({ defaultValues });
-  const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
-  const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState(0);
-  const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
-  const [totalLeftOfTellus, setTotalLeftOfTellus] = useState(0);
-  const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState(0);
+  } = useForm({  values: data });
+  const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState<number>(0.00);
+  const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState<number>(0.00);
+  const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState<number>(0.00);
+  const [totalLeftOfTellus, setTotalLeftOfTellus] = useState<number>(0.00);
+  const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState<number>(0.00);
   const benzineWatch = watch([
     "usedOfBenzine",
     "leftOfBenzine",
@@ -67,23 +68,32 @@ const PanelReportVessel = (props: AddPageProps) => {
     "usedOfFreshWater",
   ]);
 
-  useEffect(() => {
-    const dateNow = new Date();
-    setDateTime(
-      dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })
-    );
-    const test:CheckLogMonthYearForm = {
-      monthYear: dateTime,
-      vesId: defaultValues!.vesId
+  useMemo(()=>{
+    function configRequest(){
+      const user = JSON.parse(localStorage.getItem("user"));
+      setDateTime(
+      dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }));
+      setRequestForm({
+        monthYear:dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }),
+        vesId: user?.vesId
+      })
     }
-   const te = vesselService.checkLogMonthYear(test);
-   te.then((e) => setIsShowReport(e.data));
-    if (defaultValues?.currentPosition == 1) {
-      setIsAdd(false);
-    } else {
-      setIsAdd(true);
+    configRequest();
+  },[])
+
+  useEffect(()=>{
+    const getDataLog = async() =>{
+      await vesselService.getLogVessel(requestForm!)
+      .then((res)=>setData(res.data))
+      .catch((err) =>{
+        vesselService.getVesselInfo(requestForm!.vesId)
+        .then((res) =>setData(res.data))
+      })
     }
-  }, [dateTime]);
+    getDataLog();
+  },[requestForm])
+
+
 
   useEffect(() => {
     const total =
@@ -168,7 +178,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       label: "เครื่องปรับอากาศ",
       type: "number",
       fieldID: "airConditioner",
-      errors: ["airConditioner"],
+      errors: ["airConditioner"], 
       inputNumberProps: { disabled: isAdd },
     },
     {
@@ -232,35 +242,35 @@ const PanelReportVessel = (props: AddPageProps) => {
   const getResource: DynamicInputItem[] = [
     {
       label: "น้ำมัน ดีเซล (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "getOfDiesel",
       errors: ["getOfDiesel"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "getOfBenzine",
       errors: ["getOfBenzine"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "getOfGadinia",
       errors: ["getOfGadinia"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "getOfTellus",
       errors: ["getOfTellus"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำจืด (ตัน)",
-      type: "number",
+      type: "fraction",
       fieldID: "getOfFreshWater",
       errors: ["getOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
@@ -270,35 +280,35 @@ const PanelReportVessel = (props: AddPageProps) => {
   const giveResource: DynamicInputItem[] = [
     {
       label: "น้ำมัน ดีเซล (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "giveOfDiesel",
       errors: ["giveOfDiesel"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "giveOfBenzine",
       errors: ["giveOfBenzine"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "giveOfGadinia",
       errors: ["giveOfGadinia"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "giveOfTellus",
       errors: ["giveOfTellus"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำจืด (ตัน)",
-      type: "number",
+      type: "fraction",
       fieldID: "giveOfFreshWater",
       errors: ["giveOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
@@ -308,35 +318,35 @@ const PanelReportVessel = (props: AddPageProps) => {
   const usedResource: DynamicInputItem[] = [
     {
       label: "น้ำมัน ดีเซล (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "usedOfDiesel",
       errors: ["usedOfDiesel"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
-      type: "number",
+      type: "fraction",
       fieldID: "usedOfBenzine",
       errors: ["usedOfBenzine"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "usedOfGadinia",
       errors: ["usedOfGadinia"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
-      type: "number",
+      type: "fraction",
       fieldID: "usedOfTellus",
       errors: ["usedOfTellus"],
       inputNumberProps: { disabled: isAdd },
     },
     {
       label: "น้ำจืด (ตัน)",
-      type: "number",
+      type: "fraction",
       fieldID: "usedOfFreshWater",
       errors: ["usedOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
@@ -349,35 +359,35 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "label",
       fieldID: "leftOfDiesel",
       errors: ["leftOfDiesel"],
-      data: totalLeftOfDiesel,
+      data: totalLeftOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
       type: "label",
       fieldID: "leftOfBenzine",
       errors: ["leftOfBenzine"],
-      data: totalLeftOfBenzine,
+      data: totalLeftOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
       type: "label",
       fieldID: "leftOfGadinia",
       errors: ["leftOfGadinia"],
-      data: totalLeftOfGadinia,
+      data: totalLeftOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
       type: "label",
       fieldID: "leftOfTellus",
       errors: ["leftOfTellus"],
-      data: totalLeftOfTellus,
+      data: totalLeftOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
       type: "label",
       fieldID: "leftOfFreshWater",
       errors: ["leftOfFreshWater"],
-      data: totalLeftOfFreshWater,
+      data: totalLeftOfFreshWater.toPrecision(3),
     },
   ];
   const bigMachineResource: DynamicInputItem[] = [
@@ -403,7 +413,7 @@ const PanelReportVessel = (props: AddPageProps) => {
     <>
       <form>
         <Button icon="pi pi-out" label="ย้อนกลับ" className="p-button-danger" onClick={onGoBack} />
-        <h1> ส่งข้อมูลเรือ : {defaultValues!.vesNameTh}</h1>
+        <h1> ส่งข้อมูลเรือ : {data?.vesNameTh}</h1>
         <h1>รอบที่ {dateTime}</h1>
         <PopupPage
           setVisible={setIsShowWarning}
@@ -431,7 +441,7 @@ const PanelReportVessel = (props: AddPageProps) => {
             }}
           />
         </PopupPage>
-        { defaultValues?.counsel != undefined && <div className={styles.counsel}>
+        { data?.counsel != undefined && <div className={styles.counsel}>
           { isShowCounsel === false && 
             <Card className={styles.hidden} onClick={(e)=>setIsShowCounsel(true)}>
               <i className={"pi pi-exclamation-circle text-white text-4xl flex justify-content-center"}></i>
@@ -439,7 +449,7 @@ const PanelReportVessel = (props: AddPageProps) => {
           }
           {isShowCounsel === true && 
           <Card className={styles.show} onClick={(e)=>setIsShowCounsel(false)}>
-            <h2 className={styles.text}>เหตุผลที่ถูกตีกลับ : {defaultValues!.counsel}</h2>
+            <h2 className={styles.text}>เหตุผลที่ถูกตีกลับ : {data!.counsel}</h2>
           </Card>}
         </div>}
         <div className={styles.panel}>
@@ -447,14 +457,14 @@ const PanelReportVessel = (props: AddPageProps) => {
             <div className={styles.card}>
               <h1>ชั่วโมงการใช้งาน</h1>
               <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
-              <h1>{`จำนวน ${defaultValues!.bigMachineNum} เครื่อง`}</h1>
+              <h1>{`จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput
                 dynamicInputItems={bigMachineResource}
                 control={control}
               />
               <h1>ชั่วโมง</h1>
               <h1>{process.env.NEXT_PUBLIC_ELECTRIC_MACHINE}</h1>
-              <h1>{`จำนวน ${defaultValues!.electricMachineNum} เครื่อง`}</h1>
+              <h1>{`จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput
                 dynamicInputItems={electricMachineResource}
                 control={control}
