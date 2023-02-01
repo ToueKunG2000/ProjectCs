@@ -1,5 +1,6 @@
 package com.kaset.backendProject.controller;
 
+import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.MonthYearVesIdPayload;
 import com.kaset.backendProject.model.payload.UpdateVesselPayload;
 import com.kaset.backendProject.model.payload.Vessel;
@@ -7,6 +8,9 @@ import com.kaset.backendProject.repository.LogVesselRepository;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,19 +36,25 @@ public class VesselController {
         vesselService.resetReport(vessel);
     }
 
+    @GetMapping("/getDataVessel")
+    public TbVessels getDataVessel(@RequestParam(value = "vesId")Integer vesId){
+        return vesselService.getDataVessel(vesId);
+    }
+
     @PostMapping("/addToLog")
     public void addToTbLogVessel(@RequestBody Vessel vessel){
         vesselService.insertToTbLogVessel(vessel);
     }
 
-    @PostMapping("/checkLogMonthYear")
-    public boolean checkMonthYearLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
-        return vesselService.checkMonthYearLog(monthYearVesIdPayload);
-    }
-
-    @PostMapping("getDataLog")
-    public Vessel getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
-        return vesselService.getDataLog(monthYearVesIdPayload);
+    @PostMapping("/getDataLog")
+    public ResponseEntity<Vessel> getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
+        Vessel vessel = vesselService.getDataLog(monthYearVesIdPayload);
+        if(vessel == null){
+            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+        }
+        else{
+            return new ResponseEntity<>(vessel,HttpStatus.OK);
+        }
     }
 
 }

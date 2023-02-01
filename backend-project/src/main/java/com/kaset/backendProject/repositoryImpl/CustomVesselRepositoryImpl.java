@@ -171,7 +171,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         query.setParameter("getOfDiesel",null);
         query.setParameter("getOfGadinia",null);
         query.setParameter("getOfTellus",null);
-        query.setParameter("getOfFreshWater",vessel.getGetOfFreshWater());
+        query.setParameter("getOfFreshWater",null);
 //        ให้เรือลำอื่น
         query.setParameter("giveOfBenzine",null);
         query.setParameter("giveOfDiesel",null);

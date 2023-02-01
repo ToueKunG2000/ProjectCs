@@ -2,6 +2,7 @@ package com.kaset.backendProject.controller;
 
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.UserPayload;
+import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
 import com.kaset.backendProject.serviceimpl.UserServiceImpl;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/checkUser")
-    public ResponseEntity<List<TbVessels>> getUser(@RequestParam(value = "userId") Integer userId) {
+    public ResponseEntity<List<Vessel>> getUser(@RequestParam(value = "userId") Integer userId) {
         Integer vesId = userService.getVesselFromUserId(userId);
         if(vesId == null){
             return new ResponseEntity<>(vesselService.getAllVessel(),HttpStatus.OK);

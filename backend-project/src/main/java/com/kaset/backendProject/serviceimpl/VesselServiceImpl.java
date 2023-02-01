@@ -22,12 +22,12 @@ public class VesselServiceImpl {
     @Autowired
     private LogVesselRepository logVesselRepository;
 
-    public List<TbVessels> getVesselFromVesId(Integer vesId){
+    public List<Vessel> getVesselFromVesId(Integer vesId){
         return vesselRepository.getVesselByVesId(vesId);
     }
 
-    public List<TbVessels> getAllVessel(){
-        return vesselRepository.findAll();
+    public List<Vessel> getAllVessel(){
+        return vesselRepository.getAllVessel();
     }
 
     public void updateToTbVessel(Vessel vessel){
@@ -46,14 +46,8 @@ public class VesselServiceImpl {
         logVesselRepository.insertToTbLogVessel(vessel);
     }
 
-    public boolean checkMonthYearLog(MonthYearVesIdPayload payload){
-        List<String> monthYearList = logVesselRepository.findMonthYear(payload.getVesId());
-        if(monthYearList.contains(payload.getMonthYear())){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public TbVessels getDataVessel(Integer vesId){
+        return vesselRepository.getDataVessel(vesId);
     }
 
     public Vessel getDataLog(MonthYearVesIdPayload payload){

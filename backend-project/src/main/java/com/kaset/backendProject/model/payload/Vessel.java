@@ -40,6 +40,8 @@ public class Vessel {
     private BigDecimal leftOfBenzine;
     private BigDecimal leftOfGadinia;
     private BigDecimal leftOfTellus;
+
+    private Integer vesStatus;
     private BigDecimal leftOfFreshWater;
     private BigDecimal usedOfDiesel;
     private BigDecimal usedOfBenzine;
@@ -48,6 +50,13 @@ public class Vessel {
     private BigDecimal usedOfFreshWater;
 
     public Vessel() {
+    }
+
+    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, Integer vesStatus) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.currentPosition = currentPosition;
+        this.vesStatus = vesStatus;
     }
 
     public Vessel(String vesNameTh, Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, String monthYear, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater) {

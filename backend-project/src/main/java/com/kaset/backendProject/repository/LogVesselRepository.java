@@ -14,8 +14,6 @@ import java.util.List;
 @Repository
 public interface LogVesselRepository extends JpaRepository<TbLogVessels, Integer>, CustomLogVesselRepository {
 
-    @Query(nativeQuery = true)
-    List<String> findMonthYear(@Param(value = "vesId")Integer vesId);
 
     @Query(nativeQuery = true)
     Vessel getDataLog(@Param(value = "vesId")Integer vesId, @Param(value = "monthYear")String monthYear);

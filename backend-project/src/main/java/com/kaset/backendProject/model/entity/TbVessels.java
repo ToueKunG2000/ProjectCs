@@ -1,11 +1,13 @@
 package com.kaset.backendProject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.*;
 import lombok.Data;
 
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -13,125 +15,147 @@ import java.util.Objects;
 @Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "TB_VESSELS", schema = "dbo", catalog = "Navsho")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "TbVessels.getVesselByVesId",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status FROM TB_VESSELS WHERE ves_id = :vesId",
+                resultSetMapping = "VesselDisplay"
+        ),
+        @NamedNativeQuery(
+                name = "TbVessels.getAllVessel",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status FROM TB_VESSELS ",
+                resultSetMapping = "VesselDisplay"
+        )
+})
+@SqlResultSetMappings(
+        {@SqlResultSetMapping(name = "VesselDisplay",classes = {
+                @ConstructorResult(targetClass = Vessel.class, columns = {
+                        @ColumnResult(name = "ves_id"),
+                        @ColumnResult(name = "ves_name_th"),
+                        @ColumnResult(name = "current_position"),
+                        @ColumnResult(name = "ves_status")
+                })
+        })}
+)
 public class TbVessels implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ves_id", nullable = false)
+    @Column(name = "ves_id")
     private int vesId;
     @Basic
-    @Column(name = "ves_name_th", nullable = true, length = 20)
+    @Column(name = "ves_name_th")
     private String vesNameTh;
     @Basic
-    @Column(name = "big_machine_num", nullable = true)
+    @Column(name = "big_machine_num")
     private Integer bigMachineNum;
     @Basic
-    @Column(name = "electric_machine_num", nullable = true)
+    @Column(name = "electric_machine_num")
     private Integer electricMachineNum;
     @Basic
-    @Column(name = "big_machine_used", nullable = true)
+    @Column(name = "big_machine_used")
     private Integer bigMachineUsed;
     @Basic
-    @Column(name = "electric_machine_used", nullable = true)
+    @Column(name = "electric_machine_used")
     private Integer electricMachineUsed;
     @Basic
-    @Column(name = "air_conditioner", nullable = true)
+    @Column(name = "air_conditioner")
     private Integer airConditioner;
     @Basic
-    @Column(name = "air_compressor", nullable = true)
+    @Column(name = "air_compressor")
     private Integer airCompressor;
     @Basic
-    @Column(name = "freezer", nullable = true)
+    @Column(name = "freezer")
     private Integer freezer;
     @Basic
-    @Column(name = "ship_engine", nullable = true)
+    @Column(name = "ship_engine")
     private Integer shipEngine;
     @Basic
-    @Column(name = "pump", nullable = true)
+    @Column(name = "pump")
     private Integer pump;
     @Basic
-    @Column(name = "rudder", nullable = true)
+    @Column(name = "rudder")
     private Integer rudder;
     @Basic
-    @Column(name = "water_purifier", nullable = true)
+    @Column(name = "water_purifier")
     private Integer waterPurifier;
     @Basic
-    @Column(name = "diesel_oil_separator", nullable = true)
+    @Column(name = "diesel_oil_separator")
     private Integer dieselOilSeparator;
     @Basic
-    @Column(name = "gear", nullable = true)
+    @Column(name = "gear")
     private Integer gear;
     @Basic
-    @Column(name = "get_of_diesel", nullable = true, precision = 0)
-    private BigInteger getOfDiesel;
+    @Column(name = "get_of_diesel")
+    private BigDecimal getOfDiesel;
     @Basic
-    @Column(name = "get_of_benzine", nullable = true, precision = 0)
-    private BigInteger getOfBenzine;
+    @Column(name = "get_of_benzine")
+    private BigDecimal getOfBenzine;
     @Basic
-    @Column(name = "get_of_gadinia", nullable = true, precision = 0)
-    private BigInteger getOfGadinia;
+    @Column(name = "get_of_gadinia")
+    private BigDecimal getOfGadinia;
     @Basic
-    @Column(name = "get_of_tellus", nullable = true, precision = 0)
-    private BigInteger getOfTellus;
+    @Column(name = "get_of_tellus")
+    private BigDecimal getOfTellus;
     @Basic
-    @Column(name = "get_of_fresh_water", nullable = true, precision = 0)
-    private BigInteger getOfFreshWater;
+    @Column(name = "get_of_fresh_water")
+    private BigDecimal getOfFreshWater;
     @Basic
-    @Column(name = "give_of_diesel", nullable = true, precision = 0)
-    private BigInteger giveOfDiesel;
+    @Column(name = "give_of_diesel")
+    private BigDecimal giveOfDiesel;
     @Basic
-    @Column(name = "give_of_benzine", nullable = true, precision = 0)
-    private BigInteger giveOfBenzine;
+    @Column(name = "give_of_benzine")
+    private BigDecimal giveOfBenzine;
     @Basic
-    @Column(name = "give_of_gadinia", nullable = true, precision = 0)
-    private BigInteger giveOfGadinia;
+    @Column(name = "give_of_gadinia")
+    private BigDecimal giveOfGadinia;
     @Basic
-    @Column(name = "give_of_tellus", nullable = true, precision = 0)
-    private BigInteger giveOfTellus;
+    @Column(name = "give_of_tellus")
+    private BigDecimal giveOfTellus;
     @Basic
-    @Column(name = "give_of_fresh_water", nullable = true, precision = 0)
-    private BigInteger giveOfFreshWater;
+    @Column(name = "give_of_fresh_water")
+    private BigDecimal giveOfFreshWater;
     @Basic
-    @Column(name = "month_year", nullable = true, length = 20)
+    @Column(name = "month_year")
     private String monthYear;
     @Basic
-    @Column(name = "counsel", nullable = true, length = 255)
+    @Column(name = "counsel")
     private String counsel;
     @Basic
-    @Column(name = "current_position", nullable = true)
+    @Column(name = "current_position")
     private Integer currentPosition;
     @Basic
-    @Column(name = "ves_status", nullable = true)
+    @Column(name = "ves_status")
     private Integer vesStatus;
     @Basic
-    @Column(name = "used_of_diesel", nullable = true, precision = 0)
-    private BigInteger usedOfDiesel;
+    @Column(name = "used_of_diesel")
+    private BigDecimal usedOfDiesel;
     @Basic
-    @Column(name = "used_of_benzine", nullable = true, precision = 0)
-    private BigInteger usedOfBenzine;
+    @Column(name = "used_of_benzine")
+    private BigDecimal usedOfBenzine;
     @Basic
-    @Column(name = "used_of_gadinia", nullable = true, precision = 0)
-    private BigInteger usedOfGadinia;
+    @Column(name = "used_of_gadinia")
+    private BigDecimal usedOfGadinia;
     @Basic
-    @Column(name = "used_of_tellus", nullable = true, precision = 0)
-    private BigInteger usedOfTellus;
+    @Column(name = "used_of_tellus")
+    private BigDecimal usedOfTellus;
     @Basic
-    @Column(name = "used_of_fresh_water", nullable = true, precision = 0)
-    private BigInteger usedOfFreshWater;
+    @Column(name = "used_of_fresh_water")
+    private BigDecimal usedOfFreshWater;
     @Basic
-    @Column(name = "left_of_diesel", precision = 0)
-    private BigInteger leftOfDiesel;
+    @Column(name = "left_of_diesel")
+    private BigDecimal leftOfDiesel;
     @Basic
-    @Column(name = "left_of_benzine", precision = 0)
-    private BigInteger leftOfBenzine;
+    @Column(name = "left_of_benzine")
+    private BigDecimal leftOfBenzine;
     @Basic
-    @Column(name = "left_of_gadinia", precision = 0)
-    private BigInteger leftOfGadinia;
+    @Column(name = "left_of_gadinia")
+    private BigDecimal leftOfGadinia;
     @Basic
-    @Column(name = "left_of_tellus", precision = 0)
-    private BigInteger leftOfTellus;
+    @Column(name = "left_of_tellus")
+    private BigDecimal leftOfTellus;
     @Basic
-    @Column(name = "left_of_fresh_water", precision = 0)
-    private BigInteger leftOfFreshWater;
+    @Column(name = "left_of_fresh_water")
+    private BigDecimal leftOfFreshWater;
 
     @Override
     public boolean equals(Object o) {
