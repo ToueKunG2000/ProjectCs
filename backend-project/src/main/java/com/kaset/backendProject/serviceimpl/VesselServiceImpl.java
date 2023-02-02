@@ -53,4 +53,8 @@ public class VesselServiceImpl {
     public Vessel getDataLog(MonthYearVesIdPayload payload){
         return logVesselRepository.getDataLog(payload.getVesId(), payload.getMonthYear());
     }
+
+    public List<Integer> checkMonthYear(String monthYear){
+        return logVesselRepository.checkMonthLog(monthYear);
+    }
 }

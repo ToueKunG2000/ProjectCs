@@ -52,10 +52,12 @@ public class Vessel {
     public Vessel() {
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, Integer vesStatus) {
+    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, Integer vesStatus) {
         this.vesId = vesId;
         this.vesNameTh = vesNameTh;
         this.currentPosition = currentPosition;
+        this.monthYear = monthYear;
+        this.counsel = counsel;
         this.vesStatus = vesStatus;
     }
 

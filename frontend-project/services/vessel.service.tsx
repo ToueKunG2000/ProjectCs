@@ -54,6 +54,13 @@ export class VesselService {
     return res;
   }
 
+  async checkMonthYear(monthYear: string){
+    const res = await instance.get("/checkMonthYear",{
+      params: {monthYear: monthYear},
+    });
+    return res;
+  }
+
   async getLogVessel(request: CheckLogMonthYearForm){
     return await instance<VesselForm>({
       method: "post",

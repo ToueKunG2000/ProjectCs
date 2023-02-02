@@ -135,7 +135,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " air_conditioner = :airConditioner, big_machine_used = :bigMachineUsed, "+
                 " current_position = :currentPosition, diesel_oil_separator = :dieselOilSeparator, "+
                 " gear = :gear, pump = :pump, rudder = :rudder, freezer = :freezer, "+
-                " month_year = :monthYear, "+
+                " month_year = :monthYear, counsel = :counsel, "+
                 " electric_machine_used = :electricMachineUsed, "+
                 " water_purifier = :waterPurifier, ship_engine = :shipEngine,"+
                 " get_of_benzine = :getOfBenzine, get_of_diesel = :getOfDiesel, "+
@@ -154,36 +154,37 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         query.setParameter("vesId",vessel.getVesId());
         query.setParameter("monthYear",null);
         query.setParameter("currentPosition",1);
-        query.setParameter("electricMachineUsed",null);
-        query.setParameter("bigMachineUsed",null);
+        query.setParameter("electricMachineUsed",0);
+        query.setParameter("bigMachineUsed",0);
+        query.setParameter("counsel",null);
 
-        query.setParameter("airCompressor",null);
-        query.setParameter("airConditioner",null);
-        query.setParameter("waterPurifier",null);
-        query.setParameter("shipEngine",null);
-        query.setParameter("dieselOilSeparator",null);
-        query.setParameter("pump",null);
-        query.setParameter("gear",null);
-        query.setParameter("freezer",null);
-        query.setParameter("rudder",null);
+        query.setParameter("airCompressor",0);
+        query.setParameter("airConditioner",0);
+        query.setParameter("waterPurifier",0);
+        query.setParameter("shipEngine",0);
+        query.setParameter("dieselOilSeparator",0);
+        query.setParameter("pump",0);
+        query.setParameter("gear",0);
+        query.setParameter("freezer",0);
+        query.setParameter("rudder",0);
 //        รับมาจากฝั่ง
-        query.setParameter("getOfBenzine",null);
-        query.setParameter("getOfDiesel",null);
-        query.setParameter("getOfGadinia",null);
-        query.setParameter("getOfTellus",null);
-        query.setParameter("getOfFreshWater",null);
+        query.setParameter("getOfBenzine",0);
+        query.setParameter("getOfDiesel",0);
+        query.setParameter("getOfGadinia",0);
+        query.setParameter("getOfTellus",0);
+        query.setParameter("getOfFreshWater",0);
 //        ให้เรือลำอื่น
-        query.setParameter("giveOfBenzine",null);
-        query.setParameter("giveOfDiesel",null);
-        query.setParameter("giveOfGadinir",null);
-        query.setParameter("giveOfTellus",null);
-        query.setParameter("giveOfFreshWater",null);
+        query.setParameter("giveOfBenzine",0);
+        query.setParameter("giveOfDiesel",0);
+        query.setParameter("giveOfGadinir",0);
+        query.setParameter("giveOfTellus",0);
+        query.setParameter("giveOfFreshWater",0);
 //        ใช้ไป
-        query.setParameter("usedOfBenzine",null);
-        query.setParameter("usedOfDiesel",null);
-        query.setParameter("usedOfGadinia",null);
-        query.setParameter("usedOfTellus",null);
-        query.setParameter("usedOfFreshWater",null);
+        query.setParameter("usedOfBenzine",0);
+        query.setParameter("usedOfDiesel",0);
+        query.setParameter("usedOfGadinia",0);
+        query.setParameter("usedOfTellus",0);
+        query.setParameter("usedOfFreshWater",0);
 
         query.setParameter("leftOfBenzine",vessel.getLeftOfBenzine());
         query.setParameter("leftOfDiesel",vessel.getLeftOfDiesel());

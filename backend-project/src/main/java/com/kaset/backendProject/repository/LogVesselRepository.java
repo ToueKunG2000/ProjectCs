@@ -16,5 +16,8 @@ public interface LogVesselRepository extends JpaRepository<TbLogVessels, Integer
 
 
     @Query(nativeQuery = true)
+    List<Integer> checkMonthLog(@Param(value = "monthYear")String monthYear);
+
+    @Query(nativeQuery = true)
     Vessel getDataLog(@Param(value = "vesId")Integer vesId, @Param(value = "monthYear")String monthYear);
 }

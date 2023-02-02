@@ -30,6 +30,11 @@ import java.util.Objects;
                         ",used_of_gadinia, used_of_tellus, used_of_fresh_water" +
                         "  FROM TB_LOG_VESSELS" +
                         " WHERE ves_id = :vesId AND month_year LIKE :monthYear "
+            ),
+            @NamedNativeQuery(
+                    name = "TbLogVessels.checkMonthLog",
+                    query = " SELECT ves_id FROM TB_LOG_VESSELS WHERE month_year LIKE :monthYear",
+                    resultSetMapping = "GetVesId"
             )
 
     }
@@ -74,6 +79,9 @@ import java.util.Objects;
                     @ColumnResult(name = "used_of_fresh_water",type = BigDecimal.class),
 
             })
+    }),
+    @SqlResultSetMapping(name = "GetVesId", columns = {
+            @ColumnResult(name = "ves_id",type = Integer.class),
     })
 })
 public class TbLogVessels implements Serializable {

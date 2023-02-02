@@ -1,22 +1,46 @@
 import { Panel } from 'primereact/panel';
 import { TabView, TabPanel } from 'primereact/tabview';
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
+import { SetStateAction } from "react";
 
 interface PanelProps{
     children?:React.ReactNode;
-    header?:string;
+    positionId:number;
+    activeIndex: number;
+    setActiveIndex: Dispatch<SetStateAction<number>>;
 }
 
 const HomepagePanelShow = (props: PanelProps) => {
-    const [activeIndex, setActiveIndex] = useState(0);
-    const {children, header} = props;
+    const {children, positionId, activeIndex, setActiveIndex}   = props;
     return (
         <>
+            { (positionId == 1 || positionId == 2 || positionId == 3) && 
+            <>
             <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
-                <TabPanel header={header}>
+                <TabPanel header={"เรือที่กรอก"}>
                     {children}
                 </TabPanel>
             </TabView>
+            </> 
+            }
+            { (positionId == 4 || positionId == 5) && 
+            <>
+            <TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+                <TabPanel header={"ทั้งหมด"}>
+                    {children}
+                </TabPanel>
+                <TabPanel header={"ยังไม่ดำเนินการ"}>
+                    {children}
+                </TabPanel>
+                <TabPanel header={"กำลังดำเนินการ"}>
+                    {children}
+                </TabPanel>
+                <TabPanel header={"สำเร็จ"}>
+                    {children}
+                </TabPanel>
+            </TabView>
+            </>
+            }
         </>
     )
 }

@@ -18,13 +18,14 @@ import java.util.Objects;
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "TbVessels.getVesselByVesId",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status FROM TB_VESSELS WHERE ves_id = :vesId",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel FROM TB_VESSELS WHERE ves_id = :vesId",
                 resultSetMapping = "VesselDisplay"
         ),
         @NamedNativeQuery(
                 name = "TbVessels.getAllVessel",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status FROM TB_VESSELS ",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel FROM TB_VESSELS ",
                 resultSetMapping = "VesselDisplay"
+
         )
 })
 @SqlResultSetMappings(
@@ -33,7 +34,9 @@ import java.util.Objects;
                         @ColumnResult(name = "ves_id"),
                         @ColumnResult(name = "ves_name_th"),
                         @ColumnResult(name = "current_position"),
-                        @ColumnResult(name = "ves_status")
+                        @ColumnResult(name = "month_year"),
+                        @ColumnResult(name = "counsel"),
+                        @ColumnResult(name = "ves_status"),
                 })
         })}
 )

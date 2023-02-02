@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @Log4j2
 @RequestMapping("/api/v1")
@@ -55,6 +57,12 @@ public class VesselController {
         else{
             return new ResponseEntity<>(vessel,HttpStatus.OK);
         }
+    }
+
+
+    @GetMapping("/checkMonthYear")
+    public List<Integer> checkMonthYear(@RequestParam(name = "monthYear")String monthYear){
+        return vesselService.checkMonthYear(monthYear);
     }
 
 }

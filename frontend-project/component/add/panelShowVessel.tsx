@@ -1,10 +1,15 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { VesselService } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
-import { DynamicInputItem, UserForm, VesselForm } from "../common/interface";
+import {
+  CheckLogMonthYearForm,
+  DynamicInputItem,
+  UserForm,
+  VesselForm,
+} from "../common/interface";
 import styles from "../../styles/AddPage.module.css";
 import { UpdateForm } from "./../common/interface";
 import PopupPage from "./../common/popupPage";
@@ -12,15 +17,19 @@ import { useForm } from "react-hook-form";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
-  defaultValues?: VesselForm;
+  vesselSelected: number;
 }
 
 const PanelShowVessel = (props: AddPageProps) => {
-  const { setPage, defaultValues } = props;
+  const { setPage, vesselSelected } = props;
+  const dateNow = new Date();
+  const [requestForm, setRequestForm] = useState<CheckLogMonthYearForm>();
+  const [data, setData] = useState<VesselForm>();
   const [isShowButton, setIsShowButton] = useState(false);
   const [isShowPopup, setIsShowPopup] = useState(false);
   const vesselService = new VesselService();
   const [user, setUser] = useState<UserForm>();
+  const [isFetch, setIsFetch] = useState(false);
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
   const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState(0);
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
@@ -34,70 +43,67 @@ const PanelShowVessel = (props: AddPageProps) => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    const total =
-      defaultValues!.getOfBenzine +
-      defaultValues!.leftOfBenzine -
-      defaultValues!.giveOfBenzine -
-      defaultValues!.usedOfBenzine;
-    setTotalLeftOfBenzine(total);
-  }, []);
-
-  useEffect(() => {
-    const total =
-      defaultValues!.getOfDiesel +
-      defaultValues!.leftOfDiesel -
-      defaultValues!.giveOfDiesel -
-      defaultValues!.usedOfDiesel;
-    setTotalLeftOfDiesel(total);
-  }, []);
-
-  useEffect(() => {
-    const total =
-      defaultValues!.getOfGadinia +
-      defaultValues!.leftOfGadinia -
-      defaultValues!.usedOfGadinia -
-      defaultValues!.giveOfGadinia;
-    setTotalLeftOfGadinia(total);
-  }, []);
-
-  useEffect(() => {
-    const total =
-      defaultValues!.getOfTellus +
-      defaultValues!.leftOfTellus -
-      defaultValues!.usedOfTellus -
-      defaultValues!.giveOfTellus;
-    setTotalLeftOfTellus(total);
-  }, []);
-
-  useEffect(() => {
-    const total =
-      defaultValues!.getOfFreshWater +
-      defaultValues!.leftOfFreshWater -
-      defaultValues!.usedOfFreshWater -
-      defaultValues!.giveOfFreshWater;
-    setTotalLeftOfFreshWater(total);
-  }, []);
-
-  useEffect(() => {
-    const user: UserForm = JSON.parse(localStorage.getItem("user"));
-    setUser(user);
-    if (user.positionId == defaultValues?.currentPosition) {
-      setIsShowButton(true);
+  useMemo(() => {
+    function configRequest() {
+      const user = JSON.parse(localStorage.getItem("user"));
+      setUser(user);
+      setRequestForm({
+        monthYear: dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }),
+        vesId: vesselSelected,
+      });
     }
+    configRequest();
   }, []);
+
+  useEffect(() => { 
+    const getDataLog = async () => {
+      await vesselService
+        .getLogVessel(requestForm!)
+        .then((res) => {
+          setData(res.data);
+          setIsFetch(true);
+        })
+        .catch((err) => {
+          vesselService.getVesselInfo(requestForm!.vesId).then((res) => {
+            setData(res.data);
+            setIsFetch(true);
+          });
+        });
+    };
+    getDataLog();
+  }, [requestForm]);
+
+  useEffect(()=>{
+    const setDataTotal = () => {
+      setTotalLeftOfBenzine(data?.leftOfBenzine + data?.getOfBenzine - data?.giveOfBenzine - data?.usedOfBenzine)
+      setTotalLeftOfDiesel(data?.leftOfDiesel + data?.getOfDiesel - data?.giveOfDiesel - data?.usedOfDiesel)
+      setTotalLeftOfTellus(data?.leftOfTellus + data?.getOfTellus - data?.giveOfTellus - data?.usedOfTellus )
+      setTotalLeftOfGadinia(data?.leftOfGadinia + data?.getOfGadinia - data?.giveOfGadinia - data?.usedOfGadinia )
+      setTotalLeftOfFreshWater(data?.leftOfFreshWater + data?.getOfFreshWater - data?.giveOfFreshWater - data?.usedOfFreshWater )
+      if(data?.currentPosition == user?.positionId){
+        setIsShowButton(true);
+      }
+      else{
+        setIsShowButton(false);
+      }
+    }
+
+    setDataTotal();
+
+  },[isFetch])
+
 
   const onGoBack = () => {
     setPage(1);
   };
 
   const onSubmitForm = (e: any) => {
-    const data: UpdateForm = {
+    const request: UpdateForm = {
       counsel: e.counsel,
       currentPosition: 1,
-      vesId: defaultValues!.vesId,
+      vesId: data!.vesId,
     };
-    vesselService.updateReport(data);
+    vesselService.updateReport(request);
     window.location.reload();
   };
 
@@ -108,30 +114,30 @@ const PanelShowVessel = (props: AddPageProps) => {
 
   const UpdateApprove = (e: any) => {
     e.preventDefault();
-    if (user!.positionId == 5) {
-      defaultValues!.leftOfBenzine = totalLeftOfBenzine;
-      defaultValues!.leftOfDiesel = totalLeftOfDiesel;
-      defaultValues!.leftOfGadinia = totalLeftOfGadinia;
-      defaultValues!.leftOfTellus = totalLeftOfTellus;
-      defaultValues!.leftOfFreshWater = totalLeftOfFreshWater;
-      vesselService.addToLogVessel(defaultValues!);
-      vesselService.resetReport(defaultValues!);
+    if (user?.positionId == 5) {
+      data!.leftOfBenzine = totalLeftOfBenzine;
+      data!.leftOfDiesel = totalLeftOfDiesel;
+      data!.leftOfGadinia = totalLeftOfGadinia;
+      data!.leftOfTellus = totalLeftOfTellus;
+      data!.leftOfFreshWater = totalLeftOfFreshWater;
+      vesselService.addToLogVessel(data!);
+      vesselService.resetReport(data!);
       window.location.reload();
-    } else if (user!.positionId == 4) {
-      const data: UpdateForm = {
+    } else if (user?.positionId == 4) {
+      const request: UpdateForm = {
         counsel: undefined,
-        currentPosition: user!.positionId + 1,
-        vesId: defaultValues!.vesId,
+        currentPosition: user?.positionId + 1,
+        vesId: vesselSelected,
       };
-      vesselService.updateReport(data);
+      vesselService.updateReport(request);
       window.location.reload();
     } else {
-      const data: UpdateForm = {
+      const request: UpdateForm = {
         counsel: undefined,
-        currentPosition: user!.positionId + 1,
-        vesId: user!.vesId,
+        currentPosition: user?.positionId + 1,
+        vesId: vesselSelected,
       };
-      vesselService.updateReport(data);
+      vesselService.updateReport(request);
       window.location.reload();
     }
   };
@@ -140,62 +146,48 @@ const PanelShowVessel = (props: AddPageProps) => {
     {
       label: "เครื่องปรับอากาศ",
       type: "label",
-      data:
-        defaultValues!.airConditioner == undefined
-          ? "0"
-          : defaultValues!.airConditioner,
+      data: data?.airConditioner == undefined ? "0" : data?.airConditioner,
     },
     {
       label: "เครื่องอัดลม",
       type: "label",
-      data:
-        defaultValues!.airCompressor == undefined
-          ? "0"
-          : defaultValues!.airCompressor,
+      data: data?.airCompressor == undefined ? "0" : data?.airCompressor,
     },
     {
       label: "เครื่องทำความเย็น",
       type: "label",
-      data: defaultValues!.freezer == undefined ? "0" : defaultValues!.freezer,
+      data: data?.freezer == undefined ? "0" : data?.freezer,
     },
     {
       label: "เครื่องเรือยนต์",
       type: "label",
-      data:
-        defaultValues!.shipEngine == undefined
-          ? "0"
-          : defaultValues!.shipEngine,
+      data: data?.shipEngine == undefined ? "0" : data?.shipEngine,
     },
     {
       label: "เครื่องสูบน้ำเคลื่อนที่",
       type: "label",
-      data: defaultValues!.pump == undefined ? "0" : defaultValues!.pump,
+      data: data?.pump == undefined ? "0" : data?.pump,
     },
     {
       label: "หางเสือ",
       type: "label",
-      data: defaultValues!.rudder == undefined ? "0" : defaultValues!.rudder,
+      data: data?.rudder == undefined ? "0" : data?.rudder,
     },
     {
       label: "เครื่องกลั่นน้ำ",
       type: "label",
-      data:
-        defaultValues!.waterPurifier == undefined
-          ? "0"
-          : defaultValues!.waterPurifier,
+      data: data?.waterPurifier == undefined ? "0" : data?.waterPurifier,
     },
     {
       label: "เครื่องแยกน้ำมันดีเซล",
       type: "label",
       data:
-        defaultValues!.dieselOilSeparator == undefined
-          ? "0"
-          : defaultValues!.dieselOilSeparator,
+        data?.dieselOilSeparator == undefined ? "0" : data?.dieselOilSeparator,
     },
     {
       label: "เกียร์",
       type: "label",
-      data: defaultValues!.gear == undefined ? "0" : defaultValues!.gear,
+      data: data?.gear == undefined ? "0" : data?.gear,
     },
   ];
 
@@ -204,41 +196,37 @@ const PanelShowVessel = (props: AddPageProps) => {
       label: "น้ำมัน ดีเซล (กล.)",
       type: "label",
       data:
-        defaultValues!.getOfDiesel == undefined
-          ? "0"
-          : defaultValues!.getOfDiesel.toPrecision(3),
+        data?.getOfDiesel == undefined ? "0" : data?.getOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
       type: "label",
       data:
-        defaultValues!.getOfBenzine == undefined
+        data?.getOfBenzine == undefined
           ? "0"
-          : defaultValues!.getOfBenzine.toPrecision(3),
+          : data?.getOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.getOfGadinia == undefined
+        data?.getOfGadinia == undefined
           ? "0"
-          : defaultValues!.getOfGadinia.toPrecision(3),
+          : data?.getOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.getOfTellus == undefined
-          ? "0"
-          : defaultValues!.getOfTellus.toPrecision(3),
+        data?.getOfTellus == undefined ? "0" : data?.getOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
       type: "label",
       data:
-        defaultValues!.getOfFreshWater == undefined
+        data?.getOfFreshWater == undefined
           ? "0"
-          : defaultValues!.getOfFreshWater.toPrecision(3),
+          : data?.getOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -247,41 +235,41 @@ const PanelShowVessel = (props: AddPageProps) => {
       label: "น้ำมัน ดีเซล (กล.)",
       type: "label",
       data:
-        defaultValues!.giveOfDiesel == undefined
+        data?.giveOfDiesel == undefined
           ? "0"
-          : defaultValues!.giveOfDiesel.toPrecision(3),
+          : data?.giveOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
       type: "label",
       data:
-        defaultValues!.giveOfBenzine == undefined
+        data?.giveOfBenzine == undefined
           ? "0"
-          : defaultValues!.giveOfBenzine.toPrecision(3),
+          : data?.giveOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.giveOfGadinia == undefined
+        data?.giveOfGadinia == undefined
           ? "0"
-          : defaultValues!.giveOfGadinia.toPrecision(3),
+          : data?.giveOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.giveOfTellus == undefined
+        data?.giveOfTellus == undefined
           ? "0"
-          : defaultValues!.giveOfTellus.toPrecision(3),
+          : data?.giveOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
       type: "label",
       data:
-        defaultValues!.giveOfFreshWater == undefined
+        data?.giveOfFreshWater == undefined
           ? "0"
-          : defaultValues!.giveOfFreshWater.toPrecision(3),
+          : data?.giveOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -290,41 +278,41 @@ const PanelShowVessel = (props: AddPageProps) => {
       label: "น้ำมัน ดีเซล (กล.)",
       type: "label",
       data:
-        defaultValues!.usedOfDiesel == undefined
+        data?.usedOfDiesel == undefined
           ? "0"
-          : defaultValues!.usedOfDiesel.toPrecision(3),
+          : data?.usedOfDiesel.toPrecision(3),
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
       type: "label",
       data:
-        defaultValues!.usedOfBenzine == undefined
+        data?.usedOfBenzine == undefined
           ? "0"
-          : defaultValues!.usedOfBenzine.toPrecision(3),
+          : data?.usedOfBenzine.toPrecision(3),
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.usedOfGadinia == undefined
+        data?.usedOfGadinia == undefined
           ? "0"
-          : defaultValues!.usedOfGadinia.toPrecision(3),
+          : data?.usedOfGadinia.toPrecision(3),
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
       type: "label",
       data:
-        defaultValues!.usedOfTellus == undefined
+        data?.usedOfTellus == undefined
           ? "0"
-          : defaultValues!.usedOfTellus.toPrecision(3),
+          : data?.usedOfTellus.toPrecision(3),
     },
     {
       label: "น้ำจืด (ตัน)",
       type: "label",
       data:
-        defaultValues!.usedOfFreshWater == undefined
+        data?.usedOfFreshWater == undefined
           ? "0"
-          : defaultValues!.usedOfFreshWater.toPrecision(3),
+          : data?.usedOfFreshWater.toPrecision(3),
     },
   ];
 
@@ -368,10 +356,7 @@ const PanelShowVessel = (props: AddPageProps) => {
     {
       inputClassName: "center",
       type: "label",
-      data:
-        defaultValues!.bigMachineUsed == undefined
-          ? "0"
-          : defaultValues!.bigMachineUsed,
+      data: data?.bigMachineUsed == undefined ? "0" : data?.bigMachineUsed,
     },
   ];
   const electricMachineResource: DynamicInputItem[] = [
@@ -379,9 +364,9 @@ const PanelShowVessel = (props: AddPageProps) => {
       inputClassName: "center",
       type: "label",
       data:
-        defaultValues!.electricMachineUsed == undefined
+        data?.electricMachineUsed == undefined
           ? "0"
-          : defaultValues!.electricMachineUsed,
+          : data?.electricMachineUsed,
     },
   ];
 
@@ -414,18 +399,18 @@ const PanelShowVessel = (props: AddPageProps) => {
           className="p-button-danger"
           onClick={onGoBack}
         />
-        <h1> ส่งข้อมูลเรือ : {defaultValues!.vesNameTh}</h1>
-        <h1>รอบที่ {defaultValues!.monthYear}</h1>
+        <h1> ส่งข้อมูลเรือ : {data?.vesNameTh}</h1>
+        <h1>รอบที่ {data?.monthYear}</h1>
         <div className={styles.panel}>
           <Card>
             <div className={styles.card}>
               <h1>ชั่วโมงการใช้งาน</h1>
               <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
-              <h1>{`จำนวน ${defaultValues!.bigMachineNum} เครื่อง`}</h1>
+              <h1>{`จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput dynamicInputItems={bigMachineResource} />
               <h1>ชั่วโมง</h1>
               <h1>{process.env.NEXT_PUBLIC_ELECTRIC_MACHINE}</h1>
-              <h1>{`จำนวน ${defaultValues!.electricMachineNum} เครื่อง`}</h1>
+              <h1>{`จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput
                 dynamicInputItems={electricMachineResource}
               />
@@ -469,7 +454,7 @@ const PanelShowVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        {isShowButton == true && (
+        {isShowButton && (
           <div className="flex justify-content-center">
             <Button
               label="ส่งต่อ"

@@ -87,7 +87,7 @@ export interface VesselForm {
   giveOfBenzine: number;
   giveOfGadinia: number;
   giveOfTellus: number;
-  giveOfFreshWater: number;
+  giveOfFreshWater?: number;
   monthYear: string;
   counsel?: string;
   currentPosition: number;
@@ -95,10 +95,11 @@ export interface VesselForm {
   usedOfBenzine: number;
   usedOfGadinia: number;
   usedOfTellus: number;
-  usedOfFreshWater: number;
-  leftOfDiesel: number;
-  leftOfBenzine: number;
-  leftOfGadinia: number;
-  leftOfTellus: number;
+  usedOfFreshWater: number ;
+  leftOfDiesel: number ;
+  leftOfBenzine: number ;
+  leftOfGadinia: number ;
+  leftOfTellus: number ;
   leftOfFreshWater: number;
+  vesStatus: number;
 }

@@ -21,9 +21,10 @@ const InputNumberField = (props: NumberInputProps) => {
         rules={rules}
         render={({ field, fieldState }) => (
           <InputNumber
-            value={field.value==null ? 0:field.value}
+            value={field.value === null ? 0 : field.value}
             onValueChange={(e) => field.onChange(e.value)}
             minFractionDigits={0}
+            min={0}
             maxLength={7}
             maxFractionDigits={fraction}
             {...inputNumberProps}

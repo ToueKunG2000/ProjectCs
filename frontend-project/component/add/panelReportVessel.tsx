@@ -4,39 +4,47 @@ import { Card } from "primereact/card";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../../styles/AddPage.module.css";
-import { CheckLogMonthYearForm, DynamicInputItem, VesselForm } from "../common/interface";
+import {
+  CheckLogMonthYearForm,
+  DynamicInputItem,
+  VesselForm,
+} from "../common/interface";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { VesselService } from "../../services/vessel.service";
 import PopupPage from "../common/popupPage";
 
 interface AddPageProps {
   setPage: Dispatch<SetStateAction<number>>;
+  vesselSelected: number;
 }
 
 const PanelReportVessel = (props: AddPageProps) => {
-  const { setPage } = props;
+  const { setPage, vesselSelected } = props;
   const dateNow = new Date();
   const [requestForm, setRequestForm] = useState<CheckLogMonthYearForm>();
-  const [data,setData] = useState<VesselForm>();
-  const [isAdd, setIsAdd] = useState(true);
+  const [data, setData] = useState<VesselForm>();
+  const [isAdd, setIsAdd] = useState(false);
   const [isShowWarning, setIsShowWarning] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [dateTime, setDateTime] = useState("");
   const vesselService = new VesselService();
+  const [isFetch, setIsFetch] = useState(false);
   const [isShowCounsel, setIsShowCounsel] = useState(false);
-  const [isShowReport, setIsShowReport] = useState(false);
   const {
     control,
     watch,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
-  } = useForm({  values: data });
-  const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState<number>(0.00);
-  const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState<number>(0.00);
-  const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState<number>(0.00);
-  const [totalLeftOfTellus, setTotalLeftOfTellus] = useState<number>(0.00);
-  const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState<number>(0.00);
+    reset,
+  } = useForm<VesselForm>({ defaultValues: {airCompressor:1, airConditioner:1},values: data  });
+  const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState<number>(0.0);
+  const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState<number>(0.0);
+  const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState<number>(0.0);
+  const [totalLeftOfTellus, setTotalLeftOfTellus] = useState<number>(0.0);
+  const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] =
+    useState<number>(0.0);
   const benzineWatch = watch([
     "usedOfBenzine",
     "leftOfBenzine",
@@ -68,32 +76,53 @@ const PanelReportVessel = (props: AddPageProps) => {
     "usedOfFreshWater",
   ]);
 
-  useMemo(()=>{
-    function configRequest(){
-      const user = JSON.parse(localStorage.getItem("user"));
+  useMemo(() => {
+    function configRequest() {
+      reset;
       setDateTime(
-      dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }));
+        dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })
+      );
       setRequestForm({
-        monthYear:dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }),
-        vesId: user?.vesId
-      })
+        monthYear: dateNow.toLocaleString("th-TH", {
+          month: "2-digit",
+          year: "numeric",
+        }),
+        vesId: vesselSelected,
+      });
     }
     configRequest();
-  },[])
+  }, []);
 
-  useEffect(()=>{
-    const getDataLog = async() =>{
-      await vesselService.getLogVessel(requestForm!)
-      .then((res)=>setData(res.data))
-      .catch((err) =>{
-        vesselService.getVesselInfo(requestForm!.vesId)
-        .then((res) =>setData(res.data))
-      })
-    }
+  useEffect(() => {
+    const getDataLog = async () => {
+      await vesselService
+        .getLogVessel(requestForm!)
+        .then((res) => {
+          setData(res.data);
+          setIsFetch(true);
+        })
+        .catch((err) => {
+          vesselService.getVesselInfo(requestForm!.vesId).then((res) => {
+            setData(res.data);
+            setIsFetch(true);
+          });
+        });
+    };
     getDataLog();
-  },[requestForm])
+  }, [requestForm]);
 
+  useEffect(() => {
+    const setDataTotal = () => {
+      if(data?.currentPosition == 1 && (data?.counsel !== undefined || typeof(data?.counsel) == typeof("string") )){
+        setIsAdd(false);
+      }
+      else{
+        setIsAdd(true);
+      }
+    }
 
+    setDataTotal();
+  }, [isFetch]);
 
   useEffect(() => {
     const total =
@@ -141,12 +170,13 @@ const PanelReportVessel = (props: AddPageProps) => {
   }, [freshWaterWatch]);
 
   const onSubmitForm = (e: VesselForm) => {
-    if(e.monthYear !== null){
+    console.log(getValues("airCompressor"))
+    console.log(e);
+    if (e.monthYear !== null) {
       vesselService.createReport(e);
       window.location.reload();
       setPage(1);
-    }
-    else{
+    } else {
       e.monthYear = dateTime;
       vesselService.createReport(e);
       window.location.reload();
@@ -178,7 +208,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       label: "เครื่องปรับอากาศ",
       type: "number",
       fieldID: "airConditioner",
-      errors: ["airConditioner"], 
+      errors: ["airConditioner"],
       inputNumberProps: { disabled: isAdd },
     },
     {
@@ -229,6 +259,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "dieselOilSeparator",
       errors: ["dieselOilSeparator"],
       inputNumberProps: { disabled: isAdd },
+      rules:{min:0}
     },
     {
       label: "เกียร์",
@@ -284,6 +315,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfDiesel",
       errors: ["giveOfDiesel"],
       inputNumberProps: { disabled: isAdd },
+      rules:{value:0}
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
@@ -291,6 +323,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfBenzine",
       errors: ["giveOfBenzine"],
       inputNumberProps: { disabled: isAdd },
+      rules:{min:0}
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -298,6 +331,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfGadinia",
       errors: ["giveOfGadinia"],
       inputNumberProps: { disabled: isAdd },
+      rules:{min:0}
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -305,6 +339,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfTellus",
       errors: ["giveOfTellus"],
       inputNumberProps: { disabled: isAdd },
+      rules:{min:0}
     },
     {
       label: "น้ำจืด (ตัน)",
@@ -312,6 +347,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfFreshWater",
       errors: ["giveOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
+      rules:{min:0}
     },
   ];
 
@@ -322,6 +358,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfDiesel",
       errors: ["usedOfDiesel"],
       inputNumberProps: { disabled: isAdd },
+      rules:{value:0}
     },
     {
       label: "น้ำมัน เบนซิน95 (กล.)",
@@ -329,6 +366,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfBenzine",
       errors: ["usedOfBenzine"],
       inputNumberProps: { disabled: isAdd },
+      rules:{value:0}
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -336,6 +374,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfGadinia",
       errors: ["usedOfGadinia"],
       inputNumberProps: { disabled: isAdd },
+      rules:{value:0}
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -350,6 +389,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfFreshWater",
       errors: ["usedOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
+      rules:{value:0}
     },
   ];
 
@@ -412,9 +452,14 @@ const PanelReportVessel = (props: AddPageProps) => {
   return (
     <>
       <form>
-        <Button icon="pi pi-out" label="ย้อนกลับ" className="p-button-danger" onClick={onGoBack} />
+        <Button
+          icon="pi pi-out"
+          label="ย้อนกลับ"
+          className="p-button-danger"
+          onClick={onGoBack}
+        />
         <h1> ส่งข้อมูลเรือ : {data?.vesNameTh}</h1>
-        <h1>รอบที่ {dateTime}</h1>
+        <h1>รอบที่ {data?.monthYear === null? dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }): data?.monthYear}</h1>
         <PopupPage
           setVisible={setIsShowWarning}
           header="คำเตือน"
@@ -441,17 +486,32 @@ const PanelReportVessel = (props: AddPageProps) => {
             }}
           />
         </PopupPage>
-        { data?.counsel != undefined && <div className={styles.counsel}>
-          { isShowCounsel === false && 
-            <Card className={styles.hidden} onClick={(e)=>setIsShowCounsel(true)}>
-              <i className={"pi pi-exclamation-circle text-white text-4xl flex justify-content-center"}></i>
-            </Card>
-          }
-          {isShowCounsel === true && 
-          <Card className={styles.show} onClick={(e)=>setIsShowCounsel(false)}>
-            <h2 className={styles.text}>เหตุผลที่ถูกตีกลับ : {data!.counsel}</h2>
-          </Card>}
-        </div>}
+        {data?.counsel != undefined && (
+          <div className={styles.counsel}>
+            {isShowCounsel === false && (
+              <Card
+                className={styles.hidden}
+                onClick={(e) => setIsShowCounsel(true)}
+              >
+                <i
+                  className={
+                    "pi pi-exclamation-circle text-white text-4xl flex justify-content-center"
+                  }
+                ></i>
+              </Card>
+            )}
+            {isShowCounsel === true && (
+              <Card
+                className={styles.show}
+                onClick={(e) => setIsShowCounsel(false)}
+              >
+                <h2 className={styles.text}>
+                  เหตุผลที่ถูกตีกลับ : {data!.counsel}
+                </h2>
+              </Card>
+            )}
+          </div>
+        )}
         <div className={styles.panel}>
           <Card>
             <div className={styles.card}>
@@ -522,13 +582,15 @@ const PanelReportVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        {isAdd !== true && <div className="flex justify-content-center">
-          <Button
-            onClick={(e) => CheckForm(e)}
-            className="p-button-success"
-            label="ยืนยันแบบฟอร์มและส่งต่อ"
-          />
-        </div>}
+        {isAdd != true && (
+          <div className="flex justify-content-center">
+            <Button
+              onClick={(e) => CheckForm(e)}
+              className="p-button-success"
+              label="ยืนยันแบบฟอร์มและส่งต่อ"
+            />
+          </div>
+        )}
       </form>
     </>
   );
