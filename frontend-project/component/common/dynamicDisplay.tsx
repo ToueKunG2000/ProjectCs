@@ -98,7 +98,11 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                   <h2>{vessel.vesNameTh}</h2>
                   <h3>
                     {vessel.currentPosition == 1
-                      ? "ทหารช่างกำลังเขียน"
+                      ? vessel.monthYear === null
+                      ?  logVessel.includes(vessel?.vesId) 
+                      ? "ส่งสำเร็จแล้วววววววววววว"
+                      : "ยังไม่ทำไอสัส"
+                      : "รอ แก้ไข จากทหารช่าง"
                       : vessel.currentPosition == 2
                       ? "รอ ต้นกล ตรวจ"
                       : vessel.currentPosition == 3
