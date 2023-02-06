@@ -35,10 +35,9 @@ const PanelReportVessel = (props: AddPageProps) => {
     watch,
     handleSubmit,
     getValues,
-    setValue,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     reset,
-  } = useForm<VesselForm>({ defaultValues: {airCompressor:1, airConditioner:1},values: data  });
+  } = useForm<VesselForm>({ values: data });
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState<number>(0.0);
   const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState<number>(0.0);
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState<number>(0.0);
@@ -170,18 +169,18 @@ const PanelReportVessel = (props: AddPageProps) => {
   }, [freshWaterWatch]);
 
   const onSubmitForm = (e: VesselForm) => {
-    console.log(getValues("airCompressor"))
+    console.log(dirtyFields)
     console.log(e);
-    if (e.monthYear !== null) {
-      vesselService.createReport(e);
-      window.location.reload();
-      setPage(1);
-    } else {
-      e.monthYear = dateTime;
-      vesselService.createReport(e);
-      window.location.reload();
-      setPage(1);
-    }
+    // if (e.monthYear !== null) {
+    //   vesselService.createReport(e);
+    //   window.location.reload();
+    //   setPage(1);
+    // } else {
+    //   e.monthYear = dateTime;
+    //   vesselService.createReport(e);
+    //   window.location.reload();
+    //   setPage(1);
+    // }
   };
 
   const CheckForm = (e: any) => {
@@ -209,6 +208,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "airConditioner",
       errors: ["airConditioner"],
+      rules: {required:true},
       inputNumberProps: { disabled: isAdd },
     },
     {

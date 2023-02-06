@@ -1,6 +1,7 @@
 package com.kaset.backendProject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kaset.backendProject.model.payload.DropdownPayload;
 import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -25,11 +26,16 @@ import java.util.Objects;
                 name = "TbVessels.getAllVessel",
                 query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel FROM TB_VESSELS ",
                 resultSetMapping = "VesselDisplay"
-
+        ),
+        @NamedNativeQuery(
+                name = "TbVessels.getDropdownVessel",
+                query = "SELECT ves_id, ves_name_th FROM TB_VESSELS",
+                resultSetMapping = "DropdownMapping"
         )
 })
 @SqlResultSetMappings(
-        {@SqlResultSetMapping(name = "VesselDisplay",classes = {
+        {
+            @SqlResultSetMapping(name = "VesselDisplay",classes = {
                 @ConstructorResult(targetClass = Vessel.class, columns = {
                         @ColumnResult(name = "ves_id"),
                         @ColumnResult(name = "ves_name_th"),
@@ -38,7 +44,14 @@ import java.util.Objects;
                         @ColumnResult(name = "counsel"),
                         @ColumnResult(name = "ves_status"),
                 })
-        })}
+        }),
+            @SqlResultSetMapping(name = "DropdownMapping",classes = {
+                    @ConstructorResult(targetClass = DropdownPayload.class, columns = {
+                            @ColumnResult(name = "ves_id",type = Integer.class),
+                            @ColumnResult(name = "ves_name_th",type = String.class),
+                    })
+            })
+        }
 )
 public class TbVessels implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

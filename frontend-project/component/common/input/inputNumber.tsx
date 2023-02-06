@@ -12,7 +12,7 @@ interface NumberInputProps extends InputNumberProps {
 }
 
 const InputNumberField = (props: NumberInputProps) => {
-  const { control, controllerName, rules, fraction, ...inputNumberProps } = props;
+  const { control, controllerName, rules, fraction,...inputNumberProps } = props;
   return (
     <>
       <Controller
@@ -21,9 +21,11 @@ const InputNumberField = (props: NumberInputProps) => {
         rules={rules}
         render={({ field, fieldState }) => (
           <InputNumber
-            value={field.value === null ? 0 : field.value}
-            onValueChange={(e) => field.onChange(e.value)}
+            value={field.value == null? 0: field.value}
+            onValueChange={(e) => field.onChange(e.value == null? 0 : e.value )}
             minFractionDigits={0}
+            placeholder={"0"}
+            defaultValue={0}
             min={0}
             maxLength={7}
             maxFractionDigits={fraction}

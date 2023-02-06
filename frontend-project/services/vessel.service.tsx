@@ -68,4 +68,14 @@ export class VesselService {
       data: request,
     })
   }
+  async getLogVesselList(request: CheckLogMonthYearForm){
+    return await instance<VesselForm[]>({
+      method:"post",
+      url:"/getLogVesselList",
+      data: request,
+    })
+  }
+  async getDropdownVessel(){
+    return await instance.get("/getDropdownVessel");
+  }
 }

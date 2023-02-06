@@ -1,9 +1,7 @@
 package com.kaset.backendProject.controller;
 
 import com.kaset.backendProject.model.entity.TbVessels;
-import com.kaset.backendProject.model.payload.MonthYearVesIdPayload;
-import com.kaset.backendProject.model.payload.UpdateVesselPayload;
-import com.kaset.backendProject.model.payload.Vessel;
+import com.kaset.backendProject.model.payload.*;
 import com.kaset.backendProject.repository.LogVesselRepository;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
@@ -57,6 +55,17 @@ public class VesselController {
         else{
             return new ResponseEntity<>(vessel,HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/getLogVesselList")
+    public ResponseEntity<List<LogVesselPayload>> getDataLogList(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
+        return new ResponseEntity<>(vesselService.getLogVesselList(monthYearVesIdPayload), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/getDropdownVessel")
+    public ResponseEntity<List<DropdownPayload>> getDropdownVessel(){
+        return new ResponseEntity<>(vesselService.getDropdownVessel(), HttpStatus.OK);
     }
 
 

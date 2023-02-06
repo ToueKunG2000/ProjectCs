@@ -1,7 +1,8 @@
 import { InputNumberProps } from "primereact/inputnumber";
+import { InputTextProps } from "primereact/inputtext";
 import { InputTextareaProps } from "primereact/inputtextarea";
+import { DropdownProps } from "primereact/dropdown";
 import { RegisterOptions, DeepMap, FieldError } from "react-hook-form";
-
 
 export interface FieldProps {
   children?: React.ReactNode;
@@ -20,9 +21,11 @@ export interface DynamicInputItem {
   label?: string;
   placeholder?: string;
   data?: any;
-  options?: any;
+  options?: any[];
   isRequired?: boolean;
-  inputTextProps?: InputTextareaProps;
+  inputTextProps?: InputTextProps;
+  inputDropdownProps?: DropdownProps;
+  inputTextAreaProps?: InputTextareaProps;
   inputNumberProps?: InputNumberProps;
   rules?: Omit<
     RegisterOptions,
@@ -32,9 +35,11 @@ export interface DynamicInputItem {
   type:
     | "label"
     | "text"
+    | "textarea"
     | "password"
     | "number"
-    | "fraction"
+    | "dropdown"
+    | "fraction";
 }
 
 export interface DynamicInputFields extends FieldProps {
@@ -42,7 +47,7 @@ export interface DynamicInputFields extends FieldProps {
   control?: any;
 }
 
-export interface UserForm{
+export interface UserForm {
   password: string;
   positionId: number;
   vesId: number;
@@ -51,7 +56,7 @@ export interface UserForm{
   positionName: string;
 }
 
-export interface UpdateForm{
+export interface UpdateForm {
   vesId: number;
   currentPosition: number;
   counsel?: string;
@@ -59,7 +64,8 @@ export interface UpdateForm{
 
 export interface CheckLogMonthYearForm {
   monthYear: string;
-  vesId: number;
+  vesId?: number;
+  vesNameTh?: string;
 }
 
 export interface VesselForm {
@@ -95,11 +101,11 @@ export interface VesselForm {
   usedOfBenzine: number;
   usedOfGadinia: number;
   usedOfTellus: number;
-  usedOfFreshWater: number ;
-  leftOfDiesel: number ;
-  leftOfBenzine: number ;
-  leftOfGadinia: number ;
-  leftOfTellus: number ;
+  usedOfFreshWater: number;
+  leftOfDiesel: number;
+  leftOfBenzine: number;
+  leftOfGadinia: number;
+  leftOfTellus: number;
   leftOfFreshWater: number;
   vesStatus: number;
 }

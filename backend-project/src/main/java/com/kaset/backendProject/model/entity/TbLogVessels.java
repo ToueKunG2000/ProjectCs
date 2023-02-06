@@ -6,7 +6,6 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Objects;
 
 @Entity
@@ -35,7 +34,13 @@ import java.util.Objects;
                     name = "TbLogVessels.checkMonthLog",
                     query = " SELECT ves_id FROM TB_LOG_VESSELS WHERE month_year LIKE :monthYear",
                     resultSetMapping = "GetVesId"
-            )
+            ),
+//            @NamedNativeQuery(
+//                    name = "TbLogVessels.getDataLogList",
+//                    query = "SELECT ves_id, month_year, ves_name_th FROM  " +
+//                            "TB_LOG_VESSELS WHERE month_year LIKE :monthYear and ves_id = :vesId ",
+//                    resultSetMapping = "LogVesselList"
+//            )
 
     }
 )
@@ -82,7 +87,14 @@ import java.util.Objects;
     }),
     @SqlResultSetMapping(name = "GetVesId", columns = {
             @ColumnResult(name = "ves_id",type = Integer.class),
-    })
+    }),
+//        @SqlResultSetMapping(name = "LogVesselList", classes = {
+//                @ConstructorResult(targetClass = Vessel.class, columns = {
+//                        @ColumnResult(name = "ves_id",type = Integer.class),
+//                        @ColumnResult(name = "ves_name_th", type = String.class),
+//                        @ColumnResult(name = "month_year",type = String.class),
+//                })
+//        })
 })
 public class TbLogVessels implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)

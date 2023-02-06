@@ -52,6 +52,12 @@ public class Vessel {
     public Vessel() {
     }
 
+    public Vessel(Integer vesId, String vesNameTh, String monthYear) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.monthYear = monthYear;
+    }
+
     public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, Integer vesStatus) {
         this.vesId = vesId;
         this.vesNameTh = vesNameTh;

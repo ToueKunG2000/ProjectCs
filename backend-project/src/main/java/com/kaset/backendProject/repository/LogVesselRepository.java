@@ -5,7 +5,6 @@ import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.repositoryImpl.CustomLogVesselRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -20,4 +19,7 @@ public interface LogVesselRepository extends JpaRepository<TbLogVessels, Integer
 
     @Query(nativeQuery = true)
     Vessel getDataLog(@Param(value = "vesId")Integer vesId, @Param(value = "monthYear")String monthYear);
+
+//    @Query(nativeQuery = true)
+//    List<Vessel> getDataLogList(@Param(value = "vesId")Integer vesId, @Param(value = "monthYear")String monthYear);
 }

@@ -3,6 +3,8 @@ import InputNumberField from "./input/inputNumber";
 import { DynamicInputItem } from "./interface";
 import { InputNumberProps } from "primereact/inputnumber";
 import InputTextArea from "./input/inputTextArea";
+import InputTextField from "./input/inputText";
+import InputDropdown from "./input/inputDropdown";
 
 interface InputBuilderProps{
     field: DynamicInputItem;
@@ -34,11 +36,26 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
         if(field.type == "label"){
             return <label className={field.inputClassName} >{field.data}</label>
         }
-        if(field.type == "text"){
+        if(field.type == "textarea"){
             return <InputTextArea
                 control={control}
                 controllerName={field.fieldID}
+                {...field.inputTextAreaProps}
+            />
+        }
+        if(field.type == "text"){
+            return <InputTextField
+                control={control}
+                controllerName={field.fieldID}
                 {...field.inputTextProps}
+            />
+        }
+        if(field.type == "dropdown"){
+            return <InputDropdown 
+                control={control}
+                data={field.options}
+                controllerName={field.fieldID}
+                {...field.inputDropdownProps}
             />
         }
     }

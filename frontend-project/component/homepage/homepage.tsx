@@ -6,7 +6,8 @@ import PanelReportVessel from "../add/panelReportVessel";
 import { VesselService } from "./../../services/vessel.service";
 import { VesselForm } from "../common/interface";
 import PanelShowVessel from "../add/panelShowVessel";
-import { userAgent } from "next/server";
+import { Button } from "primereact/button";
+import ShowLogVessel from "../logVessel/ShowLogVessel";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {
@@ -28,12 +29,17 @@ const HomePageLayout = (props: HomePageProps) => {
     fetchData();
   },[]);
 
+  const OnClickLogVessel = (e:any) => {
+    e.preventDefault();
+    setPage(4);
+  }
+
   return (
     <>
       <Profile />
       {page == 1 && (
         <div>
-          <h1>ประวัติแบบฟอร์มเรือ</h1>
+          <Button label="ประวัติแบบฟอร์มเรือ" onClick={OnClickLogVessel}/>
           <HomepagePanelShow positionId={showPosition!} activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
             <DynamicDisplay setPage={setPage} data={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
           </HomepagePanelShow>
@@ -47,6 +53,11 @@ const HomePageLayout = (props: HomePageProps) => {
       {page == 3 && (showPosition == 2 || showPosition == 3 || showPosition == 4 || showPosition == 5) && 
         <div>
           <PanelShowVessel setPage={setPage} vesselSelected={vesselSelected}/>
+        </div>
+      }
+      {page == 4 && (showPosition == 4 || showPosition == 5) && 
+        <div>
+          <ShowLogVessel />
         </div>
       }
     </>
