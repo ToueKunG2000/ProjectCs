@@ -39,7 +39,7 @@ const HomePageLayout = (props: HomePageProps) => {
       <Profile />
       {page == 1 && (
         <div>
-          <Button label="ประวัติแบบฟอร์มเรือ" onClick={OnClickLogVessel}/>
+          { (showPosition == 4 || showPosition == 5 ) && <Button label="ประวัติแบบฟอร์มเรือ" onClick={OnClickLogVessel}/>}
           <HomepagePanelShow positionId={showPosition!} activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
             <DynamicDisplay setPage={setPage} data={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
           </HomepagePanelShow>
@@ -57,7 +57,7 @@ const HomePageLayout = (props: HomePageProps) => {
       }
       {page == 4 && (showPosition == 4 || showPosition == 5) && 
         <div>
-          <ShowLogVessel />
+          <ShowLogVessel setPage={setPage}/>
         </div>
       }
     </>

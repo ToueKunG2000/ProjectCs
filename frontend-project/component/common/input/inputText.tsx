@@ -10,16 +10,16 @@ interface InputTextFieldProps extends InputTextProps {
 }
 
 const InputTextField = (props: InputTextFieldProps) => {
-    const {control, controllerName, ...inputT} = props;
+    const {control, controllerName, ...inputTextProps} = props;
     return (
         <>
             <Controller 
                 defaultValue=""
                 name={controllerName} control={control} render={({field}) => (
                     <InputText
-                        defaultValue=""
                         value={field.value}
                         onChange={(e) => field.onChange(e.target.value)}
+                        {...inputTextProps}
                     />
                 )}
             />

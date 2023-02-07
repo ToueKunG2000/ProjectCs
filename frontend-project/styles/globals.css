@@ -1,10 +1,7 @@
-/* .html{
-    width: 100% !important;
-    min-height: 100vh !important;
-} */
 body{
     min-height: 100% !important;
     margin: 0px !important;
+    font-family: 'Sarabun', sans-serif;
 }
 h1{
     display: flex;
@@ -61,9 +58,11 @@ label{
     color: black !important;
 }
 
-div#__next{
-    height: 100%;
+#__next{
+    width: 100vw;
+    height: auto;
 }
+
 .p-inputtext{
     font-size: 20px !important;
 }

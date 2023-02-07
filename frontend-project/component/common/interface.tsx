@@ -93,7 +93,7 @@ export interface VesselForm {
   giveOfBenzine: number;
   giveOfGadinia: number;
   giveOfTellus: number;
-  giveOfFreshWater?: number;
+  giveOfFreshWater: number;
   monthYear: string;
   counsel?: string;
   currentPosition: number;

@@ -47,6 +47,7 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
             return <InputTextField
                 control={control}
                 controllerName={field.fieldID}
+                placeholder={field.placeholder}
                 {...field.inputTextProps}
             />
         }
