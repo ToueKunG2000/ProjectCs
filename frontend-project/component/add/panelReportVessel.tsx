@@ -279,7 +279,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       inputNumberProps: { disabled: isAdd },
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "fraction",
       fieldID: "getOfBenzine",
       errors: ["getOfBenzine"],
@@ -318,7 +318,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       rules:{value:0}
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "fraction",
       fieldID: "giveOfBenzine",
       errors: ["giveOfBenzine"],
@@ -361,7 +361,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       rules:{value:0}
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "fraction",
       fieldID: "usedOfBenzine",
       errors: ["usedOfBenzine"],
@@ -402,7 +402,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       data: totalLeftOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       fieldID: "leftOfBenzine",
       errors: ["leftOfBenzine"],

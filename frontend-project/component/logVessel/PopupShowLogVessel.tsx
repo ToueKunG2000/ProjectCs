@@ -79,7 +79,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
       data: vesselData?.getOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data: vesselData?.getOfBenzine.toPrecision(3),
     },
@@ -107,7 +107,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
       data: vesselData?.giveOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data: vesselData?.giveOfBenzine.toPrecision(3),
     },
@@ -135,7 +135,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
       data: vesselData?.usedOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data: vesselData?.usedOfBenzine.toPrecision(3),
     },
@@ -163,7 +163,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
       data: vesselData?.leftOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data: vesselData?.leftOfBenzine.toPrecision(3),
     },

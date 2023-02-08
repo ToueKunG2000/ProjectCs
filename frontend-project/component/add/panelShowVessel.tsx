@@ -199,7 +199,7 @@ const PanelShowVessel = (props: AddPageProps) => {
         data?.getOfDiesel == undefined ? "0" : data?.getOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data:
         data?.getOfBenzine == undefined
@@ -240,7 +240,7 @@ const PanelShowVessel = (props: AddPageProps) => {
           : data?.giveOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data:
         data?.giveOfBenzine == undefined
@@ -283,7 +283,7 @@ const PanelShowVessel = (props: AddPageProps) => {
           : data?.usedOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data:
         data?.usedOfBenzine == undefined
@@ -332,7 +332,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data: totalLeftOfDiesel.toPrecision(3),
     },
     {
-      label: "น้ำมัน เบนซิน95 (กล.)",
+      label: "น้ำมัน เบนซิน95 (ลิตร)",
       type: "label",
       data: totalLeftOfBenzine.toPrecision(3),
     },
