@@ -108,4 +108,12 @@ export interface VesselForm {
   leftOfTellus: number;
   leftOfFreshWater: number;
   vesStatus: number;
+  nameUser?: string;
 }
+
+export interface VesselStatus{
+  vesStatus: number;
+  vesId: number;
+  name?: string;
+  vesNameTh: string;
+} 

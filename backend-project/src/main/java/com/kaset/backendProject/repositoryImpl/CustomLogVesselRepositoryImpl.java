@@ -91,7 +91,6 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
         CriteriaQuery<TbLogVessels> criteriaQuery = criteriaBuilder.createQuery(TbLogVessels.class);
         Root<TbLogVessels> root = criteriaQuery.from(TbLogVessels.class);
 
-
         if(!vesId.equals(0) && !monthYear.isEmpty()){
             criteriaQuery.select(root).where(criteriaBuilder.and(
                     criteriaBuilder.like(root.get("monthYear"),monthYear),criteriaBuilder.equal(root.get("vesId"),vesId)

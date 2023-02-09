@@ -5,20 +5,24 @@ import styles from "../../styles/DynamicDisplay.module.css";
 import { VesselForm } from "./interface";
 import { VesselService } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
+import { PopupShowStatus } from "../disableVessel/PopupShowStatus";
 
 interface DynamicDisplayProps {
   setPage: Dispatch<SetStateAction<number>>;
   data: VesselForm[];
   setVesselSelected: Dispatch<SetStateAction<number>>;
   activeIndex: number;
+  isShowStatus?: boolean;
 }
 
 const DynamicDisplay = (props: DynamicDisplayProps) => {
-  const { setPage, data, setVesselSelected, activeIndex } = props;
+  const { setPage, data, setVesselSelected, activeIndex, isShowStatus } = props;
   const [showData, setShowData] = useState<VesselForm[]>([]);
   const [isShow, setIsShow] = useState(false);
   const vesselService = new VesselService();
   const [logVessel,setLogVessel] = useState([]);
+  const [showVesselStatus,setShowVesselStatus] = useState(false);
+  const [vesselStatus,setVesselStatus] = useState<VesselForm>();
   const user = JSON.parse(localStorage.getItem("user"));
   const dateNow = new Date();
 
@@ -36,17 +40,19 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
     }
   };
 
+  const PopupStatus = (e: any, vessel: VesselForm) => {
+    e.preventDefault();
+    setShowVesselStatus(true);
+    setVesselStatus(vessel);
+  };
+
   useEffect(() => {
     const SetData = () => {
         vesselService.checkMonthYear(dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })).then((res)=>{
             setLogVessel(res.data);
         });
       if(activeIndex == 0){
-        const filterData = data.filter((vessel) => {
-            return (vessel);
-          });
-          setShowData(filterData);
-          console.log(showData);
+          setShowData(data);
       }
       else if(activeIndex == 1){
         vesselService.checkMonthYear(dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })).then((res) => {
@@ -76,12 +82,18 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
 
   return (
     <div className="grid">
-      {showData.map((vessel) => {
+      <PopupPage setVisible={setIsShow} visible={isShow} header="" message="แม่งไม่ส่งข้อมูล ไอเวร" />
+      <PopupPage
+        header="สถานะของเรือ"
+        setVisible={setShowVesselStatus}
+        visible={showVesselStatus} 
+      >
+        <PopupShowStatus selectedVessel={vesselStatus!}/>
+      </PopupPage>
+
+      {isShowStatus == false && showData.map((vessel) => {
         return (
           <>
-            <PopupPage setVisible={setIsShow} visible={isShow} header="" message="แม่งไม่ส่งข้อมูล ไอเวร">
-
-            </PopupPage>
             {vessel.vesStatus == 1 && (
               <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
                 <Card
@@ -133,6 +145,30 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
           </>
         );
       })}
+      {isShowStatus == true && data.map((vessel) => {
+        return (
+          <>  
+          <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
+            <Card
+              className={"card-display"}
+              onClick={(e) => PopupStatus(e, vessel)}
+            >
+              <Image
+                className={styles["img"]}
+                alt="profile"
+                src={process.env.NEXT_PUBLIC_IMAGE}
+                width="200"
+                height="200"
+              />
+              <h2>{vessel.vesNameTh}</h2>
+              <h3>{`สถานะ ${vessel.vesStatus == 1?"กำลังใช้งาน":"ซ่อมบำรุง"}`}</h3>
+            </Card>
+          </div>
+          </>
+        );
+      })
+
+      }
     </div>
   );
 };

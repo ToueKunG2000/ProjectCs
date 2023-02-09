@@ -148,7 +148,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater," +
                 " left_of_tellus = :leftOfTellus, left_of_fresh_water = :leftOfFreshWater," +
                 " left_of_benzine = :leftOfBenzine, left_of_diesel = :leftOfDiesel," +
-                " left_of_gadinia = :leftOfGadinia"+
+                " left_of_gadinia = :leftOfGadinia "+
                 " WHERE ves_id = :vesId ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());

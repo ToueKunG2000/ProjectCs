@@ -5,7 +5,7 @@ import { DataTable } from "primereact/datatable";
 import React from "react";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import ViewRender from "../../pages/pdfView";
+import ViewRender from "../common/pdf/pdfView";
 import { VesselService } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import {
@@ -13,7 +13,7 @@ import {
   DynamicInputItem,
   VesselForm,
 } from "../common/interface";
-import PDFView from "../common/pdf";
+import PDFView from "../common/pdf/pdf";
 import PopupPage from "../common/popupPage";
 import PopupShowLogVessel from "./PopupShowLogVessel";
 
@@ -112,7 +112,7 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
         >
           <PopupShowLogVessel request={selectLogVessel!}></PopupShowLogVessel>
         </PopupPage>
-        <Button label="ย้อนกลับ" onClick={OnGoBack}/>
+        <Button className={"p-button-danger"} label="ย้อนกลับ" onClick={OnGoBack}/>
         <div className="flex justify-content-center">
           <form>
             <DynamicHorizonInput

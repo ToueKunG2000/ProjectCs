@@ -3,6 +3,7 @@ package com.kaset.backendProject.repository;
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.DropdownPayload;
 import com.kaset.backendProject.model.payload.Vessel;
+import com.kaset.backendProject.model.payload.VesselStatus;
 import com.kaset.backendProject.repositoryImpl.CustomVesselRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -22,6 +23,9 @@ public interface VesselRepository extends JpaRepository<TbVessels, Integer>, Cus
 
     @Query(nativeQuery = true)
     List<DropdownPayload> getDropdownVessel();
+
+    @Query(nativeQuery = true)
+    List<Vessel> getStatusVessel();
 
     @Query(value = "SELECT TV FROM TbVessels TV WHERE TV.vesId = :vesId")
     TbVessels getDataVessel(@Param(value = "vesId") Integer vesId);

@@ -78,4 +78,15 @@ export class VesselService {
   async getDropdownVessel(){
     return await instance.get("/getDropdownVessel");
   }
+
+  async getVesselStatus(){
+    return await instance.get<VesselForm[]>("/getStatusVessel");
+  }
+  async changeVesselStatus(request: VesselForm){
+    return await instance({
+      method: "post",
+      url:"/",
+      data: request,
+    })
+  }
 }

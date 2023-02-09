@@ -7,9 +7,10 @@ import {
   PDFViewer,
   Font,
   View,
+  Image,
 } from "@react-pdf/renderer";
 import { useEffect } from "react";
-import { VesselForm } from "./interface";
+import { VesselForm } from "../interface";
 import { PdfTable } from "./pdfTable";
 
 Font.register({
@@ -27,7 +28,6 @@ const styles = StyleSheet.create({
     fontFamily: "sarabun",
   },
   container:{
-    margin: 10,
   },
   flex:{
     flexGrow:1,
@@ -48,9 +48,13 @@ const styles = StyleSheet.create({
     width: window.innerWidth, //the pdf viewer will take up all of the width and height
     height: window.innerHeight,
   },
-  headerSec:{
-    marginTop: '30px',
-  }
+  logo:{
+    marginTop: 10,
+    height: '120px',
+    width: '100px',
+    flexDirection: 'row',
+    alignSelf: 'center',
+  },
 
 });
 
@@ -61,14 +65,14 @@ const MyDocument = (props: PDFViewProps): JSX.Element => {
     <Document language="TH"  >
         {/* render a single page */}
         <Page size="A4" style={[styles.page]}>
-          <View style={styles.container}>
+          <View style={styles.logo}>
+            <Image alt={"logo"} src={process.env.NEXT_PUBLIC_IMAGE}/>
+          </View>
+          <View>
             <Text style={styles.header}>รอบวันที่ {data?.monthYear} | ชื่อเรือ : {data?.vesNameTh}</Text>
-            <View style={styles.headerSec}>
-              <Text style={styles.header}>การใช้งานไฟฟ้า</Text>
-              <Text style={styles.text}>จำนวนเครื่องจักรใหญ่ {data?.bigMachineNum} เครื่อง มีการใช้งานเครื่องจักรใหญ่ {data?.bigMachineUsed} ชั่วโมง</Text>
-              <Text style={styles.text}>จำนวนเครื่องใช้ไฟฟ้า {data?.electricMachineNum} เครื่อง มีการใช้งานเครื่องใช้ไฟฟ้า {data?.electricMachineUsed} ชั่วโมง</Text>
-            </View>
-            
+            <Text style={styles.header}>การใช้งานไฟฟ้า</Text>
+            <Text style={styles.text}>จำนวนเครื่องจักรใหญ่ {data?.bigMachineNum} เครื่อง มีการใช้งานเครื่องจักรใหญ่ {data?.bigMachineUsed} ชั่วโมง</Text>
+            <Text style={styles.text}>จำนวนเครื่องใช้ไฟฟ้า {data?.electricMachineNum} เครื่อง มีการใช้งานเครื่องใช้ไฟฟ้า {data?.electricMachineUsed} ชั่วโมง</Text>
           </View>
           <Text style={styles.header}>การใช้งานเครื่องใช้ไฟฟ้า (ชั่วโมง)</Text>
 

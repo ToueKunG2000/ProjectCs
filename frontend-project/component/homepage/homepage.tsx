@@ -8,6 +8,7 @@ import { VesselForm } from "../common/interface";
 import PanelShowVessel from "../add/panelShowVessel";
 import { Button } from "primereact/button";
 import ShowLogVessel from "../logVessel/ShowLogVessel";
+import { PanelShowStatusVessel } from "../disableVessel/panelShowStatusVessel";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {
@@ -34,14 +35,18 @@ const HomePageLayout = (props: HomePageProps) => {
     setPage(4);
   }
 
+  const OnClickStatusVessel = (e:any) =>{
+    e.preventDefault(e);
+    setPage(5);
+  }
+
   return (
     <>
-      <Profile />
+      <Profile setPage={setPage}/>
       {page == 1 && (
         <div>
-          { (showPosition == 4 || showPosition == 5 ) && <Button label="ประวัติแบบฟอร์มเรือ" onClick={OnClickLogVessel}/>}
           <HomepagePanelShow positionId={showPosition!} activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
-            <DynamicDisplay setPage={setPage} data={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
+            <DynamicDisplay isShowStatus={false} setPage={setPage} data={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
           </HomepagePanelShow>
         </div>
       )}
@@ -60,6 +65,11 @@ const HomePageLayout = (props: HomePageProps) => {
           <ShowLogVessel setPage={setPage}/>
         </div>
       }
+      {page == 5 && (showPosition == 4 || showPosition == 5) && (
+        <div>
+          <PanelShowStatusVessel setPage={setPage}/>
+        </div>
+      )}
     </>
   );
 };

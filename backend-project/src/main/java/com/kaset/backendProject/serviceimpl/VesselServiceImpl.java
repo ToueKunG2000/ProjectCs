@@ -64,6 +64,10 @@ public class VesselServiceImpl {
         return dropdown;
     }
 
+    public List<Vessel> getVesselStatus(){
+        return vesselRepository.getStatusVessel();
+    }
+
     public List<LogVesselPayload> getLogVesselList(MonthYearVesIdPayload monthYearVesIdPayload){
         return logVesselRepository.getVesselLog(monthYearVesIdPayload.getVesId(),monthYearVesIdPayload.getMonthYear());
     }

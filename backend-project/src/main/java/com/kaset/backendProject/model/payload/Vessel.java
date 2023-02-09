@@ -49,6 +49,8 @@ public class Vessel {
     private BigDecimal usedOfTellus;
     private BigDecimal usedOfFreshWater;
 
+    private String nameUser;
+
     public Vessel() {
     }
 
@@ -103,5 +105,12 @@ public class Vessel {
         this.usedOfGadinia = usedOfGadinia;
         this.usedOfTellus = usedOfTellus;
         this.usedOfFreshWater = usedOfFreshWater;
+    }
+
+    public Vessel(Integer vesId, String vesNameTh, Integer vesStatus, String nameUser) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.vesStatus = vesStatus;
+        this.nameUser = nameUser;
     }
 }

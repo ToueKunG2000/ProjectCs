@@ -10,15 +10,17 @@
 .innerHeader{
     display: flex;
     height: inherit;
-    justify-content: center;
     align-items: center;
+    justify-content: space-between;
 }
 .profilePosition{
     position: fixed;
     top: 0px;
     right: 0px;
 }
-
+.back{
+    width: 50%;
+}
 .border{
     display:flex;
     align-items: center;
@@ -35,6 +37,30 @@
     display: flex;
     justify-content: center;
     color: white;
+}
+.front{
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+.text-front{
+    color: white;
+    font-family: 'Sarabun', sans-serif;
+    background: #000080;
+    font-size: 20px;
+    border-color: #000080;
+    margin-right: 40px;
+    margin-left: 40px;
+    pointer-events: visible;
+}
+.text-front:hover{
+    color: #000080;
+    background: white;
+    border-color: white;
+}
+.text-back{
+    color: white;
+    right: 20px;
 }
 .profileText{
     color: white;

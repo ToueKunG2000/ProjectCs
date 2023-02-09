@@ -30,6 +30,7 @@ const PanelShowVessel = (props: AddPageProps) => {
   const vesselService = new VesselService();
   const [user, setUser] = useState<UserForm>();
   const [isFetch, setIsFetch] = useState(false);
+  const [isShowLeft,setIsShowLeft] = useState(false);
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
   const [totalLeftOfDiesel, setTotalLeftOfDiesel] = useState(0);
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
@@ -393,6 +394,30 @@ const PanelShowVessel = (props: AddPageProps) => {
             }}
           />
         </PopupPage>
+        {(user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5 ) && (
+          <div className={styles["left"]}>
+            {isShowLeft == false &&
+             <Card className={styles["hidden-left"]}
+             onClick={(e) => setIsShowLeft(true)}
+             >
+              <h4>ตรวจสอบยอดคงเหลือ</h4>
+            </Card>
+            }
+            {isShowLeft == true &&
+            <Card className={styles["show-left"]}
+            onClick={(e) => setIsShowLeft(false)}
+            >
+              <h3>{`คงเหลือดีเซล ${data?.leftOfDiesel}`}</h3>
+              <h3>{`คงเหลือเบนซิน ${data?.leftOfBenzine}`}</h3>
+              <h3>{`คงเหลือการ์ดิเนีย ${data?.leftOfGadinia}`}</h3>
+              <h3>{`คงเหลือเทลลัส ${data?.leftOfTellus}`}</h3>
+              <h3>{`คงเหลือน้ำจืด ${data?.leftOfFreshWater}`}</h3>
+
+            </Card>
+            }
+          </div>
+        )
+        }
         <Button
           icon="pi pi-out"
           label="ย้อนกลับ"

@@ -5,6 +5,7 @@ import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "/node_modules/primeflex/primeflex.css";
 
+
 export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
 }

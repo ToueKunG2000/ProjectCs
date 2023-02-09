@@ -3,6 +3,7 @@ package com.kaset.backendProject.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kaset.backendProject.model.payload.DropdownPayload;
 import com.kaset.backendProject.model.payload.Vessel;
+import com.kaset.backendProject.model.payload.VesselStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,6 +32,13 @@ import java.util.Objects;
                 name = "TbVessels.getDropdownVessel",
                 query = "SELECT ves_id, ves_name_th FROM TB_VESSELS",
                 resultSetMapping = "DropdownMapping"
+        ),
+        @NamedNativeQuery(
+                name = "TbVessels.getStatusVessel",
+                query = "SELECT TV.ves_id, TV.ves_status , TV.ves_name_th,(\n" +
+                        "    SELECT concat(first_name,' ',last_name)  FROM TB_USERS TU WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id\n" +
+                        ") as name FROM TB_VESSELS TV",
+                resultSetMapping = "VesselStatus"
         )
 })
 @SqlResultSetMappings(
@@ -44,13 +52,21 @@ import java.util.Objects;
                         @ColumnResult(name = "counsel"),
                         @ColumnResult(name = "ves_status"),
                 })
-        }),
+            }),
             @SqlResultSetMapping(name = "DropdownMapping",classes = {
                     @ConstructorResult(targetClass = DropdownPayload.class, columns = {
                             @ColumnResult(name = "ves_id",type = Integer.class),
                             @ColumnResult(name = "ves_name_th",type = String.class),
                     })
-            })
+            }),
+            @SqlResultSetMapping(name = "VesselStatus",classes = {
+                    @ConstructorResult(targetClass = Vessel.class, columns = {
+                            @ColumnResult(name = "ves_id",type = Integer.class),
+                            @ColumnResult(name = "ves_name_th",type = String.class),
+                            @ColumnResult(name = "ves_status",type = Integer.class),
+                            @ColumnResult(name = "name",type = String.class),
+                    })
+            }),
         }
 )
 public class TbVessels implements Serializable {

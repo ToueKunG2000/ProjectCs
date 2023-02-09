@@ -57,6 +57,11 @@ public class VesselController {
         }
     }
 
+    @GetMapping("/getStatusVessel")
+    public ResponseEntity<List<Vessel>> getStatusVessel(){
+        return new ResponseEntity<>(vesselService.getVesselStatus(),HttpStatus.OK);
+    }
+
     @PostMapping("/getLogVesselList")
     public ResponseEntity<List<LogVesselPayload>> getDataLogList(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
         return new ResponseEntity<>(vesselService.getLogVesselList(monthYearVesIdPayload), HttpStatus.OK);
