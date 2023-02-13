@@ -85,8 +85,9 @@ export class VesselService {
   async changeVesselStatus(request: VesselForm){
     return await instance({
       method: "post",
-      url:"/",
+      url:"/changeVesselStatus",
       data: request,
     })
   }
+
 }

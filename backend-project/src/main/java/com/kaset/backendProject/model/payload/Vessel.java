@@ -51,6 +51,8 @@ public class Vessel {
 
     private String nameUser;
 
+    private String vesPhoto;
+
     public Vessel() {
     }
 
@@ -107,10 +109,60 @@ public class Vessel {
         this.usedOfFreshWater = usedOfFreshWater;
     }
 
+    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.currentPosition = currentPosition;
+        this.monthYear = monthYear;
+        this.counsel = counsel;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.vesStatus = vesStatus;
+        this.leftOfFreshWater = leftOfFreshWater;
+    }
+
     public Vessel(Integer vesId, String vesNameTh, Integer vesStatus, String nameUser) {
         this.vesId = vesId;
         this.vesNameTh = vesNameTh;
         this.vesStatus = vesStatus;
         this.nameUser = nameUser;
+    }
+
+    public Vessel(Integer vesId, String vesNameTh, Integer vesStatus, String nameUser, String vesPhoto) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.vesStatus = vesStatus;
+        this.nameUser = nameUser;
+        this.vesPhoto = vesPhoto;
+    }
+
+    public Vessel(Integer vesId, String vesNameTh, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String nameUser, String vesPhoto) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.vesStatus = vesStatus;
+        this.leftOfFreshWater = leftOfFreshWater;
+        this.nameUser = nameUser;
+        this.vesPhoto = vesPhoto;
+    }
+
+    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String vesPhoto) {
+        this.vesId = vesId;
+        this.vesNameTh = vesNameTh;
+        this.currentPosition = currentPosition;
+        this.monthYear = monthYear;
+        this.counsel = counsel;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.vesStatus = vesStatus;
+        this.leftOfFreshWater = leftOfFreshWater;
+        this.vesPhoto = vesPhoto;
     }
 }

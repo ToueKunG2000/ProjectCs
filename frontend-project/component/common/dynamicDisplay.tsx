@@ -6,6 +6,8 @@ import { VesselForm } from "./interface";
 import { VesselService } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
 import { PopupShowStatus } from "../disableVessel/PopupShowStatus";
+import { Button } from "primereact/button";
+import { PopupLeftResourcePage } from "./../homepage/popupLeftResourcePage";
 
 interface DynamicDisplayProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -23,6 +25,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
   const [logVessel,setLogVessel] = useState([]);
   const [showVesselStatus,setShowVesselStatus] = useState(false);
   const [vesselStatus,setVesselStatus] = useState<VesselForm>();
+  const [popupLeft, setPopupLeft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const dateNow = new Date();
 
@@ -45,6 +48,12 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
     setShowVesselStatus(true);
     setVesselStatus(vessel);
   };
+
+  const OnClickShowLeftPopup = (e: any, vessel: VesselForm) => {
+    e.preventDefault();
+    setPopupLeft(true);
+    setVesselStatus(vessel);
+  }
 
   useEffect(() => {
     const SetData = () => {
@@ -90,12 +99,20 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
       >
         <PopupShowStatus selectedVessel={vesselStatus!}/>
       </PopupPage>
+      <PopupPage
+        header="ทรัพยากรคงเหลือของเรือ"
+        setVisible={setPopupLeft}
+        visible={popupLeft} 
+      >
+        <PopupLeftResourcePage selectedVessel={vesselStatus!}/>
+      </PopupPage>
 
       {isShowStatus == false && showData.map((vessel) => {
         return (
           <>
             {vessel.vesStatus == 1 && (
               <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
+                <div className="flex flex-column justify-content-center align-items-center">
                 <Card
                   className={"card-display"}
                   onClick={(e) => AddOrEdit(e, vessel)}
@@ -103,7 +120,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                   <Image
                     className={styles.img}
                     alt="profile"
-                    src={process.env.NEXT_PUBLIC_IMAGE}
+                    src={`data:image/jpeg;base64,${vessel?.vesPhoto}`}
                     width="200"
                     height="200"
                   />
@@ -125,6 +142,8 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     }
                   </h3>
                 </Card>
+                <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
+                </div>
               </div>
             )}
             {vessel.vesStatus == 2 && (
@@ -133,7 +152,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                   <Image
                     className={styles.grayimg}
                     alt="profile"
-                    src={process.env.NEXT_PUBLIC_IMAGE}
+                    src={`data:image/jpeg;base64,${vessel?.vesPhoto}`}
                     width="200"
                     height="200"
                   />
@@ -156,7 +175,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
               <Image
                 className={styles["img"]}
                 alt="profile"
-                src={process.env.NEXT_PUBLIC_IMAGE}
+                src={`data:image/jpeg;base64,${vessel?.vesPhoto}`}
                 width="200"
                 height="200"
               />

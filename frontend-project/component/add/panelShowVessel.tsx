@@ -400,18 +400,36 @@ const PanelShowVessel = (props: AddPageProps) => {
              <Card className={styles["hidden-left"]}
              onClick={(e) => setIsShowLeft(true)}
              >
-              <h4>ตรวจสอบยอดคงเหลือ</h4>
+              <div className="block flex-column align-item-center">
+              <h3>ยอดคงเหลือ</h3>
+              <h3>รอบที่ผ่านมา</h3>
+              </div>  
             </Card>
             }
             {isShowLeft == true &&
             <Card className={styles["show-left"]}
             onClick={(e) => setIsShowLeft(false)}
             >
-              <h3>{`คงเหลือดีเซล ${data?.leftOfDiesel}`}</h3>
-              <h3>{`คงเหลือเบนซิน ${data?.leftOfBenzine}`}</h3>
-              <h3>{`คงเหลือการ์ดิเนีย ${data?.leftOfGadinia}`}</h3>
-              <h3>{`คงเหลือเทลลัส ${data?.leftOfTellus}`}</h3>
-              <h3>{`คงเหลือน้ำจืด ${data?.leftOfFreshWater}`}</h3>
+              <div className="flex justify-content-between">
+              <h3>{`คงเหลือดีเซล (กล.)`}</h3>
+              <h3>{`${data?.leftOfDiesel}`}</h3>
+              </div>
+              <div className="flex justify-content-between">
+              <h3>{`คงเหลือเบนซิน (ลิตร)`}</h3>
+              <h3>{`${data?.leftOfBenzine}`}</h3>
+              </div>
+              <div  className="flex justify-content-between">
+              <h3>{`คงเหลือการ์ดิเนีย (ลิตร)`}</h3>
+              <h3>{`${data?.leftOfGadinia}`}</h3>
+              </div>
+              <div className="flex justify-content-between">
+              <h3>{`คงเหลือเทลลัส (ลิตร)`}</h3>
+              <h3>{`${data?.leftOfTellus}`}</h3>
+              </div>
+              <div className="flex justify-content-between">
+              <h3>{`คงเหลือน้ำจืด (ตัน)`}</h3>
+              <h3>{`${data?.leftOfFreshWater}`}</h3>
+              </div>
 
             </Card>
             }

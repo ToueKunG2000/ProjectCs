@@ -109,6 +109,7 @@ export interface VesselForm {
   leftOfFreshWater: number;
   vesStatus: number;
   nameUser?: string;
+  vesPhoto?: string;
 }
 
 export interface VesselStatus{

@@ -24,6 +24,7 @@ const HomePageLayout = (props: HomePageProps) => {
     async function fetchData(){
       const user = JSON.parse(localStorage.getItem("user"));
       const vessel = await vesselService.getDataVessel(user.userId);
+      console.log(vessel.data);
       setVesselList(vessel.data);
       setShowPosition(user.positionId);
     }

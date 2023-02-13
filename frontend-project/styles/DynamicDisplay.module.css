@@ -18,3 +18,13 @@
     display: flex;
     justify-content: center;
 }
+
+.button{
+    background-color: #C83E4D;
+    border-color: #C83E4D;
+    width: 200px;
+}
+.button:hover{
+    background-color: #A53340 !important;
+    border-color: #A53340 !important;
+}

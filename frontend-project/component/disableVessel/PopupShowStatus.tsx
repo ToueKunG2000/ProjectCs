@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { DynamicInputFields, DynamicInputItem, VesselForm } from "./../common/interface";
 import { useEffect } from "react";
+import { VesselService } from "../../services/vessel.service";
 
 interface PopupShowStatusProps {
     selectedVessel: VesselForm;
@@ -10,6 +11,7 @@ interface PopupShowStatusProps {
 
 export const PopupShowStatus = (props: PopupShowStatusProps) => {
   const {selectedVessel} = props;
+  const vesselService = new VesselService();
 
   const { control, handleSubmit } = useForm({values: selectedVessel});
   const status = [
@@ -19,6 +21,8 @@ export const PopupShowStatus = (props: PopupShowStatusProps) => {
 
   const OnSubmit = (e:any) => {
     console.log(e);
+    vesselService.changeVesselStatus(e);
+    window.location.reload();
   }
 
   const dynamicInput: DynamicInputItem[] = [

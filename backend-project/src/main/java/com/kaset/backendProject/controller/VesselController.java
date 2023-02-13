@@ -79,4 +79,9 @@ public class VesselController {
         return vesselService.checkMonthYear(monthYear);
     }
 
+    @PostMapping("/changeVesselStatus")
+    public void changeStatus(@RequestBody Vessel vessel){
+        vesselService.changeStatus(vessel);
+    }
+
 }

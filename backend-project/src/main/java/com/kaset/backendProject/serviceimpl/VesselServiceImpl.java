@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,15 @@ public class VesselServiceImpl {
     }
 
     public List<Vessel> getAllVessel(){
-        return vesselRepository.getAllVessel();
+        List<Vessel> newVessel = vesselRepository.getAllVessel();
+        for(Vessel vessel: newVessel){
+            if(vessel.getVesPhoto() != null){
+                String text = vessel.getVesPhoto();
+                String result[]  = text.split("ฟ");
+                vessel.setVesPhoto(result[1]);
+            }
+        }
+        return newVessel;
     }
 
     public void updateToTbVessel(Vessel vessel){
@@ -65,10 +74,22 @@ public class VesselServiceImpl {
     }
 
     public List<Vessel> getVesselStatus(){
-        return vesselRepository.getStatusVessel();
+        List<Vessel> newVessel = vesselRepository.getStatusVessel();
+        for(Vessel vessel: newVessel){
+            if(vessel.getVesPhoto() != null){
+                String text = vessel.getVesPhoto();
+                String result[]  = text.split("ฟ");
+                vessel.setVesPhoto(result[1]);
+            }
+        }
+        return newVessel;
     }
 
     public List<LogVesselPayload> getLogVesselList(MonthYearVesIdPayload monthYearVesIdPayload){
         return logVesselRepository.getVesselLog(monthYearVesIdPayload.getVesId(),monthYearVesIdPayload.getMonthYear());
+    }
+
+    public void changeStatus(Vessel vessel){
+        vesselRepository.changeStatusVessel(vessel);
     }
 }

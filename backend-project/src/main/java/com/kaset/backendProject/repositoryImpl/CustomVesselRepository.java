@@ -9,4 +9,6 @@ public interface CustomVesselRepository {
     void updateApproveInTbVessel(UpdateVesselPayload approveForm);
 
     void resetToTbVessel(Vessel vessel);
+
+    void changeStatusVessel(Vessel vessel);
 }

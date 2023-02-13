@@ -6,11 +6,13 @@ import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.model.payload.VesselStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Base64;
 import java.util.Objects;
 
 @Entity
@@ -20,12 +22,18 @@ import java.util.Objects;
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "TbVessels.getVesselByVesId",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel FROM TB_VESSELS WHERE ves_id = :vesId",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel," +
+                        "left_of_benzine, left_of_diesel, left_of_gadinia, left_of_tellus, left_of_fresh_water, " +
+                        " CAST(ves_photo as VARCHAR(max)) as vesPhoto " +
+                        " FROM TB_VESSELS WHERE ves_id = :vesId",
                 resultSetMapping = "VesselDisplay"
         ),
         @NamedNativeQuery(
                 name = "TbVessels.getAllVessel",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel FROM TB_VESSELS ",
+                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel, " +
+                        "left_of_benzine, left_of_diesel, left_of_gadinia, left_of_tellus, left_of_fresh_water, " +
+                        " CAST(ves_photo as VARCHAR(max)) as vesPhoto" +
+                        " FROM TB_VESSELS ",
                 resultSetMapping = "VesselDisplay"
         ),
         @NamedNativeQuery(
@@ -37,7 +45,7 @@ import java.util.Objects;
                 name = "TbVessels.getStatusVessel",
                 query = "SELECT TV.ves_id, TV.ves_status , TV.ves_name_th,(\n" +
                         "    SELECT concat(first_name,' ',last_name)  FROM TB_USERS TU WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id\n" +
-                        ") as name FROM TB_VESSELS TV",
+                        ") as name, CAST(ves_photo as VARCHAR(max)) as vesPhoto FROM TB_VESSELS TV",
                 resultSetMapping = "VesselStatus"
         )
 })
@@ -50,7 +58,14 @@ import java.util.Objects;
                         @ColumnResult(name = "current_position"),
                         @ColumnResult(name = "month_year"),
                         @ColumnResult(name = "counsel"),
+                        @ColumnResult(name = "left_of_diesel"),
+                        @ColumnResult(name = "left_of_benzine"),
+                        @ColumnResult(name = "left_of_gadinia"),
+                        @ColumnResult(name = "left_of_tellus"),
                         @ColumnResult(name = "ves_status"),
+                        @ColumnResult(name = "left_of_fresh_water"),
+                        @ColumnResult(name = "vesPhoto",type = String.class),
+
                 })
             }),
             @SqlResultSetMapping(name = "DropdownMapping",classes = {
@@ -65,6 +80,7 @@ import java.util.Objects;
                             @ColumnResult(name = "ves_name_th",type = String.class),
                             @ColumnResult(name = "ves_status",type = Integer.class),
                             @ColumnResult(name = "name",type = String.class),
+                            @ColumnResult(name = "vesPhoto",type = String.class),
                     })
             }),
         }

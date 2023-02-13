@@ -197,6 +197,71 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
 
     @Modifying
     @Transactional
+    public void changeStatusVessel(Vessel vessel){
+        String sql = "UPDATE TB_VESSELS SET air_compressor = :airCompressor,"+
+                " air_conditioner = :airConditioner, big_machine_used = :bigMachineUsed, "+
+                " current_position = :currentPosition, diesel_oil_separator = :dieselOilSeparator, "+
+                " gear = :gear, pump = :pump, rudder = :rudder, freezer = :freezer, "+
+                " month_year = :monthYear, counsel = :counsel, "+
+                " electric_machine_used = :electricMachineUsed, "+
+                " water_purifier = :waterPurifier, ship_engine = :shipEngine,"+
+                " get_of_benzine = :getOfBenzine, get_of_diesel = :getOfDiesel, "+
+                " get_of_gadinia = :getOfGadinia, get_of_tellus = :getOfTellus, "+
+                " get_of_fresh_water = :getOfFreshWater, "+
+                " give_of_benzine = :giveOfBenzine, give_of_diesel = :giveOfDiesel, "+
+                " give_of_gadinia = :giveOfGadinir, give_of_tellus = :giveOfTellus, "+
+                " give_of_fresh_water = :giveOfFreshWater, used_of_benzine = :usedOfBenzine, "+
+                " used_of_diesel = :usedOfDiesel, used_of_gadinia = :usedOfGadinia, "+
+                " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater, ves_status = :vesStatus" +
+                " WHERE ves_id = :vesId ";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("vesId",vessel.getVesId());
+        query.setParameter("monthYear",null);
+        query.setParameter("currentPosition",1);
+        query.setParameter("electricMachineUsed",0);
+        query.setParameter("bigMachineUsed",0);
+        query.setParameter("counsel",null);
+
+        query.setParameter("airCompressor",0);
+        query.setParameter("airConditioner",0);
+        query.setParameter("waterPurifier",0);
+        query.setParameter("shipEngine",0);
+        query.setParameter("dieselOilSeparator",0);
+        query.setParameter("pump",0);
+        query.setParameter("gear",0);
+        query.setParameter("freezer",0);
+        query.setParameter("rudder",0);
+//        รับมาจากฝั่ง
+        query.setParameter("getOfBenzine",0);
+        query.setParameter("getOfDiesel",0);
+        query.setParameter("getOfGadinia",0);
+        query.setParameter("getOfTellus",0);
+        query.setParameter("getOfFreshWater",0);
+//        ให้เรือลำอื่น
+        query.setParameter("giveOfBenzine",0);
+        query.setParameter("giveOfDiesel",0);
+        query.setParameter("giveOfGadinir",0);
+        query.setParameter("giveOfTellus",0);
+        query.setParameter("giveOfFreshWater",0);
+//        ใช้ไป
+        query.setParameter("usedOfBenzine",0);
+        query.setParameter("usedOfDiesel",0);
+        query.setParameter("usedOfGadinia",0);
+        query.setParameter("usedOfTellus",0);
+        query.setParameter("usedOfFreshWater",0);
+
+        query.setParameter("vesStatus",vessel.getVesStatus());
+//        query.setParameter("leftOfBenzine",vessel.getLeftOfBenzine());
+//        query.setParameter("leftOfDiesel",vessel.getLeftOfDiesel());
+//        query.setParameter("leftOfGadinia",vessel.getLeftOfGadinia());
+//        query.setParameter("leftOfTellus",vessel.getLeftOfTellus());
+//        query.setParameter("leftOfFreshWater",vessel.getLeftOfFreshWater());
+        query.executeUpdate();
+
+    }
+
+    @Modifying
+    @Transactional
     public void updateApproveInTbVessel(UpdateVesselPayload approveForm){
         String sql = "UPDATE TB_VESSELS SET current_position = :currentPosition, " +
                 " counsel = :counsel WHERE ves_id = :vesId";

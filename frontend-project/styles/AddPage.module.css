@@ -24,13 +24,13 @@
 }
 .hidden-left {
     min-height: 100px !important;
-    min-width: 100px !important;
+    min-width: 200px !important;
     background-color: green;
     color: white !important;
 }
 .show-left {
     min-height: 100px !important;
-    min-width: 200px !important;
+    min-width: 300px !important;
     background-color: green;
     color: white !important;
 }
