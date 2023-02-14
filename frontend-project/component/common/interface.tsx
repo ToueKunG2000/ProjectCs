@@ -3,6 +3,8 @@ import { InputTextProps } from "primereact/inputtext";
 import { InputTextareaProps } from "primereact/inputtextarea";
 import { DropdownProps } from "primereact/dropdown";
 import { RegisterOptions, DeepMap, FieldError } from "react-hook-form";
+import { Dispatch, SetStateAction } from "react";
+import { FileUploadProps } from "primereact/fileupload";
 
 export interface FieldProps {
   children?: React.ReactNode;
@@ -27,6 +29,8 @@ export interface DynamicInputItem {
   inputDropdownProps?: DropdownProps;
   inputTextAreaProps?: InputTextareaProps;
   inputNumberProps?: InputNumberProps;
+  inputUpload?: FileUploadProps;
+  setValue?:any;
   rules?: Omit<
     RegisterOptions,
     "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
@@ -39,7 +43,8 @@ export interface DynamicInputItem {
     | "password"
     | "number"
     | "dropdown"
-    | "fraction";
+    | "fraction"
+    | "upload";
 }
 
 export interface DynamicInputFields extends FieldProps {
@@ -47,13 +52,21 @@ export interface DynamicInputFields extends FieldProps {
   control?: any;
 }
 
+export interface PanelProps{
+  setPage: Dispatch<SetStateAction<number>>;
+  setSelectedVessel?: VesselForm;
+}
+
 export interface UserForm {
+  name: string;
   password: string;
   positionId: number;
   vesId: number;
   userName: string;
   userId: number;
   positionName: string;
+  userStatus?: number;
+  userPhoto: string;
 }
 
 export interface UpdateForm {
@@ -66,6 +79,14 @@ export interface CheckLogMonthYearForm {
   monthYear: string;
   vesId?: number;
   vesNameTh?: string;
+}
+
+export interface AddUserForm{
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+  positionId: number;
 }
 
 export interface VesselForm {

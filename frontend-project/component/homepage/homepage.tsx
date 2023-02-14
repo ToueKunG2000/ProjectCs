@@ -2,13 +2,15 @@ import DynamicDisplay from "../common/dynamicDisplay";
 import HomepagePanelShow from "./panelShow";
 import Profile from "../common/profile";
 import { useEffect, useState } from "react";
-import PanelReportVessel from "../add/panelReportVessel";
+import PanelReportVessel from "../addReportVessel/panelReportVessel";
 import { VesselService } from "./../../services/vessel.service";
 import { VesselForm } from "../common/interface";
-import PanelShowVessel from "../add/panelShowVessel";
+import PanelShowVessel from "../addReportVessel/panelShowVessel";
 import { Button } from "primereact/button";
 import ShowLogVessel from "../logVessel/ShowLogVessel";
 import { PanelShowStatusVessel } from "../disableVessel/panelShowStatusVessel";
+import { PanelShowUser } from "../userManage/PanelShowUser";
+import { PanelAddUser } from "./../addUser/panelAddUser";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {
@@ -23,8 +25,7 @@ const HomePageLayout = (props: HomePageProps) => {
   useEffect(() => {
     async function fetchData(){
       const user = JSON.parse(localStorage.getItem("user"));
-      const vessel = await vesselService.getDataVessel(user.userId);
-      console.log(vessel.data);
+      const vessel = await vesselService.getDataVessel(user);
       setVesselList(vessel.data);
       setShowPosition(user.positionId);
     }
@@ -47,7 +48,7 @@ const HomePageLayout = (props: HomePageProps) => {
       {page == 1 && (
         <div>
           <HomepagePanelShow positionId={showPosition!} activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
-            <DynamicDisplay isShowStatus={false} setPage={setPage} data={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
+            <DynamicDisplay type="vessel" isShowStatus={false} setPage={setPage} dataVessel={vesselList} setVesselSelected={setVesselSelected} activeIndex={activeIndex}/>
           </HomepagePanelShow>
         </div>
       )}
@@ -66,11 +67,23 @@ const HomePageLayout = (props: HomePageProps) => {
           <ShowLogVessel setPage={setPage}/>
         </div>
       }
-      {page == 5 && (showPosition == 4 || showPosition == 5) && (
+      {page == 5 && (showPosition == 5) && (
         <div>
           <PanelShowStatusVessel setPage={setPage}/>
         </div>
       )}
+      {page == 6 && (showPosition == 5) && (
+        <div>
+          <PanelShowUser setPage={setPage}/>
+        </div>
+      )}
+      {page == 7 && (showPosition == 5) &&
+      (
+        <div>
+          <PanelAddUser setPage={setPage}/>
+        </div>
+      )
+      }
     </>
   );
 };

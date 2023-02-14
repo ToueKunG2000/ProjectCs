@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
@@ -15,10 +16,16 @@ import java.util.Objects;
 @NamedNativeQueries({
     @NamedNativeQuery(
             name = "TbUsers.findUserByUsername",
-            query = "SELECT ves_id, user_id, CONCAT(first_name,' ',last_name) as userName , " +
-                    " TP.position_name_th, passcode as [password], TU.position_id as positionId FROM TB_USERS TU INNER JOIN TB_POSITIONS" +
+            query = "SELECT ves_id, user_id, CONCAT(TP.rank_th,' ',first_name,' ',last_name) as userName , " +
+                    " TP.position_name_th, passcode as [password], TU.position_id as positionId, CAST(user_photo as VARCHAR(max)) as userPhoto FROM TB_USERS TU INNER JOIN TB_POSITIONS" +
                     " TP on TP.position_id = TU.position_id WHERE username = :username ",
-            resultSetMapping = "userMapping")
+            resultSetMapping = "userMapping"),
+    @NamedNativeQuery(
+            name = "TbUsers.getAllUser",
+            query = "SELECT user_id, CONCAT(TP.rank_th,' ',first_name,' ',last_name) as userName," +
+                    " TU.position_id as positionId, user_status, TP.position_name_th as positionName, CAST(user_photo as VARCHAR(max)) as userPhoto" +
+                    " FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id WHERE TU.position_id < 4",
+            resultSetMapping = "userManage"),
 })
 @SqlResultSetMappings({
         @SqlResultSetMapping(name = "userMapping",classes = {
@@ -28,7 +35,19 @@ import java.util.Objects;
                         @ColumnResult(name = "userName",type = String.class),
                         @ColumnResult(name = "position_name_th",type = String.class),
                         @ColumnResult(name = "positionId",type = Integer.class),
-                        @ColumnResult(name = "[password]", type = String.class)
+                        @ColumnResult(name = "[password]", type = String.class),
+                        @ColumnResult(name = "userPhoto",type = String.class)
+                })
+        }),
+        @SqlResultSetMapping(name = "userManage", classes = {
+                @ConstructorResult(targetClass = UserPayload.class, columns = {
+                        @ColumnResult(name = "user_id"),
+                        @ColumnResult(name = "userName"),
+                        @ColumnResult(name = "positionId"),
+                        @ColumnResult(name = "user_status"),
+                        @ColumnResult(name = "positionName"),
+                        @ColumnResult(name = "userPhoto",type = String.class)
+
                 })
         })
 })
@@ -36,40 +55,42 @@ import java.util.Objects;
 public class TbUsers implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id")
     private int userId;
     @Basic
-    @Column(name = "username", nullable = true, length = 50)
+    @Column(name = "username")
     private String username;
     @Basic
-    @Column(name = "passcode", nullable = true, length = 255)
+    @Column(name = "passcode")
     private String passcode;
     @Basic
-    @Column(name = "first_name", nullable = true, length = 100)
+    @Column(name = "first_name")
     private String firstName;
     @Basic
-    @Column(name = "last_name", nullable = true, length = 100)
+    @Column(name = "last_name")
     private String lastName;
     @Basic
-    @Column(name = "status_id", nullable = true)
-    private Integer statusId;
+    @Column(name = "user_status")
+    private Integer userStatus;
     @Basic
-    @Column(name = "position_id", nullable = true)
+    @Column(name = "position_id")
     private Integer positionId;
     @Basic
-    @Column(name = "ves_id", nullable = true)
+    @Column(name = "ves_id")
     private Integer vesId;
-
+    @Basic
+    @Column(name = "user_photo")
+    private String userPhoto;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbUsers tbUsers)) return false;
-        return getUserId() == tbUsers.getUserId() && Objects.equals(getUsername(), tbUsers.getUsername()) && Objects.equals(getPasscode(), tbUsers.getPasscode()) && Objects.equals(getFirstName(), tbUsers.getFirstName()) && Objects.equals(getLastName(), tbUsers.getLastName()) && Objects.equals(getStatusId(), tbUsers.getStatusId()) && Objects.equals(getPositionId(), tbUsers.getPositionId()) && Objects.equals(getVesId(), tbUsers.getVesId());
+        return getUserId() == tbUsers.getUserId() && Objects.equals(getUsername(), tbUsers.getUsername()) && Objects.equals(getPasscode(), tbUsers.getPasscode()) && Objects.equals(getFirstName(), tbUsers.getFirstName()) && Objects.equals(getLastName(), tbUsers.getLastName()) && Objects.equals(getUserStatus(), tbUsers.getUserStatus()) && Objects.equals(getPositionId(), tbUsers.getPositionId()) && Objects.equals(getVesId(), tbUsers.getVesId()) && Objects.equals(getUserPhoto(), tbUsers.getUserPhoto());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUserId(), getUsername(), getPasscode(), getFirstName(), getLastName(), getStatusId(), getPositionId(), getVesId());
+        return Objects.hash(getUserId(), getUsername(), getPasscode(), getFirstName(), getLastName(), getUserStatus(), getPositionId(), getVesId(), getUserPhoto());
     }
 }

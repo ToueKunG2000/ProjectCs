@@ -2,29 +2,34 @@ import { Card } from "primereact/card";
 import { Image } from "primereact/image";
 import { SetStateAction, Dispatch, useEffect, useState } from "react";
 import styles from "../../styles/DynamicDisplay.module.css";
-import { VesselForm } from "./interface";
+import { UserForm, VesselForm } from "./interface";
 import { VesselService } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
 import { PopupShowStatus } from "../disableVessel/PopupShowStatus";
 import { Button } from "primereact/button";
 import { PopupLeftResourcePage } from "./../homepage/popupLeftResourcePage";
+import { PopupUserStatus } from "../userManage/popupUserStatus";
 
 interface DynamicDisplayProps {
   setPage: Dispatch<SetStateAction<number>>;
-  data: VesselForm[];
-  setVesselSelected: Dispatch<SetStateAction<number>>;
-  activeIndex: number;
+  dataVessel?: VesselForm[];
+  dataUser?: UserForm[];
+  setVesselSelected?: Dispatch<SetStateAction<number>>;
+  activeIndex?: number;
   isShowStatus?: boolean;
+  type: string;
 }
 
 const DynamicDisplay = (props: DynamicDisplayProps) => {
-  const { setPage, data, setVesselSelected, activeIndex, isShowStatus } = props;
+  const { type, setPage, dataUser,dataVessel , setVesselSelected, activeIndex, isShowStatus } = props;
   const [showData, setShowData] = useState<VesselForm[]>([]);
   const [isShow, setIsShow] = useState(false);
+  const [showVesselStatus,setShowVesselStatus] = useState(false);
   const vesselService = new VesselService();
   const [logVessel,setLogVessel] = useState([]);
-  const [showVesselStatus,setShowVesselStatus] = useState(false);
+  const [selectUser, setSelectUser] = useState<UserForm>();
   const [vesselStatus,setVesselStatus] = useState<VesselForm>();
+  const [popupUser, setPopupUser] = useState(false);
   const [popupLeft, setPopupLeft] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const dateNow = new Date();
@@ -55,31 +60,37 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
     setVesselStatus(vessel);
   }
 
+  const OnClickPopupUser = (e: any, user: UserForm) => {
+    e.preventDefault();
+    setPopupUser(true);
+    setSelectUser(user);
+  }
+
   useEffect(() => {
     const SetData = () => {
         vesselService.checkMonthYear(dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })).then((res)=>{
             setLogVessel(res.data);
         });
       if(activeIndex == 0){
-          setShowData(data);
+          setShowData(dataVessel!);
       }
       else if(activeIndex == 1){
         vesselService.checkMonthYear(dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })).then((res) => {
-           const filterData = data.filter((vessel) => {
+           const filterData = dataVessel.filter((vessel) => {
                 return ( !res.data.includes(vessel.vesId) && vessel.monthYear === null && vessel.vesStatus == 1);
            })
            setShowData(filterData);
         });
       }
       else if(activeIndex == 2){
-        const filterData = data.filter((vessel) => {
+        const filterData = dataVessel.filter((vessel) => {
             return ( vessel.vesStatus == 1 && vessel.monthYear !== null)
         })
         setShowData(filterData);
       }
       else if(activeIndex == 3){
         vesselService.checkMonthYear(dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })).then((res) => {
-            const filterData = data.filter((vessel) => {
+            const filterData = dataVessel.filter((vessel) => {
                  return ( res.data.includes(vessel.vesId) && vessel.monthYear === null && vessel.vesStatus == 1);
             })
             setShowData(filterData);
@@ -107,7 +118,15 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
         <PopupLeftResourcePage selectedVessel={vesselStatus!}/>
       </PopupPage>
 
-      {isShowStatus == false && showData.map((vessel) => {
+      <PopupPage
+        header="รายละเอียด"
+        setVisible={setPopupUser}
+        visible={popupUser}
+      >
+        <PopupUserStatus selectedUser={selectUser!}/>
+      </PopupPage>
+
+      {type.includes("vessel") && isShowStatus == false && showData.map((vessel) => {
         return (
           <>
             {vessel.vesStatus == 1 && (
@@ -164,7 +183,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
           </>
         );
       })}
-      {isShowStatus == true && data.map((vessel) => {
+      {type.includes("vessel") && isShowStatus == true && dataVessel.map((vessel) => {
         return (
           <>  
           <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
@@ -188,6 +207,27 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
       })
 
       }
+      {type.includes("user") && dataUser?.map((user) => (
+        <>
+        <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
+            <Card
+              className={"card-display"}
+              onClick={(e)=>OnClickPopupUser(e,user)}
+            >
+              <Image
+                className={styles["img"]}
+                alt="profile"
+                src={`data:image/jpeg;base64,${user?.userPhoto}`}
+                width="200"
+                height="200"
+              />
+              <h2>{user?.positionName}</h2>
+              <h2>{user?.name}</h2>
+              <h3>{`สถานะ ${user.userStatus == 1?"ปฏิบัติงาน":"ปลดประจำการ"}`}</h3>
+            </Card>
+          </div>
+        </>
+      ))}
     </div>
   );
 };

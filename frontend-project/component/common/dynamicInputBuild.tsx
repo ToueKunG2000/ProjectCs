@@ -5,6 +5,7 @@ import { InputNumberProps } from "primereact/inputnumber";
 import InputTextArea from "./input/inputTextArea";
 import InputTextField from "./input/inputText";
 import InputDropdown from "./input/inputDropdown";
+import { InputUpload } from "./input/inputUpload";
 
 interface InputBuilderProps{
     field: DynamicInputItem;
@@ -57,6 +58,14 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
                 data={field.options}
                 controllerName={field.fieldID}
                 {...field.inputDropdownProps}
+            />
+        }
+        if(field.type == "upload"){
+            return <InputUpload 
+                control={control}
+                setValue={field.setValue}
+                controllerName={field.fieldID}
+                {...field.inputUpload}
             />
         }
     }

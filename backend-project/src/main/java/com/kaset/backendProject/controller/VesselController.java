@@ -50,7 +50,7 @@ public class VesselController {
     public ResponseEntity<Vessel> getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
         Vessel vessel = vesselService.getDataLog(monthYearVesIdPayload);
         if(vessel == null){
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null,HttpStatus.OK);
         }
         else{
             return new ResponseEntity<>(vessel,HttpStatus.OK);

@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { CheckLogMonthYearForm, VesselForm } from "../component/common/interface";
+import { CheckLogMonthYearForm, UserForm, VesselForm } from "../component/common/interface";
 import instance from "./../axios";
 import { UpdateForm } from "./../component/common/interface";
 
@@ -40,9 +40,11 @@ export class VesselService {
     return res;
   }
 
-  async getDataVessel(userId: number) {
-    const res = await instance.get("/checkUser", {
-      params: { userId: userId },
+  async getDataVessel(user: UserForm) {
+    const res = await instance({
+      method: "post",
+      url: "/checkUser",
+      data: user,
     });
     return res;
   }

@@ -11,8 +11,8 @@ import {
   VesselForm,
 } from "../common/interface";
 import styles from "../../styles/AddPage.module.css";
-import { UpdateForm } from "./../common/interface";
-import PopupPage from "./../common/popupPage";
+import { UpdateForm } from "../common/interface";
+import PopupPage from "../common/popupPage";
 import { useForm } from "react-hook-form";
 
 interface AddPageProps {

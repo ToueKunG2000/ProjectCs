@@ -8,7 +8,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,19 +22,26 @@ public class VesselServiceImpl {
     private LogVesselRepository logVesselRepository;
 
     public List<Vessel> getVesselFromVesId(Integer vesId){
-        return vesselRepository.getVesselByVesId(vesId);
+        List<Vessel> oldVessel =  vesselRepository.getVesselByVesId(vesId);
+        List<Vessel> newVessel = cutString(oldVessel);
+        return oldVessel;
     }
 
-    public List<Vessel> getAllVessel(){
-        List<Vessel> newVessel = vesselRepository.getAllVessel();
-        for(Vessel vessel: newVessel){
+    public List<Vessel> cutString(List<Vessel> vesselList){
+        for(Vessel vessel: vesselList){
             if(vessel.getVesPhoto() != null){
                 String text = vessel.getVesPhoto();
                 String result[]  = text.split("ฟ");
                 vessel.setVesPhoto(result[1]);
             }
         }
-        return newVessel;
+        return vesselList;
+    }
+
+    public List<Vessel> getAllVessel(){
+        List<Vessel> oldVessel = vesselRepository.getAllVessel();
+        List<Vessel> newVessel = cutString(oldVessel);
+        return oldVessel;
     }
 
     public void updateToTbVessel(Vessel vessel){
@@ -74,15 +80,9 @@ public class VesselServiceImpl {
     }
 
     public List<Vessel> getVesselStatus(){
-        List<Vessel> newVessel = vesselRepository.getStatusVessel();
-        for(Vessel vessel: newVessel){
-            if(vessel.getVesPhoto() != null){
-                String text = vessel.getVesPhoto();
-                String result[]  = text.split("ฟ");
-                vessel.setVesPhoto(result[1]);
-            }
-        }
-        return newVessel;
+        List<Vessel> oldVessel = vesselRepository.getStatusVessel();
+        List<Vessel> newVessel = cutString(oldVessel);
+        return oldVessel;
     }
 
     public List<LogVesselPayload> getLogVesselList(MonthYearVesIdPayload monthYearVesIdPayload){

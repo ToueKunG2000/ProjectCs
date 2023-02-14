@@ -31,7 +31,8 @@ export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
         <>
             <Button label="ย้อนกลับ" onClick={OnClickBack}/>
             <DynamicDisplay
-                data={vesselShow!}
+                type="vessel"
+                dataVessel={vesselShow!}
                 activeIndex={0}
                 setPage={setPage}
                 isShowStatus={true}

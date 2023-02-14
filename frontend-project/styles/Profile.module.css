@@ -29,9 +29,11 @@
     width: 550px;
     border-radius: 25px;
 }
-.img{
+.image{
     padding: 20px;
-    border-radius: 100%;
+}
+.image img{
+    border-radius: 100px !important;
 }
 .text{
     display: flex;

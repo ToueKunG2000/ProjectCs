@@ -7,6 +7,7 @@ import com.kaset.backendProject.serviceimpl.LoginServiceImpl;
 import com.kaset.backendProject.serviceimpl.UserServiceImpl;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,10 +38,25 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/checkUser")
-    public ResponseEntity<List<Vessel>> getUser(@RequestParam(value = "userId") Integer userId) {
-        Integer vesId = userService.getVesselFromUserId(userId);
-        if(vesId == null){
+    @GetMapping("/getAllUser")
+    public ResponseEntity<List<UserPayload>> getAllUser(){
+        return new ResponseEntity<>(userService.getAllUser(),HttpStatus.OK);
+    }
+
+    @PostMapping("/changeUserStatus")
+    public void changeUserStatus(@RequestBody UserPayload userPayload){
+        userService.changeUserStatus(userPayload);
+    }
+
+    @PostMapping("/addUser")
+    public void addUser(@RequestBody UserPayload userPayload){
+        userService.addNewUser(userPayload);
+    }
+
+    @PostMapping("/checkUser")
+    public ResponseEntity<List<Vessel>> getUser(@RequestBody UserPayload userPayload) {
+        Integer vesId = userService.getVesselFromUserId(userPayload);
+        if(vesId == null && ( userPayload.getPositionId() == 4 || userPayload.getPositionId() == 5) ){
             return new ResponseEntity<>(vesselService.getAllVessel(),HttpStatus.OK);
         }
         return new ResponseEntity<>(vesselService.getVesselFromVesId(vesId), HttpStatus.OK);
