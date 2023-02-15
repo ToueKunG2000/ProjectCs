@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { VesselService } from "../../services/vessel.service";
+import { VesselServices } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import {
   CheckLogMonthYearForm,
@@ -27,7 +27,7 @@ const PanelShowVessel = (props: AddPageProps) => {
   const [data, setData] = useState<VesselForm>();
   const [isShowButton, setIsShowButton] = useState(false);
   const [isShowPopup, setIsShowPopup] = useState(false);
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   const [user, setUser] = useState<UserForm>();
   const [isFetch, setIsFetch] = useState(false);
   const [isShowLeft,setIsShowLeft] = useState(false);
@@ -442,7 +442,7 @@ const PanelShowVessel = (props: AddPageProps) => {
           className="p-button-danger"
           onClick={onGoBack}
         />
-        <h1> ส่งข้อมูลเรือ : {data?.vesNameTh}</h1>
+        <h1> ส่งข้อมูลเรือ : {data?.vesName}</h1>
         <h1>รอบที่ {data?.monthYear}</h1>
         <div className={styles.panel}>
           <Card>

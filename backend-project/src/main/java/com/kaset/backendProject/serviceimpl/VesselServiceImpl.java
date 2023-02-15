@@ -23,24 +23,11 @@ public class VesselServiceImpl {
 
     public List<Vessel> getVesselFromVesId(Integer vesId){
         List<Vessel> oldVessel =  vesselRepository.getVesselByVesId(vesId);
-        List<Vessel> newVessel = cutString(oldVessel);
         return oldVessel;
-    }
-
-    public List<Vessel> cutString(List<Vessel> vesselList){
-        for(Vessel vessel: vesselList){
-            if(vessel.getVesPhoto() != null){
-                String text = vessel.getVesPhoto();
-                String result[]  = text.split("ฟ");
-                vessel.setVesPhoto(result[1]);
-            }
-        }
-        return vesselList;
     }
 
     public List<Vessel> getAllVessel(){
         List<Vessel> oldVessel = vesselRepository.getAllVessel();
-        List<Vessel> newVessel = cutString(oldVessel);
         return oldVessel;
     }
 
@@ -79,10 +66,8 @@ public class VesselServiceImpl {
         return dropdown;
     }
 
-    public List<Vessel> getVesselStatus(){
-        List<Vessel> oldVessel = vesselRepository.getStatusVessel();
-        List<Vessel> newVessel = cutString(oldVessel);
-        return oldVessel;
+    public List<VesselStatus> getVesselStatus(){
+        return vesselRepository.getStatusVessel();
     }
 
     public List<LogVesselPayload> getLogVesselList(MonthYearVesIdPayload monthYearVesIdPayload){
@@ -91,5 +76,9 @@ public class VesselServiceImpl {
 
     public void changeStatus(Vessel vessel){
         vesselRepository.changeStatusVessel(vessel);
+    }
+
+    public Integer addVessel(AddVesselPayload addVesselPayload){
+        return vesselRepository.insertNewVessel(addVesselPayload);
     }
 }

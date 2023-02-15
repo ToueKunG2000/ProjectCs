@@ -81,6 +81,16 @@ export interface CheckLogMonthYearForm {
   vesNameTh?: string;
 }
 
+export interface AddVesselForm {
+  vesName: string;
+  bigMachineNum: number;
+  electricMachineNum: number;
+  vesPhoto: string;
+  crewId: number;
+  engineerId: number;
+  commanderId: number;
+}
+
 export interface AddUserForm{
   username: string;
   password: string;
@@ -89,9 +99,16 @@ export interface AddUserForm{
   positionId: number;
 }
 
-export interface VesselForm {
+export interface VesselStatusForm{
+  name?: string;
+  crewId: number;
+  engineerId:number;
+  commanderId:number;
+}
+
+export interface VesselForm extends VesselStatusForm {
   vesId: number;
-  vesNameTh: string;
+  vesName: string;
   bigMachineNum?: number;
   electricMachineNum?: number;
   bigMachineUsed: number;
@@ -129,13 +146,13 @@ export interface VesselForm {
   leftOfTellus: number;
   leftOfFreshWater: number;
   vesStatus: number;
-  nameUser?: string;
   vesPhoto?: string;
 }
+
 
 export interface VesselStatus{
   vesStatus: number;
   vesId: number;
   name?: string;
-  vesNameTh: string;
+  vesName: string;
 } 

@@ -10,7 +10,7 @@ import {
   VesselForm,
 } from "../common/interface";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
-import { VesselService } from "../../services/vessel.service";
+import { VesselServices } from "../../services/vessel.service";
 import PopupPage from "../common/popupPage";
 
 interface AddPageProps {
@@ -27,7 +27,7 @@ const PanelReportVessel = (props: AddPageProps) => {
   const [isShowWarning, setIsShowWarning] = useState(false);
   const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [dateTime, setDateTime] = useState("");
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   const [isFetch, setIsFetch] = useState(false);
   const [isShowCounsel, setIsShowCounsel] = useState(false);
   const {
@@ -458,7 +458,7 @@ const PanelReportVessel = (props: AddPageProps) => {
           className="p-button-danger"
           onClick={onGoBack}
         />
-        <h1> ส่งข้อมูลเรือ : {data?.vesNameTh}</h1>
+        <h1> ส่งข้อมูลเรือ : {data?.vesName}</h1>
         <h1>รอบที่ {data?.monthYear === null? dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }): data?.monthYear}</h1>
         <PopupPage
           setVisible={setIsShowWarning}

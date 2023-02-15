@@ -1,5 +1,7 @@
 package com.kaset.backendProject.repositoryImpl;
 
+import com.kaset.backendProject.model.entity.TbVessels;
+import com.kaset.backendProject.model.payload.AddVesselPayload;
 import com.kaset.backendProject.model.payload.UpdateVesselPayload;
 import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.EntityManager;
@@ -72,6 +74,25 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         query.setParameter("usedOfFreshWater",vessel.getUsedOfFreshWater());
         query.executeUpdate();
 
+    }
+
+    @Modifying
+    @Transactional
+    public Integer insertNewVessel(AddVesselPayload addVesselPayload){
+        String sql = "INSERT INTO TB_VESSELS OUTPUT (inserted.ves_id) VALUES(:vesName, :bigMachineNum, :electricMachineNum,0,0," +
+                "0,0,0,0,0," +
+                "0,0,0,0,0," +
+                "0,0,0,0,0," +
+                "0,0,0,0," +
+                "null,null,1,1,0," +
+                "0,0,0,0,0," +
+                "0,0,0,0,:vesPhoto) ";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("vesName",addVesselPayload.getVesName());
+        query.setParameter("bigMachineNum",addVesselPayload.getBigMachineNum());
+        query.setParameter("electricMachineNum",addVesselPayload.getElectricMachineNum());
+        query.setParameter("vesPhoto",addVesselPayload.getVesPhoto());
+        return (Integer) query.getSingleResult();
     }
 
     @Modifying

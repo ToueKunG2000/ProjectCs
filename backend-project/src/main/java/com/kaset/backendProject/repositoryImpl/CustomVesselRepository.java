@@ -1,5 +1,6 @@
 package com.kaset.backendProject.repositoryImpl;
 
+import com.kaset.backendProject.model.payload.AddVesselPayload;
 import com.kaset.backendProject.model.payload.UpdateVesselPayload;
 import com.kaset.backendProject.model.payload.Vessel;
 
@@ -11,4 +12,5 @@ public interface CustomVesselRepository {
     void resetToTbVessel(Vessel vessel);
 
     void changeStatusVessel(Vessel vessel);
+    Integer insertNewVessel(AddVesselPayload addVesselPayload);
 }

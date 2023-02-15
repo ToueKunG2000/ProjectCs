@@ -3,7 +3,7 @@ import HomepagePanelShow from "./panelShow";
 import Profile from "../common/profile";
 import { useEffect, useState } from "react";
 import PanelReportVessel from "../addReportVessel/panelReportVessel";
-import { VesselService } from "./../../services/vessel.service";
+import { VesselServices } from "./../../services/vessel.service";
 import { VesselForm } from "../common/interface";
 import PanelShowVessel from "../addReportVessel/panelShowVessel";
 import { Button } from "primereact/button";
@@ -11,6 +11,7 @@ import ShowLogVessel from "../logVessel/ShowLogVessel";
 import { PanelShowStatusVessel } from "../disableVessel/panelShowStatusVessel";
 import { PanelShowUser } from "../userManage/PanelShowUser";
 import { PanelAddUser } from "./../addUser/panelAddUser";
+import { PanelAddVessel } from "../disableVessel/PanelAddVessel";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {
@@ -20,7 +21,7 @@ const HomePageLayout = (props: HomePageProps) => {
   const [showPosition, setShowPosition] = useState();
   const [vesselSelected, setVesselSelected] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   
   useEffect(() => {
     async function fetchData(){
@@ -83,6 +84,14 @@ const HomePageLayout = (props: HomePageProps) => {
           <PanelAddUser setPage={setPage}/>
         </div>
       )
+      }
+      {page == 8 && (showPosition == 5) &&
+      (
+        <div>
+          <PanelAddVessel setPage={setPage}/>
+        </div>
+      )
+
       }
     </>
   );

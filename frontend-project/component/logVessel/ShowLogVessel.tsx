@@ -5,15 +5,14 @@ import { DataTable } from "primereact/datatable";
 import React from "react";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
-import ViewRender from "../common/pdf/pdfView";
-import { VesselService } from "../../services/vessel.service";
+import { VesselServices } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import {
   CheckLogMonthYearForm,
   DynamicInputItem,
   VesselForm,
 } from "../common/interface";
-import PDFView from "../common/pdf/pdf";
+import {PDFView} from "../common/pdf/pdf";
 import PopupPage from "../common/popupPage";
 import PopupShowLogVessel from "./PopupShowLogVessel";
 
@@ -25,7 +24,7 @@ interface ShowLogVesselProps{
 const ShowLogVessel = (props: ShowLogVesselProps) => {
   const {setPage} = props;
   const [isDownload,setIsDownload]= useState(false);
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   const [logVessel, setLogVessel] = useState<VesselForm[]>([]);
   const [request, setRequest] = useState<CheckLogMonthYearForm>();
   const [vesselDropdown,setVesselDropdown] = useState<any[]>([]);
@@ -97,20 +96,28 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
     vesselService.getLogVessel(data).then((res)=>{
       setVesselLog(res.data)
     })
-
   }
+
 
   return (
     <>
-      {!isDownload && 
-        <>
-          <PopupPage
+      <>
+        <PopupPage
         widthLeng={55}
         setVisible={setVisiblePopup}
         visible={visiblePopup}
         header="ข้อมูลเรือ"
         >
           <PopupShowLogVessel request={selectLogVessel!}></PopupShowLogVessel>
+        </PopupPage>
+        <PopupPage
+          widthLeng={55}
+          setVisible={setIsDownload}
+          visible={isDownload}
+          header="Download Report"
+        >
+          <Button label="ย้อนกลับ" onClick={(e)=>setIsDownload(false)} />
+          <PDFView data={vesselLog!} />
         </PopupPage>
         <Button className={"p-button-danger"} label="ย้อนกลับ" onClick={OnGoBack}/>
         <div className="flex justify-content-center">
@@ -129,19 +136,12 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
         </div>
         <div>
           <DataTable value={logVessel}>
-            <Column header="เรือ" field="vesNameTh" />
+            <Column header="เรือ" field="vesName" />
             <Column header="เดือน" field="monthYear" />
             <Column body={(e) => ButtonPanel(e)} />
           </DataTable>
         </div>
       </>
-      }
-      {isDownload && 
-      <>
-      <Button label="ย้อนกลับ" className="p-button-danger" onClick={()=>setIsDownload(false)}/>
-        <PDFView data={vesselLog!}/>   
-      </>
-      }
     </>
   );
 };

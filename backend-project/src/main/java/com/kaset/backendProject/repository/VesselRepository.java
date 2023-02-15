@@ -25,7 +25,7 @@ public interface VesselRepository extends JpaRepository<TbVessels, Integer>, Cus
     List<DropdownPayload> getDropdownVessel();
 
     @Query(nativeQuery = true)
-    List<Vessel> getStatusVessel();
+    List<VesselStatus> getStatusVessel();
 
     @Query(value = "SELECT TV FROM TbVessels TV WHERE TV.vesId = :vesId")
     TbVessels getDataVessel(@Param(value = "vesId") Integer vesId);

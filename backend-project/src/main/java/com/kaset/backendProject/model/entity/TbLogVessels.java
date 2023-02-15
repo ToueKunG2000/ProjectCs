@@ -15,7 +15,7 @@ import java.util.Objects;
     {
             @NamedNativeQuery(name = "TbLogVessels.getDataLog",
                 resultSetMapping = "LogVessel",
-                query = "SELECT ves_name_th, big_machine_used, big_machine_num," +
+                query = "SELECT ves_name, big_machine_used, big_machine_num," +
                         " electric_machine_used, electric_machine_num, " +
                         "air_conditioner, air_compressor, freezer, ship_engine, pump, rudder," +
                         "water_purifier, diesel_oil_seperator, gear, " +
@@ -47,7 +47,7 @@ import java.util.Objects;
 @SqlResultSetMappings({
     @SqlResultSetMapping(name = "LogVessel",classes = {
             @ConstructorResult(targetClass = Vessel.class, columns = {
-                    @ColumnResult(name = "ves_name_th",type = String.class),
+                    @ColumnResult(name = "ves_name",type = String.class),
                     @ColumnResult(name = "big_machine_used",type = Integer.class),
                     @ColumnResult(name = "big_machine_num",type = Integer.class),
                     @ColumnResult(name = "electric_machine_used",type = Integer.class),
@@ -105,8 +105,8 @@ public class TbLogVessels implements Serializable {
     @Column(name = "ves_id")
     private int vesId;
     @Basic
-    @Column(name = "ves_name_th")
-    private String vesNameTh;
+    @Column(name = "ves_name")
+    private String vesName;
     @Basic
     @Column(name = "big_machine_num")
     private Integer bigMachineNum;
@@ -214,11 +214,11 @@ public class TbLogVessels implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbLogVessels that)) return false;
-        return getLogId() == that.getLogId() && getVesId() == that.getVesId() && Objects.equals(getVesNameTh(), that.getVesNameTh()) && Objects.equals(getBigMachineNum(), that.getBigMachineNum()) && Objects.equals(getElectricMachineNum(), that.getElectricMachineNum()) && Objects.equals(getBigMachineUsed(), that.getBigMachineUsed()) && Objects.equals(getElectricMachineUsed(), that.getElectricMachineUsed()) && Objects.equals(getAirConditioner(), that.getAirConditioner()) && Objects.equals(getAirCompressor(), that.getAirCompressor()) && Objects.equals(getFreezer(), that.getFreezer()) && Objects.equals(getShipEngine(), that.getShipEngine()) && Objects.equals(getPump(), that.getPump()) && Objects.equals(getRudder(), that.getRudder()) && Objects.equals(getWaterPurifier(), that.getWaterPurifier()) && Objects.equals(getDieselOilSeperator(), that.getDieselOilSeperator()) && Objects.equals(getGear(), that.getGear()) && Objects.equals(getMonthYear(), that.getMonthYear()) && Objects.equals(getGetOfBenzine(), that.getGetOfBenzine()) && Objects.equals(getGetOfDiesel(), that.getGetOfDiesel()) && Objects.equals(getGetOfGadinia(), that.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), that.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), that.getGetOfFreshWater()) && Objects.equals(getGiveOfBenzine(), that.getGiveOfBenzine()) && Objects.equals(getGiveOfDiesel(), that.getGiveOfDiesel()) && Objects.equals(getGiveOfGadinia(), that.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), that.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), that.getGiveOfFreshWater()) && Objects.equals(getUsedOfBenzine(), that.getUsedOfBenzine()) && Objects.equals(getUsedOfDiesel(), that.getUsedOfDiesel()) && Objects.equals(getUsedOfGadinia(), that.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), that.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), that.getUsedOfFreshWater()) && Objects.equals(getLeftOfBenzine(), that.getLeftOfBenzine()) && Objects.equals(getLeftOfDiesel(), that.getLeftOfDiesel()) && Objects.equals(getLeftOfGadinia(), that.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), that.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), that.getLeftOfFreshWater());
+        return getLogId() == that.getLogId() && getVesId() == that.getVesId() && Objects.equals(getVesName(), that.getVesName()) && Objects.equals(getBigMachineNum(), that.getBigMachineNum()) && Objects.equals(getElectricMachineNum(), that.getElectricMachineNum()) && Objects.equals(getBigMachineUsed(), that.getBigMachineUsed()) && Objects.equals(getElectricMachineUsed(), that.getElectricMachineUsed()) && Objects.equals(getAirConditioner(), that.getAirConditioner()) && Objects.equals(getAirCompressor(), that.getAirCompressor()) && Objects.equals(getFreezer(), that.getFreezer()) && Objects.equals(getShipEngine(), that.getShipEngine()) && Objects.equals(getPump(), that.getPump()) && Objects.equals(getRudder(), that.getRudder()) && Objects.equals(getWaterPurifier(), that.getWaterPurifier()) && Objects.equals(getDieselOilSeperator(), that.getDieselOilSeperator()) && Objects.equals(getGear(), that.getGear()) && Objects.equals(getMonthYear(), that.getMonthYear()) && Objects.equals(getGetOfBenzine(), that.getGetOfBenzine()) && Objects.equals(getGetOfDiesel(), that.getGetOfDiesel()) && Objects.equals(getGetOfGadinia(), that.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), that.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), that.getGetOfFreshWater()) && Objects.equals(getGiveOfBenzine(), that.getGiveOfBenzine()) && Objects.equals(getGiveOfDiesel(), that.getGiveOfDiesel()) && Objects.equals(getGiveOfGadinia(), that.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), that.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), that.getGiveOfFreshWater()) && Objects.equals(getUsedOfBenzine(), that.getUsedOfBenzine()) && Objects.equals(getUsedOfDiesel(), that.getUsedOfDiesel()) && Objects.equals(getUsedOfGadinia(), that.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), that.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), that.getUsedOfFreshWater()) && Objects.equals(getLeftOfBenzine(), that.getLeftOfBenzine()) && Objects.equals(getLeftOfDiesel(), that.getLeftOfDiesel()) && Objects.equals(getLeftOfGadinia(), that.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), that.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), that.getLeftOfFreshWater());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getLogId(), getVesId(), getVesNameTh(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeperator(), getGear(), getMonthYear(), getGetOfBenzine(), getGetOfDiesel(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfBenzine(), getGiveOfDiesel(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getUsedOfBenzine(), getUsedOfDiesel(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfBenzine(), getLeftOfDiesel(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater());
+        return Objects.hash(getLogId(), getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeperator(), getGear(), getMonthYear(), getGetOfBenzine(), getGetOfDiesel(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfBenzine(), getGiveOfDiesel(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getUsedOfBenzine(), getUsedOfDiesel(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfBenzine(), getLeftOfDiesel(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater());
     }
 }

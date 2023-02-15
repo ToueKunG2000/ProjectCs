@@ -2,11 +2,10 @@ package com.kaset.backendProject.controller;
 
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.*;
-import com.kaset.backendProject.repository.LogVesselRepository;
+import com.kaset.backendProject.serviceimpl.UserServiceImpl;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +19,10 @@ public class VesselController {
 
     @Autowired
     private VesselServiceImpl vesselService;
+
+    @Autowired
+    private UserServiceImpl userService;
+
 
     @PutMapping("/createReport")
     public void updateToReport(@RequestBody Vessel vessel){
@@ -58,7 +61,7 @@ public class VesselController {
     }
 
     @GetMapping("/getStatusVessel")
-    public ResponseEntity<List<Vessel>> getStatusVessel(){
+    public ResponseEntity<List<VesselStatus>> getStatusVessel(){
         return new ResponseEntity<>(vesselService.getVesselStatus(),HttpStatus.OK);
     }
 
@@ -82,6 +85,11 @@ public class VesselController {
     @PostMapping("/changeVesselStatus")
     public void changeStatus(@RequestBody Vessel vessel){
         vesselService.changeStatus(vessel);
+    }
+
+    @PostMapping("/addVessel")
+    public ResponseEntity<Integer> addVessel(@RequestBody AddVesselPayload addVesselPayload){
+       return new ResponseEntity<>(vesselService.addVessel(addVesselPayload), HttpStatus.OK);
     }
 
 }

@@ -45,7 +45,7 @@ const Profile = (props: ProfileProps) => {
                 // <h3 className={styles["text-front"]} onClick={OnClickLogVessel}>ประวัติส่งข้อมูล</h3>
                 )}
                 {(user?.positionId == 5) && (
-                    <Button className={styles["text-front"]} onClick={OnClickStatusVessel} label="แก้ไขสถานะเรือ"/>
+                    <Button className={styles["text-front"]} onClick={OnClickStatusVessel} label="สถานะเรือ"/>
                 )}
                 {(user?.positionId == 5) && (
                     <Button className={styles["text-front"]} onClick={OnClickUser} label="กำลัง(ลุง)พลเรือ" />

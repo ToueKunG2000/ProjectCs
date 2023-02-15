@@ -2,8 +2,8 @@ import { Card } from "primereact/card";
 import { Image } from "primereact/image";
 import { SetStateAction, Dispatch, useEffect, useState } from "react";
 import styles from "../../styles/DynamicDisplay.module.css";
-import { UserForm, VesselForm } from "./interface";
-import { VesselService } from "./../../services/vessel.service";
+import { AddVesselForm, UserForm, VesselForm } from "./interface";
+import { VesselServices } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
 import { PopupShowStatus } from "../disableVessel/PopupShowStatus";
 import { Button } from "primereact/button";
@@ -25,7 +25,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
   const [showData, setShowData] = useState<VesselForm[]>([]);
   const [isShow, setIsShow] = useState(false);
   const [showVesselStatus,setShowVesselStatus] = useState(false);
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   const [logVessel,setLogVessel] = useState([]);
   const [selectUser, setSelectUser] = useState<UserForm>();
   const [vesselStatus,setVesselStatus] = useState<VesselForm>();
@@ -143,7 +143,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     width="200"
                     height="200"
                   />
-                  <h2>{vessel.vesNameTh}</h2>
+                  <h2>{vessel.vesName}</h2>
                   <h3>
                     {vessel.currentPosition == 1
                       ? vessel.monthYear === null
@@ -175,7 +175,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     width="200"
                     height="200"
                   />
-                  <h2>{vessel.vesNameTh}</h2>
+                  <h2>{vessel.vesName}</h2>
                   <h3>{"ซ่อมบำรุงอยู่โว้ยยยย"}</h3>
                 </Card>
               </div>
@@ -198,7 +198,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                 width="200"
                 height="200"
               />
-              <h2>{vessel.vesNameTh}</h2>
+              <h2>{vessel.vesName}</h2>
               <h3>{`สถานะ ${vessel.vesStatus == 1?"กำลังใช้งาน":"ซ่อมบำรุง"}`}</h3>
             </Card>
           </div>

@@ -6,10 +6,8 @@ import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.repository.Modifying;
@@ -47,7 +45,7 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
                 ")";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
-        query.setParameter("vesNameTh",vessel.getVesNameTh());
+        query.setParameter("vesNameTh",vessel.getVesName());
         query.setParameter("shipEngine",vessel.getShipEngine());
         query.setParameter("waterPurifier",vessel.getWaterPurifier());
         query.setParameter("freezer",vessel.getFreezer());
@@ -119,7 +117,7 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
             LogVesselPayload temp = new LogVesselPayload();
             temp.setMonthYear(vessel.getMonthYear());
             temp.setVesId(vessel.getVesId());
-            temp.setVesNameTh(vessel.getVesNameTh());
+            temp.setVesName(vessel.getVesName());
             logVessel.add(temp);
         }
         return logVessel;

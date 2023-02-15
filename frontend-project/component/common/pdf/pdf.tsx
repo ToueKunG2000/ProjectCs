@@ -4,7 +4,7 @@ import {
   Text,
   Document,
   StyleSheet,
-  PDFViewer,
+  PDFDownloadLink,
   Font,
   View,
   Image,
@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import { VesselForm } from "../interface";
 import { PdfTable } from "./pdfTable";
+import { Button } from "primereact/button";
 
 Font.register({
   family: "sarabun",
@@ -44,10 +45,10 @@ const styles = StyleSheet.create({
     margin: 5,
     alignSelf: 'center',
   },
-  viewer: {
-    width: window.innerWidth, //the pdf viewer will take up all of the width and height
-    height: window.innerHeight,
-  },
+  // viewer: {
+  //   width: window.innerWidth, //the pdf viewer will take up all of the width and height
+  //   height: window.innerHeight,
+  // },
   logo:{
     marginTop: 10,
     height: '120px',
@@ -69,7 +70,7 @@ const MyDocument = (props: PDFViewProps): JSX.Element => {
             <Image alt={"logo"} src={process.env.NEXT_PUBLIC_IMAGE}/>
           </View>
           <View>
-            <Text style={styles.header}>รอบวันที่ {data?.monthYear} | ชื่อเรือ : {data?.vesNameTh}</Text>
+            <Text style={styles.header}>รอบวันที่ {data?.monthYear} | ชื่อเรือ : {data?.vesName}</Text>
             <Text style={styles.header}>การใช้งานไฟฟ้า</Text>
             <Text style={styles.text}>จำนวนเครื่องจักรใหญ่ {data?.bigMachineNum} เครื่อง มีการใช้งานเครื่องจักรใหญ่ {data?.bigMachineUsed} ชั่วโมง</Text>
             <Text style={styles.text}>จำนวนเครื่องใช้ไฟฟ้า {data?.electricMachineNum} เครื่อง มีการใช้งานเครื่องใช้ไฟฟ้า {data?.electricMachineUsed} ชั่วโมง</Text>
@@ -164,21 +165,10 @@ interface PDFViewProps{
     data: VesselForm;
 }
 
-const PDFView = (props: PDFViewProps) => {
-  const {data} = props;
-  const [client, setClient] = useState(false);
-
-  useEffect(() => {
-    setClient(true);
-
-  }, []);
-
-  return (
-    <>
-        <PDFViewer style={styles.viewer}>
-            <MyDocument data={data}/>
-        </PDFViewer>
-    </>
-  );
-}
-export default PDFView;
+export const PDFView = ({ data }: PDFViewProps) => (
+  <PDFDownloadLink document={<MyDocument data={data} />} fileName="Report Vessel">
+       {({ blob, url, loading, error }) =>
+        loading ? 'Loading document...' : <Button label="Download" />
+      }
+  </PDFDownloadLink>
+)

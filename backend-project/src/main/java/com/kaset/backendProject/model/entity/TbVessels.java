@@ -6,14 +6,10 @@ import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.model.payload.VesselStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Objects;
 
 @Entity
@@ -23,7 +19,7 @@ import java.util.Objects;
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "TbVessels.getVesselByVesId",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel," +
+                query = "SELECT ves_id, ves_name, current_position, ves_status, month_year, counsel," +
                         "left_of_benzine, left_of_diesel, left_of_gadinia, left_of_tellus, left_of_fresh_water, " +
                         " CAST(ves_photo as VARCHAR(max)) as vesPhoto " +
                         " FROM TB_VESSELS WHERE ves_id = :vesId",
@@ -31,7 +27,7 @@ import java.util.Objects;
         ),
         @NamedNativeQuery(
                 name = "TbVessels.getAllVessel",
-                query = "SELECT ves_id, ves_name_th, current_position, ves_status, month_year, counsel, " +
+                query = "SELECT ves_id, ves_name, current_position, ves_status, month_year, counsel, " +
                         "left_of_benzine, left_of_diesel, left_of_gadinia, left_of_tellus, left_of_fresh_water, " +
                         " CAST(ves_photo as VARCHAR(max)) as vesPhoto" +
                         " FROM TB_VESSELS ",
@@ -39,14 +35,18 @@ import java.util.Objects;
         ),
         @NamedNativeQuery(
                 name = "TbVessels.getDropdownVessel",
-                query = "SELECT ves_id, ves_name_th FROM TB_VESSELS",
+                query = "SELECT ves_id, ves_name FROM TB_VESSELS",
                 resultSetMapping = "DropdownMapping"
         ),
         @NamedNativeQuery(
                 name = "TbVessels.getStatusVessel",
-                query = "SELECT TV.ves_id, TV.ves_status , TV.ves_name_th,(\n" +
-                        "    SELECT concat(first_name,' ',last_name)  FROM TB_USERS TU WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id\n" +
-                        ") as name, CAST(ves_photo as VARCHAR(max)) as vesPhoto FROM TB_VESSELS TV",
+                query = "SELECT TV.ves_id, TV.ves_status , TV.ves_name," +
+                        "(SELECT concat(TP.rank_th,' ',first_name,' ',last_name)  FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id) " +
+                        " as name, CAST(ves_photo as VARCHAR(max)) as vesPhoto, " +
+                        "(SELECT TU.user_id FROM TB_USERS TU WHERE TU.position_id = 1 and TV.ves_id = TU.ves_id) as crewId, " +
+                        "(SELECT TU.user_id FROM TB_USERS TU WHERE TU.position_id = 2 and TV.ves_id = TU.ves_id) as engineerId," +
+                        "(SELECT TU.user_id FROM TB_USERS TU WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id) as commanderId " +
+                        "FROM TB_VESSELS TV ",
                 resultSetMapping = "VesselStatus"
         )
 })
@@ -55,7 +55,7 @@ import java.util.Objects;
             @SqlResultSetMapping(name = "VesselDisplay",classes = {
                 @ConstructorResult(targetClass = Vessel.class, columns = {
                         @ColumnResult(name = "ves_id"),
-                        @ColumnResult(name = "ves_name_th"),
+                        @ColumnResult(name = "ves_name"),
                         @ColumnResult(name = "current_position"),
                         @ColumnResult(name = "month_year"),
                         @ColumnResult(name = "counsel"),
@@ -72,15 +72,18 @@ import java.util.Objects;
             @SqlResultSetMapping(name = "DropdownMapping",classes = {
                     @ConstructorResult(targetClass = DropdownPayload.class, columns = {
                             @ColumnResult(name = "ves_id",type = Integer.class),
-                            @ColumnResult(name = "ves_name_th",type = String.class),
+                            @ColumnResult(name = "ves_name",type = String.class),
                     })
             }),
             @SqlResultSetMapping(name = "VesselStatus",classes = {
-                    @ConstructorResult(targetClass = Vessel.class, columns = {
+                    @ConstructorResult(targetClass = VesselStatus.class, columns = {
                             @ColumnResult(name = "ves_id",type = Integer.class),
-                            @ColumnResult(name = "ves_name_th",type = String.class),
-                            @ColumnResult(name = "ves_status",type = Integer.class),
+                            @ColumnResult(name = "ves_name",type = String.class),
                             @ColumnResult(name = "name",type = String.class),
+                            @ColumnResult(name = "crewId",type = Integer.class),
+                            @ColumnResult(name = "engineerId",type = Integer.class),
+                            @ColumnResult(name = "commanderId",type = Integer.class),
+                            @ColumnResult(name = "ves_status",type = Integer.class),
                             @ColumnResult(name = "vesPhoto",type = String.class),
                     })
             }),
@@ -92,8 +95,8 @@ public class TbVessels implements Serializable {
     @Column(name = "ves_id")
     private int vesId;
     @Basic
-    @Column(name = "ves_name_th")
-    private String vesNameTh;
+    @Column(name = "ves_name")
+    private String vesName;
     @Basic
     @Column(name = "big_machine_num")
     private int bigMachineNum;
@@ -213,11 +216,11 @@ public class TbVessels implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbVessels tbVessels)) return false;
-        return getVesId() == tbVessels.getVesId() && getBigMachineNum() == tbVessels.getBigMachineNum() && getElectricMachineNum() == tbVessels.getElectricMachineNum() && getBigMachineUsed() == tbVessels.getBigMachineUsed() && getElectricMachineUsed() == tbVessels.getElectricMachineUsed() && getAirConditioner() == tbVessels.getAirConditioner() && getAirCompressor() == tbVessels.getAirCompressor() && getFreezer() == tbVessels.getFreezer() && getShipEngine() == tbVessels.getShipEngine() && getPump() == tbVessels.getPump() && getRudder() == tbVessels.getRudder() && getWaterPurifier() == tbVessels.getWaterPurifier() && getDieselOilSeparator() == tbVessels.getDieselOilSeparator() && getGear() == tbVessels.getGear() && Objects.equals(getVesNameTh(), tbVessels.getVesNameTh()) && Objects.equals(getGetOfDiesel(), tbVessels.getGetOfDiesel()) && Objects.equals(getGetOfBenzine(), tbVessels.getGetOfBenzine()) && Objects.equals(getGetOfGadinia(), tbVessels.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), tbVessels.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), tbVessels.getGetOfFreshWater()) && Objects.equals(getGiveOfDiesel(), tbVessels.getGiveOfDiesel()) && Objects.equals(getGiveOfBenzine(), tbVessels.getGiveOfBenzine()) && Objects.equals(getGiveOfGadinia(), tbVessels.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), tbVessels.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), tbVessels.getGiveOfFreshWater()) && Objects.equals(getMonthYear(), tbVessels.getMonthYear()) && Objects.equals(getCounsel(), tbVessels.getCounsel()) && Objects.equals(getCurrentPosition(), tbVessels.getCurrentPosition()) && Objects.equals(getVesStatus(), tbVessels.getVesStatus()) && Objects.equals(getUsedOfDiesel(), tbVessels.getUsedOfDiesel()) && Objects.equals(getUsedOfBenzine(), tbVessels.getUsedOfBenzine()) && Objects.equals(getUsedOfGadinia(), tbVessels.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), tbVessels.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), tbVessels.getUsedOfFreshWater()) && Objects.equals(getLeftOfDiesel(), tbVessels.getLeftOfDiesel()) && Objects.equals(getLeftOfBenzine(), tbVessels.getLeftOfBenzine()) && Objects.equals(getLeftOfGadinia(), tbVessels.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), tbVessels.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), tbVessels.getLeftOfFreshWater()) && Objects.equals(getVesPhoto(), tbVessels.getVesPhoto());
+        return getVesId() == tbVessels.getVesId() && getBigMachineNum() == tbVessels.getBigMachineNum() && getElectricMachineNum() == tbVessels.getElectricMachineNum() && getBigMachineUsed() == tbVessels.getBigMachineUsed() && getElectricMachineUsed() == tbVessels.getElectricMachineUsed() && getAirConditioner() == tbVessels.getAirConditioner() && getAirCompressor() == tbVessels.getAirCompressor() && getFreezer() == tbVessels.getFreezer() && getShipEngine() == tbVessels.getShipEngine() && getPump() == tbVessels.getPump() && getRudder() == tbVessels.getRudder() && getWaterPurifier() == tbVessels.getWaterPurifier() && getDieselOilSeparator() == tbVessels.getDieselOilSeparator() && getGear() == tbVessels.getGear() && Objects.equals(getVesName(), tbVessels.getVesName()) && Objects.equals(getGetOfDiesel(), tbVessels.getGetOfDiesel()) && Objects.equals(getGetOfBenzine(), tbVessels.getGetOfBenzine()) && Objects.equals(getGetOfGadinia(), tbVessels.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), tbVessels.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), tbVessels.getGetOfFreshWater()) && Objects.equals(getGiveOfDiesel(), tbVessels.getGiveOfDiesel()) && Objects.equals(getGiveOfBenzine(), tbVessels.getGiveOfBenzine()) && Objects.equals(getGiveOfGadinia(), tbVessels.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), tbVessels.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), tbVessels.getGiveOfFreshWater()) && Objects.equals(getMonthYear(), tbVessels.getMonthYear()) && Objects.equals(getCounsel(), tbVessels.getCounsel()) && Objects.equals(getCurrentPosition(), tbVessels.getCurrentPosition()) && Objects.equals(getVesStatus(), tbVessels.getVesStatus()) && Objects.equals(getUsedOfDiesel(), tbVessels.getUsedOfDiesel()) && Objects.equals(getUsedOfBenzine(), tbVessels.getUsedOfBenzine()) && Objects.equals(getUsedOfGadinia(), tbVessels.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), tbVessels.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), tbVessels.getUsedOfFreshWater()) && Objects.equals(getLeftOfDiesel(), tbVessels.getLeftOfDiesel()) && Objects.equals(getLeftOfBenzine(), tbVessels.getLeftOfBenzine()) && Objects.equals(getLeftOfGadinia(), tbVessels.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), tbVessels.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), tbVessels.getLeftOfFreshWater()) && Objects.equals(getVesPhoto(), tbVessels.getVesPhoto());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getVesId(), getVesNameTh(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeparator(), getGear(), getGetOfDiesel(), getGetOfBenzine(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfDiesel(), getGiveOfBenzine(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getMonthYear(), getCounsel(), getCurrentPosition(), getVesStatus(), getUsedOfDiesel(), getUsedOfBenzine(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfDiesel(), getLeftOfBenzine(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater(), getVesPhoto());
+        return Objects.hash(getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeparator(), getGear(), getGetOfDiesel(), getGetOfBenzine(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfDiesel(), getGiveOfBenzine(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getMonthYear(), getCounsel(), getCurrentPosition(), getVesStatus(), getUsedOfDiesel(), getUsedOfBenzine(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfDiesel(), getLeftOfBenzine(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater(), getVesPhoto());
     }
 }

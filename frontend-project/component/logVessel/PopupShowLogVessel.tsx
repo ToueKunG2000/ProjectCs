@@ -4,7 +4,7 @@ import {
   VesselForm,
 } from "../common/interface";
 import { useEffect, useState } from "react";
-import { VesselService } from "./../../services/vessel.service";
+import { VesselServices } from "./../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 
 interface PopupShowLogVesselProps {
@@ -12,7 +12,7 @@ interface PopupShowLogVesselProps {
 }
 const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
   const { request } = props;
-  const vesselService = new VesselService();
+  const vesselService = new VesselServices();
   const [vesselData, setVesselData] = useState<VesselForm>();
 
   useEffect(() => {
@@ -202,7 +202,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
     <>
       <div>
         <h1>{`บันทึกของรอบ ${vesselData?.monthYear}`}</h1>
-        <h1>{`ชื่อเรือ ${vesselData?.vesNameTh}`}</h1>
+        <h1>{`ชื่อเรือ ${vesselData?.vesName}`}</h1>
         <h1>{"ชั่วโมง ใช้เครื่องจักรใหญ่"}</h1>
         <DynamicHorizonInput dynamicInputItems={bigMachineResource} />
         <h1>{"ชั่วโมง ใช้เครื่องใช้ไฟฟ้า"}</h1>

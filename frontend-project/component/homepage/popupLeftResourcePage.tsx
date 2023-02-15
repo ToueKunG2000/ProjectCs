@@ -7,7 +7,7 @@ interface PopupLeftResourcePageProps {
 export const PopupLeftResourcePage = (props: PopupLeftResourcePageProps) => {
   const { selectedVessel } = props;
   const dynamicInput: DynamicInputItem[] = [
-    { label: "เรือ", type: "label", data: selectedVessel?.vesNameTh },
+    { label: "เรือ", type: "label", data: selectedVessel?.vesName },
     { label: "คงเหลือดีเซล (กิโลลิตร)", type: "label", data: selectedVessel?.leftOfDiesel },
     { label: "คงเหลือเบนซิน (ลิตร)", type: "label", data: selectedVessel?.leftOfBenzine },
     { label: "คงเหลือกาดิเนีย (ลิตร)", type: "label", data: selectedVessel?.leftOfGadinia },

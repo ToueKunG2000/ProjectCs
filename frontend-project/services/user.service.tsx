@@ -1,5 +1,6 @@
-import { AddUserForm, UserForm } from "../component/common/interface";
+import { AddUserForm, AddVesselForm, UserForm } from "../component/common/interface";
 import instance from "./../axios";
+import { VesselForm } from "./../component/common/interface";
 
 export class UserServices {
   async checkUser(username: string, password: string) {
@@ -31,6 +32,28 @@ export class UserServices {
       method: "post",
       url:"/addUser",
       data:request
+    })
+    return res;
+  }
+  async getUserDropdown(positionId:number){
+    const res = instance.get("/getUserDropdown",{
+      params:{positionId: positionId}
+    })
+    return res;
+  }
+
+  async changeVesId(userId:number,vesId:number){
+    const res = instance.get("/changeVesId",{
+      params: { userId: userId, vesId: vesId }
+    })
+    return res;
+  }
+
+  async checkUserIdInVessel(request: AddVesselForm){
+    const res = instance({
+      method:"post",
+      url:"/checkUserIdInVessel",
+      data: request
     })
     return res;
   }

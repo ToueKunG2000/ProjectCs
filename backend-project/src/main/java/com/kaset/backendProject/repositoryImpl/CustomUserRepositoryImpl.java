@@ -41,4 +41,14 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
         query.executeUpdate();
     }
 
+    @Modifying
+    @Transactional
+    public void changeVesId(Integer vesId, Integer userId){
+        String sql = "UPDATE TB_USERS SET ves_id = :vesId WHERE user_id = :userId";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("vesId",vesId);
+        query.setParameter("userId",userId);
+        query.executeUpdate();
+    }
+
 }

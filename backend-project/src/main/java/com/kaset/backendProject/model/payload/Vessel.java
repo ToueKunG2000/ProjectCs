@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Data
 public class Vessel {
     private Integer vesId;
-    private String vesNameTh;
+    private String vesName;
     private Integer bigMachineUsed;
     private Integer bigMachineNum;
     private Integer electricMachineUsed;
@@ -56,23 +56,23 @@ public class Vessel {
     public Vessel() {
     }
 
-    public Vessel(Integer vesId, String vesNameTh, String monthYear) {
+    public Vessel(Integer vesId, String vesName, String monthYear) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.monthYear = monthYear;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, Integer vesStatus) {
+    public Vessel(Integer vesId, String vesName, Integer currentPosition, String monthYear, String counsel, Integer vesStatus) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.currentPosition = currentPosition;
         this.monthYear = monthYear;
         this.counsel = counsel;
         this.vesStatus = vesStatus;
     }
 
-    public Vessel(String vesNameTh, Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, String monthYear, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater) {
-        this.vesNameTh = vesNameTh;
+    public Vessel(String vesName, Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, String monthYear, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater) {
+        this.vesName = vesName;
         this.bigMachineUsed = bigMachineUsed;
         this.bigMachineNum = bigMachineNum;
         this.electricMachineUsed = electricMachineUsed;
@@ -109,9 +109,9 @@ public class Vessel {
         this.usedOfFreshWater = usedOfFreshWater;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater) {
+    public Vessel(Integer vesId, String vesName, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.currentPosition = currentPosition;
         this.monthYear = monthYear;
         this.counsel = counsel;
@@ -123,24 +123,24 @@ public class Vessel {
         this.leftOfFreshWater = leftOfFreshWater;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer vesStatus, String nameUser) {
+    public Vessel(Integer vesId, String vesName, Integer vesStatus, String nameUser) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.vesStatus = vesStatus;
         this.nameUser = nameUser;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer vesStatus, String nameUser, String vesPhoto) {
+    public Vessel(Integer vesId, String vesName, Integer vesStatus, String nameUser, String vesPhoto) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.vesStatus = vesStatus;
         this.nameUser = nameUser;
         this.vesPhoto = vesPhoto;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String nameUser, String vesPhoto) {
+    public Vessel(Integer vesId, String vesName, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String nameUser, String vesPhoto) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.leftOfDiesel = leftOfDiesel;
         this.leftOfBenzine = leftOfBenzine;
         this.leftOfGadinia = leftOfGadinia;
@@ -151,9 +151,9 @@ public class Vessel {
         this.vesPhoto = vesPhoto;
     }
 
-    public Vessel(Integer vesId, String vesNameTh, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String vesPhoto) {
+    public Vessel(Integer vesId, String vesName, Integer currentPosition, String monthYear, String counsel, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, Integer vesStatus, BigDecimal leftOfFreshWater, String vesPhoto) {
         this.vesId = vesId;
-        this.vesNameTh = vesNameTh;
+        this.vesName = vesName;
         this.currentPosition = currentPosition;
         this.monthYear = monthYear;
         this.counsel = counsel;

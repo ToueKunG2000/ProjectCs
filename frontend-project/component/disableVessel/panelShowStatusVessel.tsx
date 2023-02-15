@@ -1,16 +1,16 @@
 import { Button } from "primereact/button";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import DynamicDisplay from "../common/dynamicDisplay";
-import { VesselForm } from "../common/interface";
+import { AddVesselForm, VesselForm } from "../common/interface";
 import PopupPage from "../common/popupPage";
-import { VesselService } from "./../../services/vessel.service";
+import { VesselServices } from "./../../services/vessel.service";
 
 interface PanelShowStatusVesselProps{
     setPage: Dispatch<SetStateAction<number>>;
 }
 
 export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
-    const vesselService = new VesselService();
+    const vesselService = new VesselServices();
     const [vesselShow,setVesselShow] = useState<VesselForm[]>([]);
     const [selectedVessel, setSelectedVessel] = useState(0);  
 
@@ -19,7 +19,6 @@ export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
     useEffect(()=>{
         vesselService.getVesselStatus().then((res)=>{
         setVesselShow(res.data);
-        console.log(res.data)
         });
     },[])
 
@@ -27,9 +26,14 @@ export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
         setPage(1);
     }
 
+    const OnClickAdd = () => {
+        setPage(8);
+    }
+
     return (
         <>
             <Button label="ย้อนกลับ" onClick={OnClickBack}/>
+            <Button label="เพื่มเรือ" onClick={OnClickAdd} />
             <DynamicDisplay
                 type="vessel"
                 dataVessel={vesselShow!}

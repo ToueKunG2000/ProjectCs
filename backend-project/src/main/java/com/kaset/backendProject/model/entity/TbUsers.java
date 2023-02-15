@@ -1,12 +1,12 @@
 package com.kaset.backendProject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.kaset.backendProject.model.payload.DropdownPayload;
 import com.kaset.backendProject.model.payload.UserPayload;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
@@ -26,8 +26,22 @@ import java.util.Objects;
                     " TU.position_id as positionId, user_status, TP.position_name_th as positionName, CAST(user_photo as VARCHAR(max)) as userPhoto" +
                     " FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id WHERE TU.position_id < 4",
             resultSetMapping = "userManage"),
+    @NamedNativeQuery(
+            name = "TbUsers.getUserDropdown",
+            query = "SELECT user_id, CONCAT(TP.rank_th,' ',TU.first_name,' ',TU.last_name) as name " +
+                    "FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id " +
+                    "WHERE TU.position_id = :positionId AND TU.user_status = 1 ",
+            resultSetMapping = "userDropdown"),
+    @NamedNativeQuery(
+            name = "TbUsers.checkUserIdInVessel",
+            query = "SELECT user_id FROM TB_USERS WHERE position_id = :positionId AND ves_id = :vesId ",
+            resultSetMapping = "userId"
+    )
 })
 @SqlResultSetMappings({
+        @SqlResultSetMapping(name = "userId",columns = {
+                @ColumnResult(name = "user_id")
+        }),
         @SqlResultSetMapping(name = "userMapping",classes = {
                 @ConstructorResult(targetClass = UserPayload.class, columns = {
                         @ColumnResult(name = "user_id",type = Integer.class),
@@ -48,6 +62,12 @@ import java.util.Objects;
                         @ColumnResult(name = "positionName"),
                         @ColumnResult(name = "userPhoto",type = String.class)
 
+                })
+        }),
+        @SqlResultSetMapping(name = "userDropdown", classes = {
+                @ConstructorResult(targetClass = DropdownPayload.class, columns = {
+                        @ColumnResult(name = "user_id"),
+                        @ColumnResult(name = "name"),
                 })
         })
 })
