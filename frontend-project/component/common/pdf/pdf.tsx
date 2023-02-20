@@ -168,7 +168,7 @@ interface PDFViewProps{
 export const PDFView = ({ data }: PDFViewProps) => (
   <PDFDownloadLink document={<MyDocument data={data} />} fileName="Report Vessel">
        {({ blob, url, loading, error }) =>
-        loading ? 'Loading document...' : <Button label="Download" />
+        loading ? <i className="pi pi-spin pi-spinner " style={{ fontSize: '2rem' }}></i> : <Button label="Download" />
       }
   </PDFDownloadLink>
 )

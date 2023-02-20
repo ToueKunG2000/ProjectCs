@@ -22,11 +22,13 @@ public interface VesselRepository extends JpaRepository<TbVessels, Integer>, Cus
     List<Vessel> getAllVessel();
 
     @Query(nativeQuery = true)
+    Vessel getVesselInfo(@Param(value = "vesId")Integer vesId);
+
+    @Query(nativeQuery = true)
     List<DropdownPayload> getDropdownVessel();
 
     @Query(nativeQuery = true)
     List<VesselStatus> getStatusVessel();
 
-    @Query(value = "SELECT TV FROM TbVessels TV WHERE TV.vesId = :vesId")
-    TbVessels getDataVessel(@Param(value = "vesId") Integer vesId);
+
 }

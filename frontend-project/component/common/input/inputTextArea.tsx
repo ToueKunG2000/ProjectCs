@@ -19,6 +19,8 @@ const InputTextArea = (props: InputTextProps) => {
                 return (
                     <>
                         <InputTextarea value={field.value} 
+                        cols={20} rows={5}
+                        autoResize={true}
                         onChange={(e) => field.onChange(e.target.value)}
                         {...inputTextProps}
                         />

@@ -42,7 +42,7 @@ const LayoutLogin = () => {
       <div className={styles.div}>
         <PopupPage header="Warning" message="Your username or password incorrect" setVisible={setPopupVisible} visible={popupVisible}/>
         <div className="flex justify-content-center p-2">
-          <Image src="BEASTARS_logo.svg.png" width="200" height="100" />
+          <Image src={process.env.NEXT_PUBLIC_IMAGE} width="300" height="300" />
         </div>
         <div className="flex justify-content-center p-2">
           <label>Username : </label>

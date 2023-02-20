@@ -8,10 +8,10 @@ import { VesselForm } from "../common/interface";
 import PanelShowVessel from "../addReportVessel/panelShowVessel";
 import { Button } from "primereact/button";
 import ShowLogVessel from "../logVessel/ShowLogVessel";
-import { PanelShowStatusVessel } from "../disableVessel/panelShowStatusVessel";
+import { PanelShowStatusVessel } from "../vesselManage/panelShowStatusVessel";
 import { PanelShowUser } from "../userManage/PanelShowUser";
 import { PanelAddUser } from "./../addUser/panelAddUser";
-import { PanelAddVessel } from "../disableVessel/PanelAddVessel";
+import { PanelAddVessel } from "../vesselManage/PanelAddVessel";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {

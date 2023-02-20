@@ -99,11 +99,13 @@ const PanelReportVessel = (props: AddPageProps) => {
         .then((res) => {
           setData(res.data);
           setIsFetch(true);
+          console.log(res.data);
         })
         .catch((err) => {
           vesselService.getVesselInfo(requestForm!.vesId).then((res) => {
             setData(res.data);
             setIsFetch(true);
+            console.log(res.data);
           });
         });
     };
@@ -112,13 +114,15 @@ const PanelReportVessel = (props: AddPageProps) => {
 
   useEffect(() => {
     const setDataTotal = () => {
-      if(data?.currentPosition == 1 && (data?.counsel !== undefined || typeof(data?.counsel) == typeof("string") )){
+      if (
+        data?.currentPosition == 1 &&
+        (data?.counsel !== undefined || typeof data?.counsel == typeof "string")
+      ) {
         setIsAdd(false);
-      }
-      else{
+      } else {
         setIsAdd(true);
       }
-    }
+    };
 
     setDataTotal();
   }, [isFetch]);
@@ -169,18 +173,16 @@ const PanelReportVessel = (props: AddPageProps) => {
   }, [freshWaterWatch]);
 
   const onSubmitForm = (e: VesselForm) => {
-    console.log(dirtyFields)
-    console.log(e);
-    // if (e.monthYear !== null) {
-    //   vesselService.createReport(e);
-    //   window.location.reload();
-    //   setPage(1);
-    // } else {
-    //   e.monthYear = dateTime;
-    //   vesselService.createReport(e);
-    //   window.location.reload();
-    //   setPage(1);
-    // }
+    if (e.monthYear !== null) {
+      vesselService.createReport(e);
+      window.location.reload();
+      setPage(1);
+    } else {
+      e.monthYear = dateTime;
+      vesselService.createReport(e);
+      window.location.reload();
+      setPage(1);
+    }
   };
 
   const CheckForm = (e: any) => {
@@ -208,7 +210,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "airConditioner",
       errors: ["airConditioner"],
-      rules: {required:true},
+      rules: { required: true },
       inputNumberProps: { disabled: isAdd },
     },
     {
@@ -259,7 +261,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "dieselOilSeparator",
       errors: ["dieselOilSeparator"],
       inputNumberProps: { disabled: isAdd },
-      rules:{min:0}
+      rules: { min: 0 },
     },
     {
       label: "เกียร์",
@@ -315,7 +317,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfDiesel",
       errors: ["giveOfDiesel"],
       inputNumberProps: { disabled: isAdd },
-      rules:{value:0}
+      rules: { value: 0 },
     },
     {
       label: "น้ำมัน เบนซิน95 (ลิตร)",
@@ -323,7 +325,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfBenzine",
       errors: ["giveOfBenzine"],
       inputNumberProps: { disabled: isAdd },
-      rules:{min:0}
+      rules: { min: 0 },
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -331,7 +333,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfGadinia",
       errors: ["giveOfGadinia"],
       inputNumberProps: { disabled: isAdd },
-      rules:{min:0}
+      rules: { min: 0 },
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -339,7 +341,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfTellus",
       errors: ["giveOfTellus"],
       inputNumberProps: { disabled: isAdd },
-      rules:{min:0}
+      rules: { min: 0 },
     },
     {
       label: "น้ำจืด (ตัน)",
@@ -347,7 +349,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "giveOfFreshWater",
       errors: ["giveOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
-      rules:{min:0}
+      rules: { min: 0 },
     },
   ];
 
@@ -358,7 +360,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfDiesel",
       errors: ["usedOfDiesel"],
       inputNumberProps: { disabled: isAdd },
-      rules:{value:0}
+      rules: { value: 0 },
     },
     {
       label: "น้ำมัน เบนซิน95 (ลิตร)",
@@ -366,7 +368,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfBenzine",
       errors: ["usedOfBenzine"],
       inputNumberProps: { disabled: isAdd },
-      rules:{value:0}
+      rules: { value: 0 },
     },
     {
       label: "เซลล์ การ์ดิเนีย เกรด40 (ลิตร)",
@@ -374,7 +376,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfGadinia",
       errors: ["usedOfGadinia"],
       inputNumberProps: { disabled: isAdd },
-      rules:{value:0}
+      rules: { value: 0 },
     },
     {
       label: "เซลล์ เทลลัส เกรด68 (ลิตร)",
@@ -389,7 +391,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       fieldID: "usedOfFreshWater",
       errors: ["usedOfFreshWater"],
       inputNumberProps: { disabled: isAdd },
-      rules:{value:0}
+      rules: { value: 0 },
     },
   ];
 
@@ -459,7 +461,15 @@ const PanelReportVessel = (props: AddPageProps) => {
           onClick={onGoBack}
         />
         <h1> ส่งข้อมูลเรือ : {data?.vesName}</h1>
-        <h1>รอบที่ {data?.monthYear === null? dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" }): data?.monthYear}</h1>
+        <h1>
+          รอบที่{" "}
+          {data?.monthYear === null
+            ? dateNow.toLocaleString("th-TH", {
+                month: "2-digit",
+                year: "numeric",
+              })
+            : data?.monthYear}
+        </h1>
         <PopupPage
           setVisible={setIsShowWarning}
           header="คำเตือน"
@@ -472,19 +482,21 @@ const PanelReportVessel = (props: AddPageProps) => {
           setVisible={setIsShowConfirm}
           visible={isShowConfirm}
         >
-          <Button
-            label="ยืนยัน"
-            className="p-button-success"
-            onClick={handleSubmit(onSubmitForm)}
-          />
-          <Button
-            label="ยกเลิก"
-            className="p-button-cancel"
-            onClick={(e) => {
-              console.log(e);
-              setIsShowConfirm(false);
-            }}
-          />
+          <div className="flex justify-content-between">
+            <Button
+              label="ยืนยัน"
+              className="p-button-success"
+              onClick={handleSubmit(onSubmitForm)}
+            />
+            <Button
+              label="ยกเลิก"
+              className="p-button-cancel"
+              onClick={(e) => {
+                console.log(e);
+                setIsShowConfirm(false);
+              }}
+            />
+          </div>
         </PopupPage>
         {data?.counsel != undefined && (
           <div className={styles.counsel}>
@@ -512,9 +524,9 @@ const PanelReportVessel = (props: AddPageProps) => {
             )}
           </div>
         )}
-        <div className={styles.panel}>
-          <Card>
-            <div className={styles.card}>
+        <div className="grid">
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card>
               <h1>ชั่วโมงการใช้งาน</h1>
               <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
               <h1>{`จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
@@ -530,57 +542,63 @@ const PanelReportVessel = (props: AddPageProps) => {
                 control={control}
               />
               <h1>ชั่วโมง</h1>
-            </div>
-          </Card>
-          <Card>
-            <div className={styles.card}>
-              <h1>{"รายการรับเข้า ในเดือนนี้"}</h1>
-              <DynamicHorizonInput
-                control={control}
-                dynamicInputItems={getResource}
-              />
-            </div>
-          </Card>
-        </div>
-        <div className={styles.panel}>
-          <Card>
-            <div className={styles.card}>
-              <h1>{"การใช้งานเครื่องจักร (ชั่วโมง)"}</h1>
-              <DynamicHorizonInput
-                dynamicInputItems={dynamicInputItemsPanel2}
-                control={control}
-              />
-            </div>
-          </Card>
-          <Card>
-            <div className={styles.card}>
-              <h1>{"รายการใช้ ในเดือนนี้"}</h1>
-              <DynamicHorizonInput
-                control={control}
-                dynamicInputItems={usedResource}
-              />
-            </div>
-          </Card>
-        </div>
-        <div className={styles.panel}>
-          <Card>
-            <div className={styles.card}>
-              <h1>{"คงเหลือรวม"}</h1>
-              <DynamicHorizonInput
-                control={control}
-                dynamicInputItems={leftResource}
-              />
-            </div>
-          </Card>
-          <Card>
-            <div className={styles.card}>
-              <h1>{"รายการจ่ายให้ที่อื่น ในเดือนนี้"}</h1>
-              <DynamicHorizonInput
-                control={control}
-                dynamicInputItems={giveResource}
-              />
-            </div>
-          </Card>
+            </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card>
+              <div className={styles.card}>
+                <h1>{"รายการรับเข้า ในเดือนนี้"}</h1>
+                <DynamicHorizonInput
+                  control={control}
+                  dynamicInputItems={getResource}
+                />
+              </div>
+            </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card>
+              <div className={styles.card}>
+                <h1>{"การใช้งานเครื่องจักร (ชั่วโมง)"}</h1>
+                <DynamicHorizonInput
+                  dynamicInputItems={dynamicInputItemsPanel2}
+                  control={control}
+                />
+              </div>
+            </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card>
+              <div className={styles.card}>
+                <h1>{"รายการใช้ ในเดือนนี้"}</h1>
+                <DynamicHorizonInput
+                  control={control}
+                  dynamicInputItems={usedResource}
+                />
+              </div>
+            </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card>
+              <div className={styles.card}>
+                <h1>{"คงเหลือรวม"}</h1>
+                <DynamicHorizonInput
+                  control={control}
+                  dynamicInputItems={leftResource}
+                />
+              </div>
+            </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
+            <Card className={styles["card"]}>
+              <div className={styles.card}>
+                <h1>{"รายการจ่ายให้ที่อื่น ในเดือนนี้"}</h1>
+                <DynamicHorizonInput
+                  control={control}
+                  dynamicInputItems={giveResource}
+                />
+              </div>
+            </Card>
+          </div>
         </div>
         {isAdd != true && (
           <div className="flex justify-content-center">

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { UserServices } from "../../services/user.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { AddVesselForm, DynamicInputItem, PanelProps } from "../common/interface";
-import { VesselServices } from "./../../services/vessel.service";
+import { VesselServices } from "../../services/vessel.service";
 import { useEffect, useState } from "react";
 
 interface PanelAddVesselProps extends PanelProps{
@@ -38,7 +38,7 @@ export const PanelAddVessel = (props: PanelAddVesselProps) => {
             userService.changeVesId(e.engineerId, res.data);
             userService.changeVesId(e.commanderId, res.data);
         });
-    }   
+    }
 
     const dynamicInput: DynamicInputItem[] = [
         {type:"text",label:"ชื่อเรือ",fieldID:"vesName",errors:["vesName"]},

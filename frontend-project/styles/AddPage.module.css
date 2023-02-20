@@ -40,4 +40,35 @@
 .card{
     display: flex;
     flex-direction: column;
+    border-color: black;
+}
+.button-container{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 820px){
+    .grid{
+        justify-content: center;
+    }
+    .hidden{
+        min-width: 100% !important;
+        min-height: 30% !important;
+    }
+    .show{
+        min-width: 50% !important;
+        min-height: 30% !important;
+    }
+    .hidden-left{
+        min-width: 100px !important;
+    }
+    .show-left{
+        min-width: 200px !important;
+    }
+    .button-container{
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
 }

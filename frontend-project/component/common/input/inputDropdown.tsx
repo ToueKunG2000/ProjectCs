@@ -23,7 +23,7 @@ const InputDropdown = (props:InputDropdownProps) => {
                 defaultValue={0}
                 render={({field}) => (
                     <Dropdown
-                        value={field.value}
+                        value={field.value == undefined ? 0: field.value}
                         onChange={(e) => field.onChange(e.value)}
                         options={data}
                         {...inputDropdownProps}

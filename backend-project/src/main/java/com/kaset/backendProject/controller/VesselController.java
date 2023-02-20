@@ -40,8 +40,8 @@ public class VesselController {
     }
 
     @GetMapping("/getDataVessel")
-    public TbVessels getDataVessel(@RequestParam(value = "vesId")Integer vesId){
-        return vesselService.getDataVessel(vesId);
+    public ResponseEntity<Vessel> getDataVessel(@RequestParam(value = "vesId")Integer vesId){
+        return new ResponseEntity<>(vesselService.getDataVessel(vesId),HttpStatus.OK);
     }
 
     @PostMapping("/addToLog")
@@ -53,7 +53,7 @@ public class VesselController {
     public ResponseEntity<Vessel> getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
         Vessel vessel = vesselService.getDataLog(monthYearVesIdPayload);
         if(vessel == null){
-            return new ResponseEntity<>(null,HttpStatus.OK);
+            return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
         else{
             return new ResponseEntity<>(vessel,HttpStatus.OK);

@@ -320,9 +320,12 @@ const PanelShowVessel = (props: AddPageProps) => {
   const counsel: DynamicInputItem[] = [
     {
       label: "เหตุผลที่ไม่ยินยอม",
-      type: "text",
+      type: "textarea",
       fieldID: "counsel",
       errors: ["counsel"],
+      inputTextProps:{
+
+      }
     },
   ];
 
@@ -381,6 +384,7 @@ const PanelShowVessel = (props: AddPageProps) => {
           visible={isShowPopup}
         >
           <DynamicHorizonInput control={control} dynamicInputItems={counsel} />
+          <div className="flex justify-content-center">
           <Button
             label="ยืนยัน"
             className="p-button-success"
@@ -393,6 +397,7 @@ const PanelShowVessel = (props: AddPageProps) => {
               setIsShowPopup(false);
             }}
           />
+          </div>
         </PopupPage>
         {(user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5 ) && (
           <div className={styles["left"]}>
@@ -444,7 +449,8 @@ const PanelShowVessel = (props: AddPageProps) => {
         />
         <h1> ส่งข้อมูลเรือ : {data?.vesName}</h1>
         <h1>รอบที่ {data?.monthYear}</h1>
-        <div className={styles.panel}>
+        <div className="grid">
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>ชั่วโมงการใช้งาน</h1>
@@ -460,14 +466,16 @@ const PanelShowVessel = (props: AddPageProps) => {
               <h1>ชั่วโมง</h1>
             </div>
           </Card>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>{"รายการรับเข้า ในเดือนนี้"}</h1>
               <DynamicHorizonInput dynamicInputItems={getResource} />
             </div>
           </Card>
-        </div>
-        <div className={styles.panel}>
+          </div>
+          <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>{"การใช้งานเครื่องจักร (ชั่วโมง)"}</h1>
@@ -476,6 +484,8 @@ const PanelShowVessel = (props: AddPageProps) => {
               />
             </div>
           </Card>
+        </div>
+        <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>{"รายการใช้ ในเดือนนี้"}</h1>
@@ -483,13 +493,15 @@ const PanelShowVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
-        <div className={styles.panel}>
+        <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>{"คงเหลือรวม"}</h1>
               <DynamicHorizonInput dynamicInputItems={leftResource} />
             </div>
           </Card>
+        </div>
+        <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
           <Card>
             <div className={styles.card}>
               <h1>{"รายการจ่ายให้ที่อื่น ในเดือนนี้"}</h1>
@@ -497,8 +509,9 @@ const PanelShowVessel = (props: AddPageProps) => {
             </div>
           </Card>
         </div>
+        </div>
         {isShowButton && (
-          <div className="flex justify-content-center">
+          <div className={styles["button-container"]}>
             <Button
               label="ส่งต่อ"
               className="p-button-success"
@@ -511,6 +524,7 @@ const PanelShowVessel = (props: AddPageProps) => {
             />
           </div>
         )}
+        
       </form>
     </>
   );

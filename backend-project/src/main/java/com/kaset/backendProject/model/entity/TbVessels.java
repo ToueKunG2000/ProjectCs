@@ -48,6 +48,19 @@ import java.util.Objects;
                         "(SELECT TU.user_id FROM TB_USERS TU WHERE TU.position_id = 3 and TV.ves_id = TU.ves_id) as commanderId " +
                         "FROM TB_VESSELS TV ",
                 resultSetMapping = "VesselStatus"
+        ),
+        @NamedNativeQuery(
+                name = "TbVessels.getVesselInfo",
+                query = "SELECT ves_id, ves_name, big_machine_num, electric_machine_num, big_machine_used, electric_machine_used," +
+                        " air_conditioner, air_compressor, freezer, ship_engine, pump," +
+                        " rudder, water_purifier,diesel_oil_separator, gear, "+
+                        " get_of_diesel, get_of_benzine, get_of_tellus, get_of_gadinia, get_of_fresh_water, " +
+                        " give_of_diesel, give_of_benzine, give_of_tellus, give_of_gadinia, give_of_fresh_water," +
+                        " used_of_diesel, used_of_benzine, used_of_tellus, used_of_gadinia, used_of_fresh_water," +
+                        " left_of_diesel, left_of_benzine, left_of_tellus, left_of_gadinia, left_of_fresh_water," +
+                        " month_year, counsel, current_position " +
+                        " FROM TB_VESSELS WHERE ves_id = :vesId ",
+                resultSetMapping = "VesselInfo"
         )
 })
 @SqlResultSetMappings(
@@ -87,6 +100,48 @@ import java.util.Objects;
                             @ColumnResult(name = "vesPhoto",type = String.class),
                     })
             }),
+            @SqlResultSetMapping(name = "VesselInfo", classes = {
+                    @ConstructorResult(targetClass = Vessel.class, columns = {
+                        @ColumnResult(name = "ves_id"),
+                        @ColumnResult(name = "ves_name"),
+                        @ColumnResult(name = "big_machine_used"),
+                        @ColumnResult(name = "big_machine_num"),
+                        @ColumnResult(name = "electric_machine_used"),
+                        @ColumnResult(name = "electric_machine_num"),
+                        @ColumnResult(name = "air_conditioner"),
+                        @ColumnResult(name = "air_compressor"),
+                        @ColumnResult(name = "freezer"),
+                        @ColumnResult(name = "ship_engine"),
+                        @ColumnResult(name = "pump"),
+                        @ColumnResult(name = "rudder"),
+                        @ColumnResult(name = "water_purifier"),
+                        @ColumnResult(name = "diesel_oil_separator"),
+                        @ColumnResult(name = "gear"),
+                        @ColumnResult(name = "current_position"),
+                        @ColumnResult(name = "month_year"),
+                        @ColumnResult(name = "counsel"),
+                        @ColumnResult(name = "get_of_benzine"),
+                        @ColumnResult(name = "get_of_diesel"),
+                        @ColumnResult(name = "get_of_gadinia"),
+                        @ColumnResult(name = "get_of_tellus"),
+                        @ColumnResult(name = "get_of_fresh_water"),
+                        @ColumnResult(name = "give_of_benzine"),
+                        @ColumnResult(name = "give_of_diesel"),
+                        @ColumnResult(name = "give_of_gadinia"),
+                        @ColumnResult(name = "give_of_tellus"),
+                        @ColumnResult(name = "give_of_fresh_water"),
+                        @ColumnResult(name = "left_of_benzine"),
+                        @ColumnResult(name = "left_of_diesel"),
+                        @ColumnResult(name = "left_of_gadinia"),
+                        @ColumnResult(name = "left_of_tellus"),
+                        @ColumnResult(name = "left_of_fresh_water"),
+                        @ColumnResult(name = "used_of_benzine"),
+                        @ColumnResult(name = "used_of_diesel"),
+                        @ColumnResult(name = "used_of_gadinia"),
+                        @ColumnResult(name = "used_of_tellus"),
+                        @ColumnResult(name = "used_of_fresh_water"),
+                    } )
+            })
         }
 )
 public class TbVessels implements Serializable {

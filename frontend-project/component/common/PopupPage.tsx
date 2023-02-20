@@ -19,7 +19,7 @@ const PopupPage = (props : PopupProps) => {
 
     return (
         <>
-            <Dialog header={header} visible={visible} onHide={onHide} draggable={false} style={{width: widthLeng == undefined? '30vw' : `${widthLeng}vw`}} >
+            <Dialog header={header} visible={visible} onHide={onHide} draggable={false} >
                 <h1>{message}</h1>
                 {children}
             </Dialog>

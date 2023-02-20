@@ -69,10 +69,10 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
 
   const ButtonPanel = (data: any) => {
     return (
-      <>
+      <div className="flex justify-content-center">
         <Button icon="pi pi-search" onClick={()=>onShowPopup(data)} />
         <Button icon="pi pi-download" onClick={(e) => {PDFLoader(data)}} />
-      </>
+      </div>
     );
   };
 
@@ -116,8 +116,10 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
           visible={isDownload}
           header="Download Report"
         >
-          <Button label="ย้อนกลับ" onClick={(e)=>setIsDownload(false)} />
-          <PDFView data={vesselLog!} />
+          <div className="flex align-items-center justify-content-between">
+            <Button label="ย้อนกลับ" onClick={(e)=>setIsDownload(false)} />
+            <PDFView data={vesselLog!} />
+          </div>
         </PopupPage>
         <Button className={"p-button-danger"} label="ย้อนกลับ" onClick={OnGoBack}/>
         <div className="flex justify-content-center">
@@ -136,8 +138,8 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
         </div>
         <div>
           <DataTable value={logVessel}>
-            <Column header="เรือ" field="vesName" />
-            <Column header="เดือน" field="monthYear" />
+            <Column style={{ paddingLeft: '100px'}} header="เรือ" field="vesName" />
+            <Column align={"center"} header="เดือน" field="monthYear" />
             <Column body={(e) => ButtonPanel(e)} />
           </DataTable>
         </div>

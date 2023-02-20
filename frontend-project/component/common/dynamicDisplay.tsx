@@ -5,7 +5,7 @@ import styles from "../../styles/DynamicDisplay.module.css";
 import { AddVesselForm, UserForm, VesselForm } from "./interface";
 import { VesselServices } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
-import { PopupShowStatus } from "../disableVessel/PopupShowStatus";
+import { PopupShowStatus } from "../vesselManage/PopupShowStatus";
 import { Button } from "primereact/button";
 import { PopupLeftResourcePage } from "./../homepage/popupLeftResourcePage";
 import { PopupUserStatus } from "../userManage/popupUserStatus";
@@ -161,7 +161,10 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     }
                   </h3>
                 </Card>
-                <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
+                { (user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5) &&  <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
+
+
+                }
                 </div>
               </div>
             )}
@@ -169,7 +172,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
               <div className="flex justify-content-center col-12 md:col-6 lg:col-4">
                 <Card className={"card-not-active"}>
                   <Image
-                    className={styles.grayimg}
+                    className={styles["grayimg"]}
                     alt="profile"
                     src={`data:image/jpeg;base64,${vessel?.vesPhoto}`}
                     width="200"

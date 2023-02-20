@@ -47,8 +47,8 @@ public class VesselServiceImpl {
         logVesselRepository.insertToTbLogVessel(vessel);
     }
 
-    public TbVessels getDataVessel(Integer vesId){
-        return vesselRepository.getDataVessel(vesId);
+    public Vessel getDataVessel(Integer vesId){
+        return vesselRepository.getVesselInfo(vesId);
     }
 
     public Vessel getDataLog(MonthYearVesIdPayload payload){
