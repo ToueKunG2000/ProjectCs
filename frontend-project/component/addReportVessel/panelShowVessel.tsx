@@ -1,6 +1,5 @@
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { InputTextarea } from "primereact/inputtextarea";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { VesselServices } from "../../services/vessel.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
@@ -29,6 +28,7 @@ const PanelShowVessel = (props: AddPageProps) => {
   const [isShowPopup, setIsShowPopup] = useState(false);
   const vesselService = new VesselServices();
   const [user, setUser] = useState<UserForm>();
+  const [isShowCounsel, setIsShowCounsel] = useState(false);
   const [isFetch, setIsFetch] = useState(false);
   const [isShowLeft,setIsShowLeft] = useState(false);
   const [totalLeftOfBenzine, setTotalLeftOfBenzine] = useState(0);
@@ -38,11 +38,16 @@ const PanelShowVessel = (props: AddPageProps) => {
   const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState(0);
   const {
     control,
-    watch,
+    setValue,
     handleSubmit,
-    getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm<UpdateForm>({
+    defaultValues:{
+      counsel:"",
+      vesId:0,
+      currentPosition:0,
+    },
+  });
 
   useMemo(() => {
     function configRequest() {
@@ -81,6 +86,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       setTotalLeftOfTellus(data?.leftOfTellus + data?.getOfTellus - data?.giveOfTellus - data?.usedOfTellus )
       setTotalLeftOfGadinia(data?.leftOfGadinia + data?.getOfGadinia - data?.giveOfGadinia - data?.usedOfGadinia )
       setTotalLeftOfFreshWater(data?.leftOfFreshWater + data?.getOfFreshWater - data?.giveOfFreshWater - data?.usedOfFreshWater )
+      setValue("showCounsel",data?.counsel);
       if(data?.currentPosition == user?.positionId){
         setIsShowButton(true);
       }
@@ -103,12 +109,15 @@ const PanelShowVessel = (props: AddPageProps) => {
       counsel: e.counsel,
       currentPosition: 1,
       vesId: data!.vesId,
+      rejectByPositionId: user?.positionId,
     };
+    console.log(request);
     vesselService.updateReport(request);
     window.location.reload();
   };
 
   const RejectReport = (e: any) => {
+
     e.preventDefault();
     setIsShowPopup(true);
   };
@@ -126,17 +135,19 @@ const PanelShowVessel = (props: AddPageProps) => {
       window.location.reload();
     } else if (user?.positionId == 4) {
       const request: UpdateForm = {
-        counsel: undefined,
+        counsel: data?.counsel,
         currentPosition: user?.positionId + 1,
         vesId: vesselSelected,
+        rejectByPositionId: data?.rejectByPositionId,
       };
       vesselService.updateReport(request);
       window.location.reload();
     } else {
       const request: UpdateForm = {
-        counsel: undefined,
+        counsel: data?.counsel,
         currentPosition: user?.positionId + 1,
         vesId: vesselSelected,
+        rejectByPositionId: data?.rejectByPositionId,
       };
       vesselService.updateReport(request);
       window.location.reload();
@@ -322,12 +333,33 @@ const PanelShowVessel = (props: AddPageProps) => {
       label: "เหตุผลที่ไม่ยินยอม",
       type: "textarea",
       fieldID: "counsel",
-      errors: ["counsel"],
-      inputTextProps:{
-
+      errors: errors["counsel"],
+      isRequired: true,
+      rules:{
+        required: { value:true, message: "You should define counsel"},
+        maxLength:256,
+      },
+      inputTextAreaProps:{
+        required:true,
       }
     },
   ];
+
+  const counselShow :DynamicInputItem[] = [
+    {
+      type: "textarea",
+      label: "เหตุผลแก้ไข",
+      fieldID: "showCounsel",
+      inputTextAreaProps:{
+        disabled:true
+      },
+      data: 
+        data?.rejectByPositionId == 2 ? "ต้นกล" 
+      : data?.rejectByPositionId == 3 ? "ผู้บังคับการ เรือ"
+      : data?.rejectByPositionId == 4 ? "ผอ. การช่าง " : "ผบ. กตอ",
+      inputClassName: "counsel",
+    }
+  ]
 
   const leftResource: DynamicInputItem[] = [
     {
@@ -441,6 +473,35 @@ const PanelShowVessel = (props: AddPageProps) => {
           </div>
         )
         }
+        {data?.counsel != undefined && (
+          <div className={styles.counsel}>
+            {isShowCounsel === false && (
+              <Card
+                className={styles.hidden}
+                onClick={(e) => setIsShowCounsel(true)}
+              >
+                <i
+                  className={
+                    "pi pi-exclamation-circle text-white text-4xl flex justify-content-center"
+                  }
+                ></i>
+              </Card>
+            )}
+            {isShowCounsel === true && (
+              <Card
+                className={styles["show"]}
+                onClick={(e) => setIsShowCounsel(false)}
+              >
+                  <div className={styles["text-contain"]}>
+                  <DynamicHorizonInput 
+                    dynamicInputItems={counselShow}
+                    control={control}
+                  />
+                  </div>
+              </Card>
+            )}
+          </div>
+        )}
         <Button
           icon="pi pi-out"
           label="ย้อนกลับ"

@@ -86,7 +86,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 "0,0,0,0," +
                 "null,null,1,1,0," +
                 "0,0,0,0,0," +
-                "0,0,0,0,:vesPhoto) ";
+                "0,0,0,0,:vesPhoto,null) ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesName",addVesselPayload.getVesName());
         query.setParameter("bigMachineNum",addVesselPayload.getBigMachineNum());
@@ -95,60 +95,6 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         return (Integer) query.getSingleResult();
     }
 
-    @Modifying
-    @Transactional
-    public void resendToTbVessel(Vessel vessel){
-        String sql = "UPDATE TB_VESSELS SET air_compressor = :airCompressor,"+
-                " air_conditioner = :airConditioner, big_machine_used = :bigMachineUsed, "+
-                " current_position = :currentPosition, diesel_oil_separator = :dieselOilSeparator, "+
-                " gear = :gear, pump = :pump, rudder = :rudder, freezer = :freezer, "+
-                " electric_machine_used = :electricMachineUsed, "+
-                " water_purifier = :waterPurifier, ship_engine = :shipEngine,"+
-                " get_of_benzine = :getOfBenzine, get_of_diesel = :getOfDiesel, "+
-                " get_of_gadinia = :getOfGadinia, get_of_tellus = :getOfTellus, "+
-                " get_of_fresh_water = :getOfFreshWater, "+
-                " give_of_benzine = :giveOfBenzine, give_of_diesel = :giveOfDiesel, "+
-                " give_of_gadinia = :giveOfGadinir, give_of_tellus = :giveOfTellus, "+
-                " give_of_fresh_water = :giveOfFreshWater, used_of_benzine = :usedOfBenzine, "+
-                " used_of_diesel = :usedOfDiesel, used_of_gadinia = :usedOfGadinia, "+
-                " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater"+
-                " WHERE ves_id = :vesId ";
-        Query query = entityManager.createNativeQuery(sql);
-        query.setParameter("vesId",vessel.getVesId());
-        query.setParameter("currentPosition",vessel.getCurrentPosition());
-        query.setParameter("electricMachineUsed",vessel.getElectricMachineUsed());
-        query.setParameter("bigMachineUsed",vessel.getBigMachineUsed());
-
-        query.setParameter("airCompressor",vessel.getAirCompressor());
-        query.setParameter("airConditioner",vessel.getAirConditioner());
-        query.setParameter("waterPurifier",vessel.getWaterPurifier());
-        query.setParameter("shipEngine",vessel.getShipEngine());
-        query.setParameter("dieselOilSeparator",vessel.getDieselOilSeparator());
-        query.setParameter("pump",vessel.getPump());
-        query.setParameter("gear",vessel.getGear());
-        query.setParameter("freezer",vessel.getFreezer());
-        query.setParameter("rudder",vessel.getRudder());
-//        รับมาจากฝั่ง
-        query.setParameter("getOfBenzine",vessel.getGetOfBenzine());
-        query.setParameter("getOfDiesel",vessel.getGetOfDiesel());
-        query.setParameter("getOfGadinia",vessel.getGetOfGadinia());
-        query.setParameter("getOfTellus",vessel.getGetOfTellus());
-        query.setParameter("getOfFreshWater",vessel.getGetOfFreshWater());
-//        ให้เรือลำอื่น
-        query.setParameter("giveOfBenzine",vessel.getGiveOfBenzine());
-        query.setParameter("giveOfDiesel",vessel.getGiveOfDiesel());
-        query.setParameter("giveOfGadinir",vessel.getGiveOfGadinia());
-        query.setParameter("giveOfTellus",vessel.getGiveOfTellus());
-        query.setParameter("giveOfFreshWater",vessel.getGiveOfFreshWater());
-//        ใช้ไป
-        query.setParameter("usedOfBenzine",vessel.getUsedOfBenzine());
-        query.setParameter("usedOfDiesel",vessel.getUsedOfDiesel());
-        query.setParameter("usedOfGadinia",vessel.getUsedOfGadinia());
-        query.setParameter("usedOfTellus",vessel.getUsedOfTellus());
-        query.setParameter("usedOfFreshWater",vessel.getUsedOfFreshWater());
-        query.executeUpdate();
-
-    }
     @Modifying
     @Transactional
     public void resetToTbVessel(Vessel vessel){
@@ -169,7 +115,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater," +
                 " left_of_tellus = :leftOfTellus, left_of_fresh_water = :leftOfFreshWater," +
                 " left_of_benzine = :leftOfBenzine, left_of_diesel = :leftOfDiesel," +
-                " left_of_gadinia = :leftOfGadinia "+
+                " left_of_gadinia = :leftOfGadinia, reject_by_positionId = null "+
                 " WHERE ves_id = :vesId ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
@@ -285,13 +231,13 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
     @Transactional
     public void updateApproveInTbVessel(UpdateVesselPayload approveForm){
         String sql = "UPDATE TB_VESSELS SET current_position = :currentPosition, " +
-                " counsel = :counsel WHERE ves_id = :vesId";
+                " counsel = :counsel, reject_by_positionId = :rejectByPositionId WHERE ves_id = :vesId";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("currentPosition",approveForm.getCurrentPosition());
         query.setParameter("vesId",approveForm.getVesId());
         query.setParameter("counsel",approveForm.getCounsel());
+        query.setParameter("rejectByPositionId",approveForm.getRejectByPositionId());
         query.executeUpdate();
-        log.info("Done");
     }
 
 

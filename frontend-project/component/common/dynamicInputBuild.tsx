@@ -14,14 +14,16 @@ interface InputBuilderProps{
 
 const DynamicInputBuild = (props: InputBuilderProps) => {
     const {control, field} = props;
+
     const InputBuilderSwitch = (
         field: DynamicInputItem,
-        control: Control<any>
+        control: Control<any>,
     ) => {
         if(field.type == "number"){
             return <InputNumberField 
                 control={control}
                 fraction={0}
+                rules={field.rules}
                 controllerName={field.fieldID}
                 {...field.inputNumberProps}
             />
@@ -30,16 +32,24 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
             return <InputNumberField 
                 control={control}
                 fraction={2}
+                rules={field.rules}
                 controllerName={field.fieldID}
                 {...field.inputNumberProps}
             />
         }
         if(field.type == "label"){
-            return <label className={field.inputClassName} >{field.data}</label>
+            return (
+                <>
+                    <label className={field.inputClassName} >{field.data}</label>
+                    { field.tail && <h1 className={field.inputClassName} >{`ส่งกลับโดย: ${field.tail}`}</h1>}
+                </>
+            )
         }
         if(field.type == "textarea"){
             return <InputTextArea
                 control={control}
+                rules={field.rules}
+                data={field.data}
                 controllerName={field.fieldID}
                 {...field.inputTextAreaProps}
             />
@@ -47,6 +57,7 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
         if(field.type == "text"){
             return <InputTextField
                 control={control}
+                rules={field.rules}
                 controllerName={field.fieldID}
                 placeholder={field.placeholder}
                 {...field.inputTextProps}
@@ -55,6 +66,7 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
         if(field.type == "dropdown"){
             return <InputDropdown 
                 control={control}
+                rules={field.rules}
                 data={field.options}
                 controllerName={field.fieldID}
                 {...field.inputDropdownProps}
@@ -63,6 +75,7 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
         if(field.type == "upload"){
             return <InputUpload 
                 control={control}
+                rules={field.rules}
                 setValue={field.setValue}
                 controllerName={field.fieldID}
                 {...field.inputUpload}

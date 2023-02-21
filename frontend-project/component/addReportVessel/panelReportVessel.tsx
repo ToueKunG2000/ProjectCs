@@ -395,6 +395,22 @@ const PanelReportVessel = (props: AddPageProps) => {
     },
   ];
 
+  const counselShow :DynamicInputItem[] = [
+    {
+      type: "textarea",
+      fieldID: "counsel",
+      errors:["counsel"],
+      label: "เหตุผลแก้ไข",
+      inputTextAreaProps:{
+        disabled:true,
+      },
+      inputClassName: "counsel",
+      data: data?.rejectByPositionId == 2 ? "ต้นกล" 
+      : data?.rejectByPositionId == 3 ? "ผู้บังคับการ เรือ"
+      : data?.rejectByPositionId == 4 ? "ผอ. การช่าง " : "ผบ. กตอ",
+    },
+  ]
+
   const leftResource: DynamicInputItem[] = [
     {
       label: "น้ำมัน ดีเซล (กล.)",
@@ -514,12 +530,15 @@ const PanelReportVessel = (props: AddPageProps) => {
             )}
             {isShowCounsel === true && (
               <Card
-                className={styles.show}
+                className={styles["show"]}
                 onClick={(e) => setIsShowCounsel(false)}
               >
-                <h2 className={styles.text}>
-                  เหตุผลที่ถูกตีกลับ : {data!.counsel}
-                </h2>
+                  <div className={styles["text-contain"]}>
+                  <DynamicHorizonInput 
+                    dynamicInputItems={counselShow}
+                    control={control}
+                  />
+                  </div>
               </Card>
             )}
           </div>

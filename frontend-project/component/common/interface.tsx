@@ -23,6 +23,7 @@ export interface DynamicInputItem {
   label?: string;
   placeholder?: string;
   data?: any;
+  tail?: any;
   options?: any[];
   isRequired?: boolean;
   inputTextProps?: InputTextProps;
@@ -73,6 +74,8 @@ export interface UpdateForm {
   vesId: number;
   currentPosition: number;
   counsel?: string;
+  rejectByPositionId?: number;
+  showCounsel? :string;
 }
 
 export interface CheckLogMonthYearForm {
@@ -109,6 +112,7 @@ export interface VesselStatusForm{
 export interface VesselForm extends VesselStatusForm {
   vesId: number;
   vesName: string;
+  rejectByPositionId?: number;
   bigMachineNum?: number;
   electricMachineNum?: number;
   bigMachineUsed: number;

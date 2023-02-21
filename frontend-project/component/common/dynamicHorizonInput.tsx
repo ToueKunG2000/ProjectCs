@@ -1,5 +1,5 @@
 import DynamicInputBuild from "./dynamicInputBuild";
-import HorizontalField from "./HorizontalField";
+import HorizontalField from "./horizontalField";
 import { DynamicInputFields } from "./interface";
 import styles from '../../styles/InputStyles.module.css'
 
@@ -11,11 +11,12 @@ const DynamicHorizonInput = (props: DynamicInputFields) => {
             {dynamicInputItems.map((fields) => {
                 return (
                     <>
-                    <div className={`line${fields.inputClassName==undefined?"":fields.inputClassName}`}>
+                    <div className={styles[`${fields.inputClassName==undefined?"line":fields.inputClassName}`]}>
                         <HorizontalField 
                         fieldID={fieldID}
                         label={fields.label}
                         key={fields.fieldID}
+                        isRequired={fields.isRequired}
                     >
                         <DynamicInputBuild 
                             control={control}

@@ -7,6 +7,7 @@ const HorizontalField = (props: FieldProps) => {
         <>
             <>
             <div className={styles.field}>
+                { isRequired == true && <label className={"required"}>*</label>}
                 <label className={styles.label}>{label}</label>
             </div>
             <div>

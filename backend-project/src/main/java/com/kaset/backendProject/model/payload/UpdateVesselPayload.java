@@ -8,12 +8,15 @@ public class UpdateVesselPayload {
     private Integer currentPosition;
     private String counsel;
 
+    private Integer rejectByPositionId;
+
     public UpdateVesselPayload() {
     }
 
-    public UpdateVesselPayload(Integer vesId, Integer currentPosition, String counsel) {
+    public UpdateVesselPayload(Integer vesId, Integer currentPosition, String counsel, Integer rejectByPositionId) {
         this.vesId = vesId;
         this.currentPosition = currentPosition;
         this.counsel = counsel;
+        this.rejectByPositionId = rejectByPositionId;
     }
 }

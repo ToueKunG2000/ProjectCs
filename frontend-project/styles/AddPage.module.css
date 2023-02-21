@@ -7,14 +7,20 @@
 .counsel{
     position: fixed;
     z-index: 1;
+    top: 20%;
 }
 .hidden{
     min-height: 100px !important;
     min-width: 100px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: red;
 }
 .show{
     background-color: red;
+    min-height: 200px !important;
+    min-width: 500px !important;
 }
 .left{
     position: fixed;
@@ -22,6 +28,13 @@
     top: 20%;
     right: 0px;
 }
+
+.text-contain{
+    background-color: white;
+    min-height: 200px;
+    border-radius: 10px;
+}
+
 .hidden-left {
     min-height: 100px !important;
     min-width: 200px !important;
@@ -33,9 +46,6 @@
     min-width: 300px !important;
     background-color: green;
     color: white !important;
-}
-.text{
-    color: white;
 }
 .card{
     display: flex;

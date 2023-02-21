@@ -10,13 +10,14 @@ h1{
     display: flex;
     justify-content: center;
     font-family: 'Sarabun', sans-serif !important;
+    font-size: 30px;
 }
 h2{
     font-family: 'Sarabun', sans-serif !important;
 }
 h3{
     margin: 0;
-    font-size: 25px;
+    font-size: 30px;
     font-family: 'Sarabun', sans-serif !important;
 }
 label{
@@ -24,18 +25,8 @@ label{
     font-weight: normal;
     font-family: 'Sarabun', sans-serif !important;
 }
-.linecenter{
-    display: flex;
-    justify-content: center;
-}
 .p-dialog{
     width: 40%;
-}
-.line{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
 }
 .p-card.card-display{
     min-width: 500px !important;
@@ -67,18 +58,34 @@ label{
 .p-tabview{
     color: black;
 }
-
+label.required{
+    color:red;
+}
+.invalid{
+    border-color: red !important;
+}
+.invalid:hover{
+    border-color: red !important;
+}
+.invalid:focus{
+    border-color: red !important;
+}
 .p-card{
     min-width: 750px !important;
     min-height: 500px !important;
     color: black !important;
+    padding: 0px;
 }
-
+.p-component:disabled{
+    opacity: 1 !important;
+}
 #__next{
     width: 100vw;
     height: auto;
 }
-
+.vesName{
+    padding-left: 100px !important;
+}
 .p-inputtext{
     font-size: 20px !important;
 }
@@ -112,5 +119,10 @@ label{
     .p-dialog{
         width: 60%;
     }
+    .logvessel {
+        table-layout: fixed;
+    }
+    .vesName{
+        padding: 1rem 1rem !important;
+    }
 }
-

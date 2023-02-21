@@ -1,4 +1,3 @@
-import { Page, View, Text } from "@react-pdf/renderer";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
@@ -137,10 +136,10 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
           </form>
         </div>
         <div>
-          <DataTable value={logVessel}>
-            <Column style={{ paddingLeft: '100px'}} header="เรือ" field="vesName" />
-            <Column align={"center"} header="เดือน" field="monthYear" />
-            <Column body={(e) => ButtonPanel(e)} />
+          <DataTable showGridlines className="logvessel" value={logVessel}>
+            <Column className="vesName" header="เรือ" field="vesName" />
+            <Column className="monthYear"  align={"center"} header="เดือน" field="monthYear" />
+            <Column className="action"  body={(e) => ButtonPanel(e)} />
           </DataTable>
         </div>
       </>

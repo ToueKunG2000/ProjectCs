@@ -7,20 +7,26 @@ interface InputTextFieldProps extends InputTextProps {
       RegisterOptions,
       "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
     >;
+    
 }
 
 const InputTextField = (props: InputTextFieldProps) => {
-    const {control, controllerName, ...inputTextProps} = props;
+    const {control, rules, controllerName, ...inputTextProps} = props;
+
     return (
         <>
             <Controller 
                 defaultValue=""
-                name={controllerName} control={control} render={({field}) => (
+                rules={rules}
+                name={controllerName} control={control} render={({field,formState}) => (
+                    <>
+                    <label htmlFor={field.name}></label>
                     <InputText
                         value={field.value}
                         onChange={(e) => field.onChange(e.target.value)}
                         {...inputTextProps}
                     />
+                    </>
                 )}
             />
         </>
