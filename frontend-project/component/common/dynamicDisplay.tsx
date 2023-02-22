@@ -102,7 +102,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
 
   return (
     <div className="grid">
-      <PopupPage setVisible={setIsShow} visible={isShow} header="" message="แม่งไม่ส่งข้อมูล ไอเวร" />
+      <PopupPage setVisible={setIsShow} visible={isShow} header="" message="ทหารช่าง ยังไม่ได้ดำเนินการ" />
       <PopupPage
         header="สถานะของเรือ"
         setVisible={setShowVesselStatus}
@@ -144,12 +144,12 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     height="200"
                   />
                   <h2>{vessel.vesName}</h2>
-                  <h3>
+                  <h2>
                     {vessel.currentPosition == 1
                       ? vessel.monthYear === null
                       ?  logVessel.includes(vessel?.vesId) 
-                      ? "ส่งสำเร็จแล้วววววววววววว"
-                      : "ยังไม่ทำไอสัส"
+                      ? "ส่งสำเร็จ"
+                      : "ยังไม่ดำเนินการ"
                       : "รอ แก้ไข จากทหารช่าง"
                       : vessel.currentPosition == 2
                       ? "รอ ต้นกล ตรวจ"
@@ -159,7 +159,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                       ? "รอ ผอ. การช่าง ตรวจ"
                       : "รอ ผบ.กตอ ตรวจ"
                     }
-                  </h3>
+                  </h2>
                 </Card>
                 { (user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5) &&  <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
                 }
@@ -177,7 +177,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     height="200"
                   />
                   <h2>{vessel.vesName}</h2>
-                  <h3>{"ซ่อมบำรุงอยู่โว้ยยยย"}</h3>
+                  <h3>{"ซ่อมบำรุง"}</h3>
                 </Card>
               </div>
             )}

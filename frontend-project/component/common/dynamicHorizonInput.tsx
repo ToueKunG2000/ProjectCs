@@ -14,6 +14,7 @@ const DynamicHorizonInput = (props: DynamicInputFields) => {
                     <div className={styles[`${fields.inputClassName==undefined?"line":fields.inputClassName}`]}>
                         <HorizontalField 
                         fieldID={fieldID}
+                        inputClassName={fields.inputClassName}
                         label={fields.label}
                         key={fields.fieldID}
                         isRequired={fields.isRequired}

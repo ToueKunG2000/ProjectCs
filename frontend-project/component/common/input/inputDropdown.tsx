@@ -1,4 +1,3 @@
-import { InputNumberProps } from "primereact/inputnumber";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 import { Dropdown, DropdownProps } from "primereact/dropdown";
 
@@ -14,20 +13,25 @@ interface InputDropdownProps extends DropdownProps {
   }
 
 const InputDropdown = (props:InputDropdownProps) => {
-    const {control, data, controllerName, ...inputDropdownProps} = props;
+    const {control, rules,data, controllerName, ...inputDropdownProps} = props;
     return (
         <>
             <Controller 
                 name={controllerName}
                 control={control}
-                defaultValue={0}
-                render={({field}) => (
-                    <Dropdown
-                        value={field.value == undefined ? 0: field.value}
-                        onChange={(e) => field.onChange(e.value)}
-                        options={data}
-                        {...inputDropdownProps}
-                    />
+                rules={rules}
+                render={({field, fieldState}) => (
+                    <>
+                        {fieldState.error && <label id={field.name} className="required p-4">{fieldState.error.message}</label>}
+                        <Dropdown
+                            name={field.name}
+                            value={field.value == undefined ? 0: field.value}
+                            onChange={(e) => field.onChange(e.value)}
+                            className={fieldState.error == undefined ?'':'invalid'}
+                            options={data}
+                            {...inputDropdownProps}
+                        />
+                    </>
                 )}
             />
         </>

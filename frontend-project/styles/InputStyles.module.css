@@ -1,7 +1,10 @@
 .field{
-    display: flex;
+    display: flex-start;
     flex-direction: row;
-    align-items: center;
+}
+.last{
+    display:flex-end;
+    flex-direction: row;
 }
 .label{
     font-weight: 800 !important;
@@ -15,9 +18,24 @@
 .line{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     padding: 15px;
     font-size: 20px;
+    justify-content: space-between;
+}
+.space-bet{
+    display: flex;
+    padding: 10px;
+}
+.front-space-bet{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    padding-left: 25%;
+}
+.last-space-bet{
+    display: flex;
+    flex-direction: column;
+
 }
 .center{
     display: flex;
@@ -29,4 +47,16 @@
 }
 .counsel-show:hover{
     overflow:visible;
+}
+
+@media screen and (max-width: 820px){
+    .space-bet{
+        display: flex;
+        padding: 10px;
+    }
+    .front-space-bet{
+        display: flex;
+        width: 50%;
+        padding-left: 10%;
+    }
 }

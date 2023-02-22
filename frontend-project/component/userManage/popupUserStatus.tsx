@@ -17,7 +17,7 @@ export const PopupUserStatus = (props: PopupUserStatus) => {
     } = useForm({values: selectedUser});
 
     const status = [
-        {label:"ปฏิบัตงาน",value:1},
+        {label:"ปฏิบัติงาน",value:1},
         {label:"ปลดประจำการ",value:2}
     ];
 
@@ -38,7 +38,9 @@ export const PopupUserStatus = (props: PopupUserStatus) => {
                     dynamicInputItems={dynamicInput}
                     control={control}
                 />
+            <div className="flex justify-content-center">
             <Button className="p-button-success" label="ยืนยัน" onClick={handleSubmit(OnSubmit)}/>
+            </div>
         </form>
         </>
     );

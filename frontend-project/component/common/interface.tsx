@@ -9,6 +9,7 @@ import { FileUploadProps } from "primereact/fileupload";
 export interface FieldProps {
   children?: React.ReactNode;
   label?: string;
+  inputClassName?: string;
   fieldID?: string;
   isRequired?: boolean;
 }
@@ -100,6 +101,7 @@ export interface AddUserForm{
   firstName: string;
   lastName: string;
   positionId: number;
+  userPhoto: string;
 }
 
 export interface VesselStatusForm{

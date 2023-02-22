@@ -18,11 +18,12 @@ const InputTextField = (props: InputTextFieldProps) => {
             <Controller 
                 defaultValue=""
                 rules={rules}
-                name={controllerName} control={control} render={({field,formState}) => (
+                name={controllerName} control={control} render={({field,fieldState}) => (
                     <>
-                    <label htmlFor={field.name}></label>
+                    {fieldState.error && <label id={field.name} className="required p-4">{fieldState.error.message}</label>}
                     <InputText
                         value={field.value}
+                        className={fieldState.error == undefined ?'':'invalid'}
                         onChange={(e) => field.onChange(e.target.value)}
                         {...inputTextProps}
                     />

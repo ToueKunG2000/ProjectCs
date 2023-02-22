@@ -32,8 +32,8 @@ export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
     return (
         <>
         <div>
-            <Button label="ย้อนกลับ" className="p-button-danger m-5" onClick={OnClickBack}/>
-            <Button label="เพื่มเรือ" className="p-button-primary m-5" onClick={OnClickAdd} />
+            <Button label="ย้อนกลับ" className="p-button-danger" onClick={OnClickBack}/>
+            <Button label="เพิ่มเรือ" className="p-button-success" onClick={OnClickAdd} />
         </div>  
         <DynamicDisplay
                 type="vessel"
