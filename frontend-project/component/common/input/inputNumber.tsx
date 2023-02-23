@@ -21,16 +21,16 @@ const InputNumberField = (props: NumberInputProps) => {
         rules={rules}
         render={({ field, fieldState }) => (
           <>
-          {fieldState.error && <label id={field.name} className="required p-4">{fieldState.error.message}</label>}
-          <InputNumber
-            value={field.value}
-            onValueChange={(e) => field.onChange(e.value)}
-            minFractionDigits={0}
-            className={fieldState.error == undefined ?'':'invalid'}
-            maxLength={7}
-            maxFractionDigits={fraction}
-            {...inputNumberProps}
-          />
+            {fieldState.error && <label id={field.name} className="required p-4">{fieldState.error.message}</label>}
+            <InputNumber
+              value={field.value}
+              onValueChange={(e) => field.onChange(e.value)}
+              minFractionDigits={0}
+              className={fieldState.error == undefined ?'':'invalid'}
+              maxLength={7}
+              maxFractionDigits={fraction}
+              {...inputNumberProps}
+            />
           </>
         )}
       />

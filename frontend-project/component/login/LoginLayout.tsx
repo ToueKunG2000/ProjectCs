@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import styles from "../../styles/Login.module.css";
 import { useRouter } from "next/router";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { UserServices } from "../../services/user.service";
 import PopupPage from "../common/popupPage";
 import { Password } from 'primereact/password';
@@ -39,21 +39,28 @@ const LayoutLogin = () => {
 
   return (
     <>
-      <div className={styles.div}>
+      <div className={styles["page"]}>
         <PopupPage header="Warning" message="Your username or password incorrect" setVisible={setPopupVisible} visible={popupVisible}/>
         <div className="flex justify-content-center p-2">
-          <Image src={process.env.NEXT_PUBLIC_IMAGE} width="300" height="300" />
+          <Image src={process.env.NEXT_PUBLIC_IMAGE} width="300" height="400" />
         </div>
-        <div className="flex justify-content-center p-2">
+        <div className={styles["horizon"]}>
+        <div className={styles["label-text"]}>
           <label>Username : </label>
-          <InputText
+        </div>
+        <div className={styles["input"]}>
+        <InputText
             placeholder="abc123"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </div>
-        <div className="flex justify-content-center p-2">
-          <label>Password : </label>
+        </div>
+        <div className={styles["horizon"]}>
+        <div className={styles["label-text"]}>
+        <label>Password : </label>
+        </div>  
+          <div className={styles["input"]}>
           <Password
             placeholder="123456"
             value={password}
@@ -62,11 +69,12 @@ const LayoutLogin = () => {
             feedback={false}
           />
         </div>
+        </div>
         <div className="flex justify-content-center">
           <Button
             type="submit"
             label="Login"
-            className={styles.login}
+            className={styles["button"]}
             onClick={CheckLogin}
           />
         </div>

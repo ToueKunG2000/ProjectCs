@@ -154,14 +154,14 @@ export const PanelAddVessel = (props: PanelAddVesselProps) => {
 
   return (
     <>
-      <Button label="ย้อนกลับ" onClick={(e)=>{onGoBack(e)}} />  
+      <Button label="ย้อนกลับ" className="p-button-danger" onClick={(e)=>{onGoBack(e)}} />  
         <form>
         <DynamicHorizonInput
           dynamicInputItems={dynamicInput}
           control={control}
         />
         <div className="flex justify-content-center">
-        <Button label="ยืนยัน" onClick={handleSubmit(OnSubmit)} />  
+        <Button label="ยืนยัน" className="p-button-success" onClick={handleSubmit(OnSubmit)} />  
         </div>
         </form>
     </>

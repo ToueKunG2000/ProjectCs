@@ -25,7 +25,6 @@ const PanelReportVessel = (props: AddPageProps) => {
   const [data, setData] = useState<VesselForm>();
   const [isAdd, setIsAdd] = useState(false);
   const [isShowWarning, setIsShowWarning] = useState(false);
-  const [isShowConfirm, setIsShowConfirm] = useState(false);
   const [dateTime, setDateTime] = useState("");
   const vesselService = new VesselServices();
   const [isFetch, setIsFetch] = useState(false);
@@ -172,21 +171,8 @@ const PanelReportVessel = (props: AddPageProps) => {
     setTotalLeftOfFreshWater(total);
   }, [freshWaterWatch]);
 
-  const onSubmitForm = (e: VesselForm) => {
-    if (e.monthYear !== null) {
-      vesselService.createReport(e);
-      window.location.reload();
-      setPage(1);
-    } else {
-      e.monthYear = dateTime;
-      vesselService.createReport(e);
-      window.location.reload();
-      setPage(1);
-    }
-  };
 
-  const CheckForm = (e: any) => {
-    e.preventDefault();
+  const CheckForm = (e: VesselForm) => {
     if (
       totalLeftOfBenzine >= 0 &&
       totalLeftOfDiesel >= 0 &&
@@ -194,7 +180,16 @@ const PanelReportVessel = (props: AddPageProps) => {
       totalLeftOfGadinia >= 0 &&
       totalLeftOfTellus >= 0
     ) {
-      setIsShowConfirm(true);
+      if (e.monthYear !== null) {
+        vesselService.createReport(e);
+        window.location.reload();
+        setPage(1);
+      } else {
+        e.monthYear = dateTime;
+        vesselService.createReport(e);
+        window.location.reload();
+        setPage(1);
+      }
     } else {
       setIsShowWarning(true);
     }
@@ -210,9 +205,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "airConditioner",
       errors: errors["airConditioner"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:"กรุณาใส่ค่า"},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min:{value:0 , message: "กรุณาใส่ค่ามากกว่า 0"}
       },
     },
     {
@@ -220,9 +216,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "airCompressor",
       errors: errors["airCompressor"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:"กรุณาใส่ค่า"},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min:{value:0, message:  "กรุณาใส่ค่ามากกว่า 0"}
       },
     },
     {
@@ -230,9 +227,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "freezer",
       errors: errors["freezer"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:"กรุณาใส่ค่า"},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min:{value:0, message:  "กรุณาใส่ค่ามากกว่า 0"}
+
       },
     },
     {
@@ -240,9 +239,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "shipEngine",
       errors: errors["shipEngine"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:"กรุณาใส่ค่า"},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min:{value:0, message:  "กรุณาใส่ค่ามากกว่า 0"}
+
       },
     },
     {
@@ -250,11 +251,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "pump",
       errors: errors["pump"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:"กรุณาใส่ค่า"},
-        min:{value:0,message:""}
-
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
       },
     },
     {
@@ -262,10 +262,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "rudder",
       errors: errors["rudder"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
-        min:{value:0,message:""}
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
       },
     },
     {
@@ -273,9 +273,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "waterPurifier",
       errors: errors["waterPurifier"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -283,9 +285,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "dieselOilSeparator",
       errors: errors["dieselOilSeparator"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -293,9 +297,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "gear",
       errors: errors["gear"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
       },
     },
   ];
@@ -306,9 +311,10 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "getOfDiesel",
       errors: errors["getOfDiesel"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
       },
     },
     {
@@ -316,9 +322,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "getOfBenzine",
       errors: errors["getOfBenzine"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -326,9 +334,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "getOfGadinia",
       errors: errors["getOfGadinia"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -336,9 +346,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "getOfTellus",
       errors: errors["getOfTellus"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -346,9 +358,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "getOfFreshWater",
       errors: errors["getOfFreshWater"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
   ];
@@ -359,9 +373,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "giveOfDiesel",
       errors: errors["giveOfDiesel"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -369,9 +385,9 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "giveOfBenzine",
       errors: errors["giveOfBenzine"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
       },
     },
     {
@@ -379,9 +395,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "giveOfGadinia",
       errors: errors["giveOfGadinia"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -389,9 +407,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "giveOfTellus",
       errors: errors["giveOfTellus"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -399,9 +419,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "giveOfFreshWater",
       errors: errors["giveOfFreshWater"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
   ];
@@ -412,9 +434,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "usedOfDiesel",
       errors: errors["usedOfDiesel"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -422,9 +446,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "usedOfBenzine",
       errors: errors["usedOfBenzine"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -432,9 +458,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "usedOfGadinia",
       errors: errors["usedOfGadinia"],
-      inputNumberProps: { disabled: isAdd,required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -442,9 +470,11 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "usedOfTellus",
       errors: errors["usedOfTellus"],
-      inputNumberProps: { disabled: isAdd ,required:true},
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
     {
@@ -452,28 +482,35 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "fraction",
       fieldID: "usedOfFreshWater",
       errors: errors["usedOfFreshWater"],
-      inputNumberProps: { disabled: isAdd, required:true },
-      rules:{
-        required: {value:true, message:""},
+      inputNumberProps: { disabled: isAdd, required: true },
+      rules: {
+        required: { value: true, message: "กรุณาใส่ค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
     },
   ];
 
-  const counselShow :DynamicInputItem[] = [
+  const counselShow: DynamicInputItem[] = [
     {
       type: "textarea",
       fieldID: "counsel",
-      errors:["counsel"],
+      errors: ["counsel"],
       label: "เหตุผลแก้ไข",
-      inputTextAreaProps:{
-        disabled:true,
+      inputTextAreaProps: {
+        disabled: true,
       },
       inputClassName: "counsel",
-      data: data?.rejectByPositionId == 2 ? "ต้นกล" 
-      : data?.rejectByPositionId == 3 ? "ผู้บังคับการ เรือ"
-      : data?.rejectByPositionId == 4 ? "ผอ. การช่าง " : "ผบ. กตอ",
+      data:
+        data?.rejectByPositionId == 2
+          ? "ต้นกล"
+          : data?.rejectByPositionId == 3
+          ? "ผู้บังคับการ เรือ"
+          : data?.rejectByPositionId == 4
+          ? "ผอ. การช่าง "
+          : "ผบ. กตอ",
     },
-  ]
+  ];
 
   const leftResource: DynamicInputItem[] = [
     {
@@ -518,12 +555,14 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "bigMachineUsed",
       errors: errors["bigMachineUsed"],
-      rules:{
-        required: {value:true, message:""},
+      rules: {
+        required: { value: true, message: "โปรดระบุค่า" },
+        min: { value: 0, message: "โปรดระบุค่ามากกว่า 0" },
       },
-      inputNumberProps: { 
+      inputNumberProps: {
         disabled: isAdd,
-        required:true },
+        required: true,
+      },
     },
   ];
   const electricMachineResource: DynamicInputItem[] = [
@@ -532,16 +571,18 @@ const PanelReportVessel = (props: AddPageProps) => {
       type: "number",
       fieldID: "electricMachineUsed",
       errors: errors["electricMachineUsed"],
-      rules:{
-        required: {value:true, message:""},
+      rules: {
+        required: { value: true, message: "โปรดระบุค่า" },
+        min: { value: 0, message: "กรุณาใส่ค่ามากกว่า 0" },
+
       },
-      inputNumberProps: { disabled: isAdd, required:true },
+      inputNumberProps: { disabled: isAdd, required: true },
     },
   ];
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSubmit(CheckForm)}>
         <Button
           icon="pi pi-out"
           label="ย้อนกลับ"
@@ -564,28 +605,6 @@ const PanelReportVessel = (props: AddPageProps) => {
           message="โปรดตรวจสอบให้แน่ใจว่าค่า คงเหลือ มากกว่า 0"
           visible={isShowWarning}
         />
-        <PopupPage
-          header="ยืนยัน"
-          message="คุณยืนยันที่จะส่งข้อมูลในเดือนนี้หรือไม่"
-          setVisible={setIsShowConfirm}
-          visible={isShowConfirm}
-        >
-          <div className="flex justify-content-between">
-            <Button
-              label="ยืนยัน"
-              className="p-button-success"
-              onClick={handleSubmit(onSubmitForm)}
-            />
-            <Button
-              label="ยกเลิก"
-              className="p-button-cancel"
-              onClick={(e) => {
-                console.log(e);
-                setIsShowConfirm(false);
-              }}
-            />
-          </div>
-        </PopupPage>
         {data?.counsel != undefined && (
           <div className={styles.counsel}>
             {isShowCounsel === false && (
@@ -595,7 +614,7 @@ const PanelReportVessel = (props: AddPageProps) => {
               >
                 <i
                   className={
-                    "pi pi-exclamation-circle text-white text-4xl flex justify-content-center"
+                    "pi pi-exclamation-circle text-white text-8xl flex justify-content-center"
                   }
                 ></i>
               </Card>
@@ -605,12 +624,12 @@ const PanelReportVessel = (props: AddPageProps) => {
                 className={styles["show"]}
                 onClick={(e) => setIsShowCounsel(false)}
               >
-                  <div className={styles["text-contain"]}>
-                  <DynamicHorizonInput 
+                <div className={styles["text-contain"]}>
+                  <DynamicHorizonInput
                     dynamicInputItems={counselShow}
                     control={control}
                   />
-                  </div>
+                </div>
               </Card>
             )}
           </div>
@@ -618,21 +637,19 @@ const PanelReportVessel = (props: AddPageProps) => {
         <div className="grid">
           <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
             <Card>
-              <h1>ชั่วโมงการใช้งาน</h1>
-              <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
-              <h1>{`จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
+              <h1>ชั่วโมงการใช้งาน (ชั่วโมง)</h1>
+              <br></br>
+              <h1>{`${process.env.NEXT_PUBLIC_BIG_MACHINE} จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput
                 dynamicInputItems={bigMachineResource}
                 control={control}
               />
-              <h1>ชั่วโมง</h1>
-              <h1>{process.env.NEXT_PUBLIC_ELECTRIC_MACHINE}</h1>
-              <h1>{`จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
+              <br></br>
+              <h1>{`${process.env.NEXT_PUBLIC_ELECTRIC_MACHINE} จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
               <DynamicHorizonInput
                 dynamicInputItems={electricMachineResource}
                 control={control}
               />
-              <h1>ชั่วโมง</h1>
             </Card>
           </div>
           <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
@@ -694,7 +711,7 @@ const PanelReportVessel = (props: AddPageProps) => {
         {isAdd != true && (
           <div className="flex justify-content-center">
             <Button
-              onClick={(e) => CheckForm(e)}
+              type="submit"
               className="p-button-success"
               label="ยืนยันแบบฟอร์มและส่งต่อ"
             />

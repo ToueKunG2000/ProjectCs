@@ -1,24 +1,41 @@
-.login{
-    position: absolute;
-    background: #2196F3;
-    width: 200px;
-}
-.div{
-    position: inherit; 
-    flex-direction: column;
-    justify-items: center;
-    justify-content: center;
+.page{
+    height: 100vh;
+    background-image:url('../public/login_page.jpeg');
+    background-size: cover;
+    background-position: center;
     display: flex;
-    margin-top: 40vh;
-}
-.label{
-    padding-right: 20%;
-}
-.label{
+    flex-direction: column;
     align-items: center;
-    justify-items: center;
+    justify-content: center;
 }
-.img{
-    background-image:url('../public/login_page.png');
+.label-text{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5%;
+    width: 50%;
+}
+.label-text > label{
+    font-weight: bold !important;
+}
+.horizon{
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 10px;
+}
+.button{
+    background-color: #0000DC;
+    border-color: #0000DC;
+}
+.button:hover{
+    background-color: #000080 !important;
+    border-color: #000080 !important;
 
+}
+
+@media screen and (max-width: 820) {
+    .label{
+        padding-left: 42%;
+        width: 50%;
+    }
 }

@@ -76,8 +76,8 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
   };
 
   const dynamicInput: DynamicInputItem[] = [
-    { label: "เดือน/ปี", type: "text", fieldID: "monthYear", placeholder:"MM/yyyy" },
-    { label: "ชื่อเรือ", type: "dropdown", options: vesselDropdown, fieldID: "vesId" },
+    { label: "เดือน/ปี", inputClassName:"space", type: "text", fieldID: "monthYear", placeholder:"MM/yyyy" },
+    { label: "ชื่อเรือ", inputClassName:"space",type: "dropdown", options: vesselDropdown, fieldID: "vesId" },
   ];
 
   const onSubmit = (e: any) => {

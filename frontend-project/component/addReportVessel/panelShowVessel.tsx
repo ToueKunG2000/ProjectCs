@@ -438,8 +438,8 @@ const PanelShowVessel = (props: AddPageProps) => {
              onClick={(e) => setIsShowLeft(true)}
              >
               <div className="block flex-column align-item-center">
-              <h3>ยอดคงเหลือ</h3>
-              <h3>รอบที่ผ่านมา</h3>
+              <h3 className="text-7xl">ยอดคงเหลือ</h3>
+              <h3 className="text-7xl">รอบที่ผ่านมา</h3>
               </div>  
             </Card>
             }
@@ -482,7 +482,7 @@ const PanelShowVessel = (props: AddPageProps) => {
               >
                 <i
                   className={
-                    "pi pi-exclamation-circle text-white text-4xl flex justify-content-center"
+                    "pi pi-exclamation-circle text-white text-8xl flex justify-content-center"
                   }
                 ></i>
               </Card>

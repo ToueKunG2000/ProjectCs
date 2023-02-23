@@ -88,7 +88,10 @@ export const PopupShowStatus = (props: PopupShowStatusProps) => {
             dynamicInputItems={dynamicInput}
             control={control}
           />
-          <Button label="ยืนยัน" onClick={handleSubmit(OnSubmit)} />
+          <div className="flex justify-content-center">
+          <Button label="ยืนยัน" className="p-button-success" onClick={handleSubmit(OnSubmit)} />
+
+          </div>
         </form>
       </div>
     </>

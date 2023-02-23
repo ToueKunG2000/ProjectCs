@@ -58,7 +58,7 @@ const Profile = (props: ProfileProps) => {
    
                 </div>
                 <div className={styles["back"]}>
-                <h3 className={styles["text-back"]}>ระบบการส่งข้อมูลเรือตรวจอ่าว กองเรือตรวจอ่าว</h3>
+                <h3 className={styles["text-back"]}>ระบบการส่งข้อมูลเรือตรวจอ่าว</h3>
 
                 </div>
             </div>

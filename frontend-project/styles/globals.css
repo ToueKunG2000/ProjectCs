@@ -11,6 +11,10 @@ body{
     font-weight: 700!important;
     font-size: 25px !important;
 }
+.p-inputtext{
+    font-family: 'Sarabun', sans-serif !important;
+}
+
 h1{
     display: flex;
     justify-content: center;
@@ -19,11 +23,19 @@ h1{
 }
 h2{
     font-family: 'Sarabun', sans-serif !important;
+    font-size: 30px;
+
 }
 h3{
     margin: 0;
-    font-size: 30px;
+    font-size: 25px;
     font-family: 'Sarabun', sans-serif !important;
+}
+.p-dialog .p-dialog-header > .p-dialog-title{
+    font-size: 30px !important;
+}
+.p-inputtext{
+    width: 250px !important;
 }
 label{
     font-size: 30px;
@@ -67,7 +79,8 @@ label{
 label.required{
     color:red;
     padding: 5px 0px !important;
-    font-size: normal;
+    font-size: medium !important;
+    font-weight: bold;
 }
 .invalid{
     border-color: red !important;
