@@ -3,17 +3,7 @@ import instance from "./../axios";
 import { VesselForm } from "./../component/common/interface";
 
 export class UserServices {
-  async checkUser(username: string, password: string) {
-    const res = instance.get<UserForm>("/login", {
-      params: {
-        username: username,
-        password: password,
-      },
-    }).catch((error) => {
-        console.log(error);
-    });
-    return res;
-  }
+
   async getAllUser(){
     const res = instance.get<UserForm>("/getAllUser")
     return res;

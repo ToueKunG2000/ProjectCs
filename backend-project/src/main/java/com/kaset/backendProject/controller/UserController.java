@@ -33,6 +33,16 @@ public class UserController {
     @Autowired
     private VesselServiceImpl vesselService;
 
+    @GetMapping("/checkUsernameDup")
+    public ResponseEntity<Boolean> checkUsernameDup(@RequestParam(value = "username")String username){
+        if(loginService.checkUsernameDup(username)){
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(false,HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @GetMapping("/login")
     public ResponseEntity<UserPayload> getUser(@RequestParam(value = "username") String username, @RequestParam(value = "password") String password){
         UserPayload user = loginService.checkUser(username,password);

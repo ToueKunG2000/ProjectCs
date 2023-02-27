@@ -17,12 +17,13 @@ export const PopupUserStatus = (props: PopupUserStatus) => {
     } = useForm({values: selectedUser});
 
     const status = [
-        {label:"ปฏิบัติงาน",value:1},
-        {label:"ปลดประจำการ",value:2}
+        {label:"ปฏิบัติงาน", value:1},
+        {label:"ปลดประจำการ", value:2}
     ];
 
     const OnSubmit = (e:any) => {
         userService.changeUserStatus(e);
+        window.location.reload();
     }
 
     const dynamicInput: DynamicInputItem[] = [

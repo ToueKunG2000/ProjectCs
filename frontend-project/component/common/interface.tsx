@@ -5,6 +5,7 @@ import { DropdownProps } from "primereact/dropdown";
 import { RegisterOptions, DeepMap, FieldError } from "react-hook-form";
 import { Dispatch, SetStateAction } from "react";
 import { FileUploadProps } from "primereact/fileupload";
+import { PasswordProps } from "primereact/password";
 
 export interface FieldProps {
   children?: React.ReactNode;
@@ -32,6 +33,7 @@ export interface DynamicInputItem {
   inputTextAreaProps?: InputTextareaProps;
   inputNumberProps?: InputNumberProps;
   inputUpload?: FileUploadProps;
+  inputPasswordProps?: PasswordProps;
   setValue?:any;
   rules?: Omit<
     RegisterOptions,
@@ -162,3 +164,8 @@ export interface VesselStatus{
   name?: string;
   vesName: string;
 } 
+
+export interface LoginForm{
+  username: string;
+  password: string;
+}

@@ -49,4 +49,5 @@ public class UserServiceImpl {
     public Integer checkUserIdInVessel(Integer positionId, Integer vesId){
         return userRepository.checkUserIdInVessel(positionId,vesId);
     }
+
 }

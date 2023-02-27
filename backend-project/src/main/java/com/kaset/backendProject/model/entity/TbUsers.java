@@ -21,6 +21,11 @@ import java.util.Objects;
                     " TP on TP.position_id = TU.position_id WHERE username = :username ",
             resultSetMapping = "userMapping"),
     @NamedNativeQuery(
+            name = "TbUsers.checkUsernameDup",
+            query = "SELECT username FROM TB_USERS ",
+            resultSetMapping = "usernameList"
+    ),
+    @NamedNativeQuery(
             name = "TbUsers.getAllUser",
             query = "SELECT user_id, CONCAT(TP.rank_th,' ',first_name,' ',last_name) as userName," +
                     " TU.position_id as positionId, user_status, TP.position_name_th as positionName, CAST(user_photo as VARCHAR(max)) as userPhoto" +
@@ -41,6 +46,9 @@ import java.util.Objects;
 @SqlResultSetMappings({
         @SqlResultSetMapping(name = "userId",columns = {
                 @ColumnResult(name = "user_id")
+        }),
+        @SqlResultSetMapping(name = "usernameList",columns = {
+                @ColumnResult(name = "username")
         }),
         @SqlResultSetMapping(name = "userMapping",classes = {
                 @ConstructorResult(targetClass = UserPayload.class, columns = {

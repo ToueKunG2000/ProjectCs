@@ -7,6 +7,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Log4j2
 public class LoginServiceImpl implements LoginService {
@@ -21,6 +23,16 @@ public class LoginServiceImpl implements LoginService {
             return user;
         }
         return null;
+    }
+
+    public Boolean checkUsernameDup(String username){
+        List<String> usernameList = userRepository.checkUsernameDup();
+        if(usernameList.contains(username)){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 }

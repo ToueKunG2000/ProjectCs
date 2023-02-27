@@ -6,6 +6,7 @@ import InputTextArea from "./input/inputTextArea";
 import InputTextField from "./input/inputText";
 import InputDropdown from "./input/inputDropdown";
 import { InputUpload } from "./input/inputUpload";
+import { InputPassword } from "./input/inputPassword";
 
 interface InputBuilderProps{
     field: DynamicInputItem;
@@ -79,6 +80,14 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
                 setValue={field.setValue}
                 controllerName={field.fieldID}
                 {...field.inputUpload}
+            />
+        }
+        if(field.type == "password"){
+            return <InputPassword
+                control={control}
+                rules={field.rules}
+                controllerName={field.fieldID}
+                {...field.inputPasswordProps}
             />
         }
     }

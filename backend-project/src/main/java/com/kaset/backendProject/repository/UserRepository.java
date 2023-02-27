@@ -17,18 +17,21 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<TbUsers, Integer>, CustomUserRepository {
 
     @Query(nativeQuery = true)
-    public UserPayload findUserByUsername(@Param(value = "username") String username);
+    UserPayload findUserByUsername(@Param(value = "username") String username);
 
     @Query(nativeQuery = true)
-    public List<UserPayload> getAllUser();
+    List<UserPayload> getAllUser();
 
     @Query(nativeQuery = true)
-    public List<DropdownPayload> getUserDropdown(@Param(value = "positionId")Integer positionId);
+    List<DropdownPayload> getUserDropdown(@Param(value = "positionId")Integer positionId);
 
     @Query(nativeQuery = true)
-    public Integer checkUserIdInVessel(@Param(value = "positionId")Integer positionId, @Param(value = "vesId")Integer vesId);
+    Integer checkUserIdInVessel(@Param(value = "positionId")Integer positionId, @Param(value = "vesId")Integer vesId);
 
     @Query(value = "SELECT TU.vesId FROM TbUsers TU WHERE TU.userId = :userId")
-    public Integer findVesselByUserId(Integer userId);
+    Integer findVesselByUserId(Integer userId);
+
+    @Query(nativeQuery = true)
+    List<String> checkUsernameDup();
 
 }

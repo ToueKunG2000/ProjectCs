@@ -10,7 +10,7 @@ import { Button } from "primereact/button";
 import ShowLogVessel from "../logVessel/ShowLogVessel";
 import { PanelShowStatusVessel } from "../vesselManage/panelShowStatusVessel";
 import { PanelShowUser } from "../userManage/PanelShowUser";
-import { PanelAddUser } from "./../addUser/panelAddUser";
+import { PanelAddUser } from "../userManage/panelAddUser";
 import { PanelAddVessel } from "../vesselManage/PanelAddVessel";
 
 interface HomePageProps {}

@@ -50,10 +50,10 @@ const Profile = (props: ProfileProps) => {
                 // <h3 className={styles["text-front"]} onClick={OnClickLogVessel}>ประวัติส่งข้อมูล</h3>
                 )}
                 {(user?.positionId == 5) && (
-                    <Button className={styles["text-front"]} onClick={OnClickStatusVessel} label="สถานะเรือ"/>
+                    <Button className={styles["text-front"]} onClick={OnClickStatusVessel} label="เรือตรวจอ่าว"/>
                 )}
                 {(user?.positionId == 5) && (
-                    <Button className={styles["text-front"]} onClick={OnClickUser} label="กำลังพลเรือ" />
+                    <Button className={styles["text-front"]} onClick={OnClickUser} label="ตำแหน่งประจำเรือ" />
                 )}
    
                 </div>

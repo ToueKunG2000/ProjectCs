@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form";
 import { UserServices } from "../../services/user.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { AddUserForm, DynamicInputItem, PanelProps } from "../common/interface";
+import { LoginServices } from "./../../services/login.service";
 
 interface PanelAddUserProps extends PanelProps {}
 export const PanelAddUser = (props: PanelAddUserProps) => {
   const userService = new UserServices();
+  const loginService = new LoginServices();
   const { setPage } = props;
-  const { control, formState:{errors}, handleSubmit, setValue } = useForm<AddUserForm>();
+  const { control, formState:{errors}, handleSubmit, setError,setValue } = useForm<AddUserForm>();
 
   const positionDropdown = [
     { value: 0, label: "ไม่ระบุ"},
@@ -27,14 +29,14 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
       isRequired: true,
       rules:{
         required: {value: true ,message:"กรุณาระบุชื่อผู้ใช้"},
-        minLength: {value:1, message:""},
+        minLength: {value:1, message:"กรุณาระบุชื่อผู้ใช้"},
       },
       inputTextProps:{
         required: true
       },
     },
     {
-      type: "text",
+      type: "password",
       label: "password",
       fieldID: "password",
       inputClassName:"space-bet",
@@ -42,8 +44,11 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
       isRequired: true,
       rules:{
         required: {value: true ,message:"กรุณาระบุรหัสผ่าน"},
-        minLength: {value:1, message:""},
+        minLength: {value:1, message:"กรุณาระบุรหัสผ่าน"},
       },
+      inputPasswordProps:{
+        required: true
+      }
     },
     {
       type: "text",
@@ -54,7 +59,7 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
       isRequired: true,
       rules:{
         required: {value: true ,message:"กรุณาระบุชื่อ"},
-        minLength: {value:1, message:""},
+        minLength: {value:1, message:"กรุณาระบุชื่อ"},
       },
     },
     {
@@ -66,7 +71,7 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
       isRequired: true,
       rules:{
         required: {value: true ,message:"กรุณาระบุนามสกุล"},
-        minLength: {value:1, message:""},
+        minLength: {value:1, message:"กรุณาระบุนามสกุล"},
       },
     },
     {
@@ -94,15 +99,20 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
       isRequired: true,
       rules:{
         required: {value: true ,message:"กรุณากดปุ่มอัพโหลดรูปภาพ"},
-        minLength: {value:1, message:""},
+        minLength: {value:1, message:"กรุณากดปุ่มอัพโหลดรูปภาพ"},
       },
       setValue: setValue,
     },
   ];
 
-  const onSubmit = (e: any) => {
-    userService.addUser(e);
-    window.location.reload();
+  const onSubmit = (e: AddUserForm) => {
+    loginService.checkUsernameDup(e.username)
+    .then((res) => {
+      userService.addUser(e);
+      window.location.reload();
+    }).catch((err) => {
+      setError("username",{message: "username ไม่สามารถใช้ได้"});
+    });
   };
 
   const onGoBack = (e:any) => {

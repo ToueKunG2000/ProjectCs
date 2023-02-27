@@ -1,37 +1,59 @@
-import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import styles from "../../styles/Login.module.css";
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
-import { UserServices } from "../../services/user.service";
+import { useState } from "react";
 import PopupPage from "../common/popupPage";
-import { Password } from 'primereact/password';
+import { LoginServices } from "./../../services/login.service";
+import { DynamicInputItem, LoginForm, UserForm } from "../common/interface";
+import { useForm } from "react-hook-form";
+import DynamicHorizonInput from "./../common/dynamicHorizonInput";
 
-interface User{
-    username:string;
-    password:string;
+interface User {
+  username: string;
+  password: string;
 }
 const LayoutLogin = () => {
   const router = useRouter();
-  const service = new UserServices();
-  const op = useRef(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [result, setResult] = useState("");
+  const service = new LoginServices();
+  const [user, setUser] = useState<UserForm>();
   const [popupVisible, setPopupVisible] = useState(false);
 
-  const CheckLogin = async () => {
-    const user = await service.checkUser(username,password)
-    console.log(user);
-    if(user != null){
-      localStorage.setItem("user",JSON.stringify(user.data));
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginForm>();
+
+  const CheckLogin = (e: LoginForm) => {
+    service.checkUser(e.username, e.password).then((res) => {
+      setUser(res.data);
+      localStorage.setItem("user", JSON.stringify(res.data));
       GoToHome();
-    }
-    else{
-      setPopupVisible(true)
-    }
+    }).catch((err) => {
+      setPopupVisible(true);
+    });
   };
+
+  const dynamicInput: DynamicInputItem[] = [
+    {
+      type: "text",
+      fieldID: "username",
+      label: "Username",
+      errors: errors["username"],
+      inputClassName:"login",
+    },
+    {
+      type: "password",
+      fieldID: "password",
+      inputClassName:"login",
+      label: "Password",
+      errors: errors["password"],
+      inputPasswordProps:{
+        feedback:false
+      }
+    },
+  ];
 
   const GoToHome = () => {
     router.push("/homepage");
@@ -39,46 +61,34 @@ const LayoutLogin = () => {
 
   return (
     <>
-      <div className={styles["page"]}>
-        <PopupPage header="Warning" message="Your username or password incorrect" setVisible={setPopupVisible} visible={popupVisible}/>
-        <div className="flex justify-content-center p-2">
-          <Image src={process.env.NEXT_PUBLIC_IMAGE} width="300" height="400" />
-        </div>
-        <div className={styles["horizon"]}>
-        <div className={styles["label-text"]}>
-          <label>Username : </label>
-        </div>
-        <div className={styles["input"]}>
-        <InputText
-            placeholder="abc123"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+      <form onSubmit={handleSubmit(CheckLogin)}>
+        <div className={styles["page"]}>
+          <PopupPage
+            header="Warning"
+            message="Your username or password incorrect"
+            setVisible={setPopupVisible}
+            visible={popupVisible}
           />
-        </div>
-        </div>
-        <div className={styles["horizon"]}>
-        <div className={styles["label-text"]}>
-        <label>Password : </label>
-        </div>  
-          <div className={styles["input"]}>
-          <Password
-            placeholder="123456"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            toggleMask
-            feedback={false}
+          <div className="flex justify-content-center p-2">
+            <Image
+              src={process.env.NEXT_PUBLIC_IMAGE}
+              width="300"
+              height="400"
+            />
+          </div>
+          <DynamicHorizonInput 
+            dynamicInputItems={dynamicInput}
+            control={control}
           />
+          <div className="flex justify-content-center">
+            <Button
+              type="submit"
+              label="Login"
+              className={styles["button"]}
+            />
+          </div>
         </div>
-        </div>
-        <div className="flex justify-content-center">
-          <Button
-            type="submit"
-            label="Login"
-            className={styles["button"]}
-            onClick={CheckLogin}
-          />
-        </div>
-      </div>
+      </form>
     </>
   );
 };
