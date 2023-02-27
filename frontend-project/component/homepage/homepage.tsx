@@ -12,6 +12,7 @@ import { PanelShowStatusVessel } from "../vesselManage/panelShowStatusVessel";
 import { PanelShowUser } from "../userManage/PanelShowUser";
 import { PanelAddUser } from "../userManage/panelAddUser";
 import { PanelAddVessel } from "../vesselManage/PanelAddVessel";
+import { PanelShowGraph } from "../graph/panelShowGraph";
 
 interface HomePageProps {}
 const HomePageLayout = (props: HomePageProps) => {
@@ -89,6 +90,14 @@ const HomePageLayout = (props: HomePageProps) => {
       (
         <div>
           <PanelAddVessel setPage={setPage}/>
+        </div>
+      )
+
+      }
+      {page == 9 && (showPosition == 5) &&
+      (
+        <div>
+          <PanelShowGraph setPage={setPage} />
         </div>
       )
 

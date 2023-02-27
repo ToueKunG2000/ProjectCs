@@ -29,11 +29,16 @@ export const PanelShowStatusVessel = (props: PanelShowStatusVesselProps) =>{
         setPage(8);
     }
 
+    const OnClickWatchGraph = () => {
+        setPage(9);
+    }
+
     return (
         <>
         <div>
             <Button label="ย้อนกลับ" className="p-button-danger" onClick={OnClickBack}/>
             <Button label="เพิ่มเรือ" className="p-button-success" onClick={OnClickAdd} />
+            <Button label="ดูกราฟ" className="p-button-primary" onClick={OnClickWatchGraph}/>
         </div>  
         <DynamicDisplay
                 type="vessel"
