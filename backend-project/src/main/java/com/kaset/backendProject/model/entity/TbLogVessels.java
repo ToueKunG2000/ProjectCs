@@ -1,5 +1,6 @@
 package com.kaset.backendProject.model.entity;
 
+import com.kaset.backendProject.model.payload.ColumnData;
 import com.kaset.backendProject.model.payload.Vessel;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -35,6 +36,11 @@ import java.util.Objects;
                     query = " SELECT ves_id FROM TB_LOG_VESSELS WHERE month_year LIKE :monthYear",
                     resultSetMapping = "GetVesId"
             ),
+            @NamedNativeQuery(
+                    name = "TbLogVessels.getColumnData",
+                    query = "SELECT * FROM TB_LOG_VESSELS where month_year LIKE '%'+:year and ves_id = :vesId",
+                    resultClass = TbLogVessels.class
+            )
 //            @NamedNativeQuery(
 //                    name = "TbLogVessels.getDataLogList",
 //                    query = "SELECT ves_id, month_year, ves_name_th FROM  " +
@@ -220,5 +226,48 @@ public class TbLogVessels implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getLogId(), getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeperator(), getGear(), getMonthYear(), getGetOfBenzine(), getGetOfDiesel(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfBenzine(), getGiveOfDiesel(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getUsedOfBenzine(), getUsedOfDiesel(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfBenzine(), getLeftOfDiesel(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater());
+    }
+
+    public TbLogVessels() {
+    }
+
+    public TbLogVessels(int logId, int vesId, String vesName, Integer bigMachineNum, Integer electricMachineNum, Integer bigMachineUsed, Integer electricMachineUsed, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeperator, Integer gear, String monthYear, BigDecimal getOfBenzine, BigDecimal getOfDiesel, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfBenzine, BigDecimal giveOfDiesel, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal usedOfBenzine, BigDecimal usedOfDiesel, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, BigDecimal leftOfBenzine, BigDecimal leftOfDiesel, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater) {
+        this.logId = logId;
+        this.vesId = vesId;
+        this.vesName = vesName;
+        this.bigMachineNum = bigMachineNum;
+        this.electricMachineNum = electricMachineNum;
+        this.bigMachineUsed = bigMachineUsed;
+        this.electricMachineUsed = electricMachineUsed;
+        this.airConditioner = airConditioner;
+        this.airCompressor = airCompressor;
+        this.freezer = freezer;
+        this.shipEngine = shipEngine;
+        this.pump = pump;
+        this.rudder = rudder;
+        this.waterPurifier = waterPurifier;
+        this.dieselOilSeperator = dieselOilSeperator;
+        this.gear = gear;
+        this.monthYear = monthYear;
+        this.getOfBenzine = getOfBenzine;
+        this.getOfDiesel = getOfDiesel;
+        this.getOfGadinia = getOfGadinia;
+        this.getOfTellus = getOfTellus;
+        this.getOfFreshWater = getOfFreshWater;
+        this.giveOfBenzine = giveOfBenzine;
+        this.giveOfDiesel = giveOfDiesel;
+        this.giveOfGadinia = giveOfGadinia;
+        this.giveOfTellus = giveOfTellus;
+        this.giveOfFreshWater = giveOfFreshWater;
+        this.usedOfBenzine = usedOfBenzine;
+        this.usedOfDiesel = usedOfDiesel;
+        this.usedOfGadinia = usedOfGadinia;
+        this.usedOfTellus = usedOfTellus;
+        this.usedOfFreshWater = usedOfFreshWater;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.leftOfFreshWater = leftOfFreshWater;
     }
 }

@@ -1,5 +1,6 @@
 package com.kaset.backendProject.serviceimpl;
 
+import com.kaset.backendProject.model.entity.TbLogVessels;
 import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.*;
 import com.kaset.backendProject.repository.LogVesselRepository;
@@ -80,5 +81,9 @@ public class VesselServiceImpl {
 
     public Integer addVessel(AddVesselPayload addVesselPayload){
         return vesselRepository.insertNewVessel(addVesselPayload);
+    }
+
+    public List<TbLogVessels> getColumnData(String year, Integer vesId){
+        return logVesselRepository.getColumnData(year,vesId);
     }
 }
