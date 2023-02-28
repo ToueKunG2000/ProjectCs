@@ -169,3 +169,9 @@ export interface LoginForm{
   username: string;
   password: string;
 }
+
+export interface GraphLogVesselForm{
+  year: string;
+  type: string;
+  vesId: number;
+}

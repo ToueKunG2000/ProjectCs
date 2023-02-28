@@ -38,7 +38,8 @@ import java.util.Objects;
             ),
             @NamedNativeQuery(
                     name = "TbLogVessels.getColumnData",
-                    query = "SELECT * FROM TB_LOG_VESSELS where month_year LIKE '%'+:year and ves_id = :vesId",
+                    query = "SELECT * FROM TB_LOG_VESSELS" +
+                            " WHERE month_year LIKE '%'+:year and ves_id = :vesId ORDER BY month_year ASC ",
                     resultClass = TbLogVessels.class
             )
 //            @NamedNativeQuery(
