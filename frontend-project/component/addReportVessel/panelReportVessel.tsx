@@ -636,16 +636,16 @@ const PanelReportVessel = (props: AddPageProps) => {
         )}
         <div className="grid">
           <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
-            <Card>
+            <Card className="report">
               <h1>ชั่วโมงการใช้งาน (ชั่วโมง)</h1>
               <br></br>
-              <h1>{`${process.env.NEXT_PUBLIC_BIG_MACHINE} จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
+              <h2 style={{}}>{`${process.env.NEXT_PUBLIC_BIG_MACHINE} จำนวน ${data?.bigMachineNum} เครื่อง`}</h2>
               <DynamicHorizonInput
                 dynamicInputItems={bigMachineResource}
                 control={control}
               />
               <br></br>
-              <h1>{`${process.env.NEXT_PUBLIC_ELECTRIC_MACHINE} จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
+              <h2>{`${process.env.NEXT_PUBLIC_ELECTRIC_MACHINE} จำนวน ${data?.electricMachineNum} เครื่อง`}</h2>
               <DynamicHorizonInput
                 dynamicInputItems={electricMachineResource}
                 control={control}
@@ -653,7 +653,7 @@ const PanelReportVessel = (props: AddPageProps) => {
             </Card>
           </div>
           <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
-            <Card>
+            <Card >
               <div className={styles.card}>
                 <h1>{"รายการรับเข้า ในเดือนนี้"}</h1>
                 <DynamicHorizonInput

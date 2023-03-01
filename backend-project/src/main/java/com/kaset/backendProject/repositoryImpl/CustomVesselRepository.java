@@ -6,11 +6,11 @@ import com.kaset.backendProject.model.payload.Vessel;
 
 public interface CustomVesselRepository {
     void updateToTbVessel(Vessel vessel);
-
+    void openStatusVessel(Vessel vessel);
     void updateApproveInTbVessel(UpdateVesselPayload approveForm);
 
     void resetToTbVessel(Vessel vessel);
 
-    void changeStatusVessel(Vessel vessel);
+    void closeStatusVessel(Vessel vessel);
     Integer insertNewVessel(AddVesselPayload addVesselPayload);
 }

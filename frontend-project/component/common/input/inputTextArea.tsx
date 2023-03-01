@@ -30,7 +30,7 @@ const InputTextArea = (props: InputTextProps) => {
                             id={field.name}
                             name={field.name}
                             value={field.value} 
-                            cols={60} rows={5}
+                            cols={100} rows={5}
                             autoResize={true}
                             className={fieldState.error == undefined ?'':'invalid'}
                             onChange={(e) => field.onChange(e.target.value)}

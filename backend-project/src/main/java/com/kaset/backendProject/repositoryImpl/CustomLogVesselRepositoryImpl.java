@@ -8,6 +8,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.jpa.repository.Modifying;
@@ -89,24 +90,30 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
         CriteriaQuery<TbLogVessels> criteriaQuery = criteriaBuilder.createQuery(TbLogVessels.class);
         Root<TbLogVessels> root = criteriaQuery.from(TbLogVessels.class);
 
+        List<Order> orderList = new ArrayList();
+        orderList.add(criteriaBuilder.asc(root.get("vesName")));
+
         if(!vesId.equals(0) && !monthYear.isEmpty()){
             criteriaQuery.select(root).where(criteriaBuilder.and(
                     criteriaBuilder.like(root.get("monthYear"),monthYear),criteriaBuilder.equal(root.get("vesId"),vesId)
-            ));
+            ))
+            .orderBy(orderList);
 
         }
         if(vesId.equals(0) && !monthYear.isEmpty()){
             criteriaQuery.select(root).where(criteriaBuilder.or(
                     criteriaBuilder.like(root.get("monthYear"),monthYear)
-            ));
+            ))
+            .orderBy(orderList);
         }
         if(!vesId.equals(0) && monthYear.isEmpty()){
             criteriaQuery.select(root).where(
                     criteriaBuilder.equal(root.get("vesId"),vesId)
-            );
+            )
+            .orderBy(orderList);
         }
         else{
-            criteriaQuery.select(root);
+            criteriaQuery.select(root).orderBy(orderList);
         }
 
 

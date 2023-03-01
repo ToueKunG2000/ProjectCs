@@ -1,7 +1,6 @@
 package com.kaset.backendProject.serviceimpl;
 
 import com.kaset.backendProject.model.entity.TbLogVessels;
-import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.*;
 import com.kaset.backendProject.repository.LogVesselRepository;
 import com.kaset.backendProject.repository.VesselRepository;
@@ -76,7 +75,12 @@ public class VesselServiceImpl {
     }
 
     public void changeStatus(Vessel vessel){
-        vesselRepository.changeStatusVessel(vessel);
+        if(vessel.getVesStatus() == 1){
+            vesselRepository.openStatusVessel(vessel);
+        }
+        else{
+            vesselRepository.closeStatusVessel(vessel);
+        }
     }
 
     public Integer addVessel(AddVesselPayload addVesselPayload){

@@ -20,6 +20,7 @@ h1{
     justify-content: center;
     font-family: 'Sarabun', sans-serif !important;
     font-size: 30px;
+    text-decoration: underline;
 }
 h2{
     font-family: 'Sarabun', sans-serif !important;
@@ -37,6 +38,9 @@ h3{
 .p-inputtext{
     width: 250px !important;
 }
+.p-inputtextarea{
+    width: auto !important;
+}
 .p-inputtext:hover{
     border-color: #000080;
 }
@@ -50,7 +54,7 @@ label{
     font-family: 'Sarabun', sans-serif !important;
 }
 .p-dialog{
-    width: 40%;
+    width: 70%;
 }
 .p-card.card-display{
     min-width: 500px !important;
@@ -70,7 +74,11 @@ label{
     display: flex;
     justify-content: center;
 }
-
+.p-card.report{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
 .p-card.card-display:hover{
     background-color: #000080;
     color: white !important;
@@ -115,11 +123,14 @@ label.required{
     height: auto;
 }
 .chart-container{
+    width: 2000px;
+}
+.chart-size{
+    margin-top: 100px;
     display:flex;
     flex-direction: row;
     justify-content: center;
 }
-
 .vesName{
     padding-left: 100px !important;
 }
@@ -161,5 +172,8 @@ label.required{
     }
     .vesName{
         padding: 1rem 1rem !important;
+    }
+    .chart-container{
+        width: 600px;
     }
 }

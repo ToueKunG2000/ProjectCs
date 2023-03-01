@@ -1,6 +1,5 @@
 package com.kaset.backendProject.repositoryImpl;
 
-import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.AddVesselPayload;
 import com.kaset.backendProject.model.payload.UpdateVesselPayload;
 import com.kaset.backendProject.model.payload.Vessel;
@@ -164,7 +163,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
 
     @Modifying
     @Transactional
-    public void changeStatusVessel(Vessel vessel){
+    public void closeStatusVessel(Vessel vessel){
         String sql = "UPDATE TB_VESSELS SET air_compressor = :airCompressor,"+
                 " air_conditioner = :airConditioner, big_machine_used = :bigMachineUsed, "+
                 " current_position = :currentPosition, diesel_oil_separator = :dieselOilSeparator, "+
@@ -217,12 +216,20 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         query.setParameter("usedOfTellus",0);
         query.setParameter("usedOfFreshWater",0);
 
-        query.setParameter("vesStatus",vessel.getVesStatus());
-//        query.setParameter("leftOfBenzine",vessel.getLeftOfBenzine());
-//        query.setParameter("leftOfDiesel",vessel.getLeftOfDiesel());
-//        query.setParameter("leftOfGadinia",vessel.getLeftOfGadinia());
-//        query.setParameter("leftOfTellus",vessel.getLeftOfTellus());
-//        query.setParameter("leftOfFreshWater",vessel.getLeftOfFreshWater());
+        query.setParameter("vesStatus",2);
+        query.executeUpdate();
+
+    }
+
+    @Modifying
+    @Transactional
+    public void openStatusVessel(Vessel vessel){
+        String sql = "UPDATE TB_VESSELS SET ves_status = :vesStatus" +
+                " WHERE ves_id = :vesId ";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("vesId",vessel.getVesId());
+
+        query.setParameter("vesStatus",1);
         query.executeUpdate();
 
     }

@@ -1,0 +1,22 @@
+{
+    "leftOfBenzine":"คงเหลือเบนซิน (กิโลลิตร)",
+    "leftOfDiesel":"คงเหลือดีเซล (ลิตร)",
+    "leftOfGadinia":"คงเหลือกาดิเนีย (ลิตร)",
+    "leftOfTellus":"คงเหลือกาดิเนีย (ลิตร)",
+    "leftOfFreshWater":"คงเหลือน้ำดื่ม (ตัน)",
+    "usedOfBenzine":"การใช้เบนซิน (กิโลลิตร)",
+    "usedOfDiesel":"การใช้ดีเซล (ลิตร)",   
+    "usedOfGadinia":"การใช้กาดิเนีย (ลิตร)",
+    "usedOfTellus":"การใช้เทลลัส (ลิตร)",
+    "usedOfFreshWater":"การใช้น้ำดื่ม (ตัน)",
+    "giveOfBenzine":"จ่ายออกเบนซิน (กิโลลิตร)",
+    "giveOfDiesel":"จ่ายออกดีเซล (ลิตร)",
+    "giveOfGadinia":"จ่ายออกกาดิเนีย (ลิตร)",
+    "giveOfTellus":"จ่ายออกเทลลัส (ลิตร)",
+    "giveOfFreshWater":"จ่ายออกน้ำดื่ม (ตัน)",
+    "getOfBenzine":"ได้รับเบนซิน (กิโลลิตร)",
+    "getOfDiesel":"ได้รับดีเซล (ลิตร)",
+    "getOfGadinia":"ได้รับกาดิเนีย (ลิตร)",
+    "getOfTellus":"ได้รับเทลลัส (ลิตร)",
+    "getOfFreshWater":"ได้รับน้ำดื่ม (ตัน)"
+}

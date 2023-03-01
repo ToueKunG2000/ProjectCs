@@ -68,7 +68,19 @@
 .login{
     padding: 10px;
 }
-
+.up-down{
+    display: flex;
+    flex-direction: column;
+}
+.front-up-down{
+    margin: 10px;
+}
+.left{
+    display: flex;
+}
+.front-left{
+    width: 25%;
+}
 @media screen and (max-width: 820px){
     .space-bet{
         display: flex;

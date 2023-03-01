@@ -6,6 +6,8 @@ import "primeicons/primeicons.css";                                //icons
 import "/node_modules/primeflex/primeflex.css";
 
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
-}
+const MyApp = ({ Component, pageProps }: AppProps) => (
+  <Component {...pageProps} />
+)
+
+export default MyApp;

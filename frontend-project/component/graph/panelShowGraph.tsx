@@ -11,15 +11,18 @@ import { useForm } from "react-hook-form";
 import DynamicHorizonInput from "./../common/dynamicHorizonInput";
 import { Button } from "primereact/button";
 import { VesselServices } from "./../../services/vessel.service";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-export-i18n";
+
 
 interface PanelShowGraph extends PanelProps {}
 
-export const PanelShowGraph = () => {
+export const PanelShowGraph = (props: PanelShowGraph) => {
+  const {setPage} = props;
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
   const { t } = useTranslation();
 
+  
   const labelArray :string[] = [];
 
   const dataArray : number[] = [];
@@ -79,7 +82,7 @@ export const PanelShowGraph = () => {
 
   useEffect(() => {
     const dataType  = getValues("type");
-    console.log(t(dataType));
+    console.log(t(`${dataType}`));
     dataLogVessel?.map((vessel)=>{
         labelArray.push(vessel.monthYear);
         dataArray.push(vessel[`${dataType}`]);
@@ -97,7 +100,7 @@ export const PanelShowGraph = () => {
 
       const options = {
         // responsive: true,
-        // maintainAspectRatio:false,
+        maintainAspectRatio:false,
         scales: {
           y: {
             beginAtZero: true,
@@ -159,10 +162,16 @@ export const PanelShowGraph = () => {
     });
   };
 
+  const onGoBack = (e:any) => {
+    e.preventDefault();
+    setPage(5)
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="flex flex-column justify-content-center">
+        <Button className="p-button-danger" label="ย้อนกลับ" onClick={(e) => onGoBack(e)}/>
+        <div className="flex flex-column justify-content-center mt-6">
           <DynamicHorizonInput
             dynamicInputItems={dynamicInput}
             control={control}
@@ -173,8 +182,11 @@ export const PanelShowGraph = () => {
         </div>
       </form>
 
-      <div className="chart-container">
-        <Chart type="bar" width="40%" height="40%" data={chartData} options={chartOptions} />
+      <div className="chart-size">
+          <div className="chart-container">
+        <Chart type="bar" height="600px" data={chartData} options={chartOptions} />
+
+        </div>
       </div>
     </>
   );

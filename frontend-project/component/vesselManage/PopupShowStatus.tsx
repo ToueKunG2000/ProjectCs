@@ -36,7 +36,6 @@ export const PopupShowStatus = (props: PopupShowStatusProps) => {
   ];
 
   const OnSubmit = (e: any) => {
-    console.log(e);
     vesselService.changeVesselStatus(e);
     userService.checkUserIdInVessel(e);
     window.location.reload();

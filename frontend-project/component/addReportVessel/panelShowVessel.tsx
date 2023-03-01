@@ -341,7 +341,10 @@ const PanelShowVessel = (props: AddPageProps) => {
       },
       inputTextAreaProps:{
         required:true,
-      }
+
+      },
+      inputClassName: "up-down",
+
     },
   ];
 
@@ -512,19 +515,17 @@ const PanelShowVessel = (props: AddPageProps) => {
         <h1>รอบที่ {data?.monthYear}</h1>
         <div className="grid">
           <div className="flex justify-content-center col-12 md:col-12 lg:col-6">
-          <Card>
-            <div className={styles.card}>
+          <Card className="report">
+            <div className={styles["card-center"]}>
               <h1>ชั่วโมงการใช้งาน</h1>
-              <h1>{process.env.NEXT_PUBLIC_BIG_MACHINE}</h1>
-              <h1>{`จำนวน ${data?.bigMachineNum} เครื่อง`}</h1>
+              <h2>{`${process.env.NEXT_PUBLIC_BIG_MACHINE} จำนวน ${data?.bigMachineNum} เครื่อง`}</h2>
               <DynamicHorizonInput dynamicInputItems={bigMachineResource} />
-              <h1>ชั่วโมง</h1>
-              <h1>{process.env.NEXT_PUBLIC_ELECTRIC_MACHINE}</h1>
-              <h1>{`จำนวน ${data?.electricMachineNum} เครื่อง`}</h1>
+              <h2>ชั่วโมง</h2>
+              <h2>{`${process.env.NEXT_PUBLIC_ELECTRIC_MACHINE} จำนวน ${data?.electricMachineNum} เครื่อง`}</h2>
               <DynamicHorizonInput
                 dynamicInputItems={electricMachineResource}
               />
-              <h1>ชั่วโมง</h1>
+              <h2>ชั่วโมง</h2>
             </div>
           </Card>
           </div>

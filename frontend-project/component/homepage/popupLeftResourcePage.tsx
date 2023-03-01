@@ -1,23 +1,32 @@
+import { Column } from "primereact/column";
+import { DataTable } from "primereact/datatable";
 import { DynamicInputItem, VesselForm } from "../common/interface";
-import DynamicHorizonInput from "./../common/dynamicHorizonInput";
 interface PopupLeftResourcePageProps {
   selectedVessel: VesselForm;
 }
 
 export const PopupLeftResourcePage = (props: PopupLeftResourcePageProps) => {
   const { selectedVessel } = props;
-  const dynamicInput: DynamicInputItem[] = [
-    { label: "เรือ", type: "label", data: selectedVessel?.vesName },
-    { label: "คงเหลือดีเซล (กิโลลิตร)", type: "label", data: selectedVessel?.leftOfDiesel },
-    { label: "คงเหลือเบนซิน (ลิตร)", type: "label", data: selectedVessel?.leftOfBenzine },
-    { label: "คงเหลือกาดิเนีย (ลิตร)", type: "label", data: selectedVessel?.leftOfGadinia },
-    { label: "คงเหลือเทลลัส (ลิตร)", type: "label", data: selectedVessel?.leftOfTellus },
-    { label: "คงเหลือน้ำจืด (ตัน)", type: "label", data: selectedVessel?.leftOfGadinia },
 
+  const displayData = [
+    {
+      diesel: selectedVessel?.leftOfDiesel,
+      benzine: selectedVessel?.leftOfBenzine,
+      gadinia: selectedVessel?.leftOfGadinia,
+      tellus: selectedVessel?.leftOfTellus,
+      freshwater: selectedVessel?.leftOfFreshWater,
+    },
   ];
   return (
     <>
-      <DynamicHorizonInput dynamicInputItems={dynamicInput} />
+      <h2>{`เรือ: ${selectedVessel?.vesName}`}</h2>
+      <DataTable showGridlines value={displayData}>
+        <Column header="ดีเซล (กิโลลิตร)" align={"center"} field="diesel" />
+        <Column header="เบนซิน (ลิตร)" align={"center"} field="benzine" />
+        <Column header="กลาดิเนีย (ลิตร)" align={"center"} field="gadinia" />
+        <Column header="เทลลัส (ลิตร)" align={"center"} field="tellus" />
+        <Column header="น้ำจืด (ตัน)" align={"center"} field="freshwater" />
+      </DataTable>
     </>
   );
 };
