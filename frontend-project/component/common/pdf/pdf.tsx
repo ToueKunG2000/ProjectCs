@@ -71,11 +71,11 @@ const MyDocument = (props: PDFViewProps): JSX.Element => {
           </View>
           <View>
             <Text style={styles.header}>รอบวันที่ {data?.monthYear} | ชื่อเรือ : {data?.vesName}</Text>
-            <Text style={styles.header}>การใช้งานไฟฟ้า</Text>
+            <Text style={styles.header}>การใช้งานเครื่องจักรใหญ่/ไฟฟ้า</Text>
             <Text style={styles.text}>จำนวนเครื่องจักรใหญ่ {data?.bigMachineNum} เครื่อง มีการใช้งานเครื่องจักรใหญ่ {data?.bigMachineUsed} ชั่วโมง</Text>
-            <Text style={styles.text}>จำนวนเครื่องใช้ไฟฟ้า {data?.electricMachineNum} เครื่อง มีการใช้งานเครื่องใช้ไฟฟ้า {data?.electricMachineUsed} ชั่วโมง</Text>
+            <Text style={styles.text}>จำนวนเครื่องไฟฟ้า {data?.electricMachineNum} เครื่อง มีการใช้งานเครื่องไฟฟ้า {data?.electricMachineUsed} ชั่วโมง</Text>
           </View>
-          <Text style={styles.header}>การใช้งานเครื่องใช้ไฟฟ้า (ชั่วโมง)</Text>
+          <Text style={styles.header}>การใช้งานเครื่องจักร (ชั่วโมง)</Text>
 
           <View style={[{margin:0}]}>
             <PdfTable 

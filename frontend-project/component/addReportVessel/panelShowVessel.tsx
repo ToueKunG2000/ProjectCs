@@ -36,6 +36,7 @@ const PanelShowVessel = (props: AddPageProps) => {
   const [totalLeftOfGadinia, setTotalLeftOfGadinia] = useState(0);
   const [totalLeftOfTellus, setTotalLeftOfTellus] = useState(0);
   const [totalLeftOfFreshWater, setTotalLeftOfFreshWater] = useState(0);
+  const [logData, setLogData] = useState(false);
   const {
     control,
     setValue,
@@ -68,6 +69,7 @@ const PanelShowVessel = (props: AddPageProps) => {
         .then((res) => {
           setData(res.data);
           setIsFetch(true);
+          setLogData(true);
         })
         .catch((err) => {
           vesselService.getVesselInfo(requestForm!.vesId).then((res) => {
@@ -81,12 +83,21 @@ const PanelShowVessel = (props: AddPageProps) => {
 
   useEffect(()=>{
     const setDataTotal = () => {
-      setTotalLeftOfBenzine(data?.leftOfBenzine + data?.getOfBenzine - data?.giveOfBenzine - data?.usedOfBenzine)
-      setTotalLeftOfDiesel(data?.leftOfDiesel + data?.getOfDiesel - data?.giveOfDiesel - data?.usedOfDiesel)
-      setTotalLeftOfTellus(data?.leftOfTellus + data?.getOfTellus - data?.giveOfTellus - data?.usedOfTellus )
-      setTotalLeftOfGadinia(data?.leftOfGadinia + data?.getOfGadinia - data?.giveOfGadinia - data?.usedOfGadinia )
-      setTotalLeftOfFreshWater(data?.leftOfFreshWater + data?.getOfFreshWater - data?.giveOfFreshWater - data?.usedOfFreshWater )
-      setValue("showCounsel",data?.counsel);
+      if(logData){
+        setTotalLeftOfBenzine(data?.leftOfBenzine);
+        setTotalLeftOfDiesel(data?.leftOfDiesel);
+        setTotalLeftOfTellus(data?.leftOfTellus);
+        setTotalLeftOfGadinia(data?.leftOfGadinia);
+        setTotalLeftOfFreshWater(data?.leftOfFreshWater);
+      }
+      else{
+        setTotalLeftOfBenzine(data?.leftOfBenzine + data?.getOfBenzine - data?.giveOfBenzine - data?.usedOfBenzine)
+        setTotalLeftOfDiesel(data?.leftOfDiesel + data?.getOfDiesel - data?.giveOfDiesel - data?.usedOfDiesel)
+        setTotalLeftOfTellus(data?.leftOfTellus + data?.getOfTellus - data?.giveOfTellus - data?.usedOfTellus )
+        setTotalLeftOfGadinia(data?.leftOfGadinia + data?.getOfGadinia - data?.giveOfGadinia - data?.usedOfGadinia )
+        setTotalLeftOfFreshWater(data?.leftOfFreshWater + data?.getOfFreshWater - data?.giveOfFreshWater - data?.usedOfFreshWater )
+        setValue("showCounsel",data?.counsel);
+      }
       if(data?.currentPosition == user?.positionId){
         setIsShowButton(true);
       }

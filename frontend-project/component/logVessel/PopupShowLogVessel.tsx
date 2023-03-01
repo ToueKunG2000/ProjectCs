@@ -104,10 +104,12 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
         <h1>{`บันทึกของรอบ ${vesselData?.monthYear}`}</h1>
         <h1>{`ชื่อเรือ ${vesselData?.vesName}`}</h1>
         <div className="flex flex-column align-items-center">
+        <h1>การใช้งานเครื่องจักรใหญ่/เครื่องไฟฟ้า</h1>
         <h2>{`จำนวนเครื่องจักรใหญ่ ${vesselData?.bigMachineNum} เครื่อง มีการใช้งานเครื่องจักรใหญ่ ${vesselData?.bigMachineUsed} ชั่วโมง`}</h2>
-        <h2>{`จำนวนเครื่องใช้ไฟฟ้า ${vesselData?.electricMachineNum} เครื่อง มีการใช้งานเครื่องใช้ไฟฟ้า ${vesselData?.electricMachineUsed} ชั่วโมง`}</h2>
+        <h2>{`จำนวนเครื่องไฟฟ้า ${vesselData?.electricMachineNum} เครื่อง มีการใช้งานเครื่องไฟฟ้า ${vesselData?.electricMachineUsed} ชั่วโมง`}</h2>
         </div>
         <div className="flex flex-column align-items-center">
+        <h1>การใช้งานเครื่องจักร (ชั่วโมง)</h1>
         <DataTable style={{width: '90%'}} showGridlines  value={usedElectricHourUpper} >
           <Column style={{width:'20%'}} align={"center"} header="เครื่องปรับอากาศ" field="airConditioner"/>
           <Column style={{width:'20%'}} align={"center"} header="เครื่องอัดลม" field="airCompressor"/>

@@ -29,6 +29,8 @@ const PanelReportVessel = (props: AddPageProps) => {
   const vesselService = new VesselServices();
   const [isFetch, setIsFetch] = useState(false);
   const [isShowCounsel, setIsShowCounsel] = useState(false);
+  const [logData, setLogData] = useState(false);
+
   const {
     control,
     watch,
@@ -98,7 +100,7 @@ const PanelReportVessel = (props: AddPageProps) => {
         .then((res) => {
           setData(res.data);
           setIsFetch(true);
-          console.log(res.data);
+          setLogData(true);
         })
         .catch((err) => {
           vesselService.getVesselInfo(requestForm!.vesId).then((res) => {
@@ -127,48 +129,73 @@ const PanelReportVessel = (props: AddPageProps) => {
   }, [isFetch]);
 
   useEffect(() => {
-    const total =
+    if(logData){
+      setTotalLeftOfBenzine(getValues("leftOfBenzine"))
+    }
+    else{
+      const total =
       getValues("leftOfBenzine") +
       getValues("getOfBenzine") -
       getValues("usedOfBenzine") -
       getValues("giveOfBenzine");
     setTotalLeftOfBenzine(total);
+    }
   }, [benzineWatch]);
 
   useEffect(() => {
-    const total =
+    if(logData){
+      setTotalLeftOfDiesel(getValues("leftOfDiesel"))
+    }
+    else{
+      const total =
       getValues("leftOfDiesel") +
       getValues("getOfDiesel") -
       getValues("usedOfDiesel") -
       getValues("giveOfDiesel");
     setTotalLeftOfDiesel(total);
+    }
   }, [dieselWatch]);
 
   useEffect(() => {
-    const total =
+    if(logData){
+      setTotalLeftOfGadinia(getValues("leftOfGadinia"))
+    }
+    else{
+      const total =
       getValues("leftOfGadinia") +
       getValues("getOfGadinia") -
       getValues("usedOfGadinia") -
       getValues("giveOfGadinia");
     setTotalLeftOfGadinia(total);
+    }
   }, [gadiniaWatch]);
 
   useEffect(() => {
-    const total =
+    if(logData){
+      setTotalLeftOfTellus(getValues("leftOfTellus"))
+    }
+    else{
+      const total =
       getValues("leftOfTellus") +
       getValues("getOfTellus") -
       getValues("usedOfTellus") -
       getValues("giveOfTellus");
     setTotalLeftOfTellus(total);
+    }
   }, [tellusWatch]);
 
   useEffect(() => {
-    const total =
+    if(logData){
+      setTotalLeftOfFreshWater(getValues("leftOfFreshWater"));
+    }
+    else{
+      const total =
       getValues("leftOfFreshWater") +
       getValues("getOfFreshWater") -
       getValues("usedOfFreshWater") -
       getValues("giveOfFreshWater");
-    setTotalLeftOfFreshWater(total);
+    setTotalLeftOfFreshWater(total); 
+    }
   }, [freshWaterWatch]);
 
 
