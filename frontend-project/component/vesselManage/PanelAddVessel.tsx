@@ -30,6 +30,7 @@ export const PanelAddVessel = (props: PanelAddVesselProps) => {
   const { control, formState:{ errors }, setValue, handleSubmit } = useForm<AddVesselForm>();
 
   const OnSubmit = (e: AddVesselForm) => {
+    console.log(e);
     vesselService.addVessel(e).then((res) => {
       console.log(res.data);
       userService.changeVesId(e.crewId, res.data);

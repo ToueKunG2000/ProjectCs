@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { AddVesselForm, CheckLogMonthYearForm, UserForm, VesselForm, VesselStatusForm } from "../component/common/interface";
 import instance from "./../axios";
 import { UpdateForm } from "./../component/common/interface";

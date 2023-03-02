@@ -138,6 +138,9 @@ export const PanelShowGraph = (props: PanelShowGraph) => {
       rules:{
         required:{value: true, message:"กรุณาระบุ"}
       },
+      inputDropdownProps: {
+        placeholder: "กรุณาเลือกประเภททรัพยากร",
+      },
       inputClassName: "space-bet",
     },
     {

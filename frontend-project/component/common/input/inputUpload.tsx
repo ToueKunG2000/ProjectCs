@@ -1,8 +1,6 @@
 
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 import { FileUpload, FileUploadProps } from 'primereact/fileupload';
-import { Dispatch, SetStateAction } from "react";
-import { Button } from "primereact/button";
 import Image from "next/image";
 
 interface UploadProps extends FileUploadProps {
@@ -16,9 +14,9 @@ interface UploadProps extends FileUploadProps {
 }
 
 export const InputUpload = (props: UploadProps) => {
-    const {control, rules,setValue, controllerName, ...InputUpload} = props;
+    const {control, rules, setValue, controllerName, ...InputUpload} = props;
 
-    const customBase64Uploader = async (event:any,data:any) => {
+    const customBase64Uploader = async (event:any) => {
         const file = event.files[0];
         const reader = new FileReader();
         let blob = await fetch(file.objectURL).then((r) => r.blob()); //blob:url
@@ -29,7 +27,7 @@ export const InputUpload = (props: UploadProps) => {
             const base64data = reader.result;
             console.log(base64data);
             const base64split = base64data?.split(",");
-            setValue(data.name, base64split[1]);
+            setValue(controllerName, base64split[1]);
         };
     }
 
@@ -46,6 +44,8 @@ export const InputUpload = (props: UploadProps) => {
             </div>
         );
     };
+
+    
 
     const emptyTemplate = () => {
         return (
@@ -69,6 +69,14 @@ export const InputUpload = (props: UploadProps) => {
         );
     };
 
+    const onTemplateRemove = () => {
+        setValue(controllerName, "");
+    }
+    
+    const chooseOptions = { className: 'custom-choose-btn' };
+    const uploadOptions = { className: 'custom-upload-btn p-button-success' };
+    const cancelOptions = { className: 'custom-cancel-btn p-button-danger' };
+
     return (
         <>
             <Controller
@@ -79,9 +87,13 @@ export const InputUpload = (props: UploadProps) => {
                     <>
                     {fieldState.error && <label id={field.name} className="required p-4">{fieldState.error.message}</label>}
                     <FileUpload name={field.name} url="/api/upload" accept="image/*" customUpload 
-                    uploadHandler={(e)=>customBase64Uploader(e,field)}
+                    uploadHandler={(e)=>customBase64Uploader(e)}
                     itemTemplate={itemTemplate}
                     emptyTemplate={emptyTemplate}
+                    chooseOptions={chooseOptions}
+                    uploadOptions={uploadOptions}
+                    cancelOptions={cancelOptions}
+                    onClear={onTemplateRemove}
                     // <input id={field.name} name={field.name} type="file" onChange={(e)=> customBase64Uploader(e,field)} value={field.value} accept="/image/png, image/jpeg"/>
                     {...InputUpload}
                     /> 

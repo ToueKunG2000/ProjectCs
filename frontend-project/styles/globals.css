@@ -87,6 +87,22 @@ label{
     margin: 20px !important;
     font-size: x-large !important;
 }
+.p-button.logView{
+    background-color: #009DDC;
+    border-color: #009DDC;
+}
+.p-button.logView:enabled:hover{
+    background-color: #007BAD;
+    border-color: #007BAD;
+}
+.p-button.downloadLog{
+    background-color: #38D399;
+    border-color: #38D399;
+}
+.p-button.downloadLog:enabled:hover{
+    background-color: #09B978;
+    border-color: #09B978;
+}
 .p-tabview{
     color: black;
 }
@@ -109,6 +125,15 @@ label.required{
 .invalid:focus{
     border-color: red !important;
 }
+.p-button.p-fileupload-choose{
+    background-color: #2E85F6;
+    border-color: #2E85F6;
+}
+.p-button.p-fileupload-choose:not(.p-disabled):hover{
+    background-color: #236AC7 ;
+    border-color: #236AC7 ;
+}
+
 .p-card{
     min-width: 750px !important;
     min-height: 500px !important;
@@ -137,6 +162,7 @@ label.required{
 .p-inputtext{
     font-size: 20px !important;
 }
+
 /* .p-component-overlay-enter{
     animation: none;
 } */

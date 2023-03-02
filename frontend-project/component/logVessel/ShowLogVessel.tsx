@@ -71,9 +71,14 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
   const ButtonPanel = (data: any) => {
     return (
       <div className="flex justify-content-center">
-        <Button icon="pi pi-search" onClick={() => onShowPopup(data)} />
+        <Button 
+          icon="pi pi-search"
+          className="logView"
+          onClick={() => onShowPopup(data)} 
+        />
         <Button
           icon="pi pi-download"
+          className="downloadLog"
           onClick={(e) => {
             PDFLoader(data);
           }}
@@ -136,7 +141,7 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
           header="Download Report"
         >
           <div className="flex align-items-center justify-content-between">
-            <Button label="ย้อนกลับ" onClick={(e) => setIsDownload(false)} />
+            <Button label="ย้อนกลับ" className="p-button-danger" onClick={(e) => setIsDownload(false)} />
             <PDFView data={vesselLog!} />
           </div>
         </PopupPage>

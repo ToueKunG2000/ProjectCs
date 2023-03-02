@@ -200,6 +200,7 @@ const PanelReportVessel = (props: AddPageProps) => {
 
 
   const CheckForm = (e: VesselForm) => {
+    console.log(e)
     if (
       totalLeftOfBenzine >= 0 &&
       totalLeftOfDiesel >= 0 &&

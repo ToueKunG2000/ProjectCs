@@ -79,6 +79,7 @@ const DynamicInputBuild = (props: InputBuilderProps) => {
                 rules={field.rules}
                 setValue={field.setValue}
                 controllerName={field.fieldID}
+                fieldName={field.fieldID}
                 {...field.inputUpload}
             />
         }
