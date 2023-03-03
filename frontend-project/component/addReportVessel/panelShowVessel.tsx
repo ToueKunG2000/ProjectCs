@@ -347,7 +347,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       errors: errors["counsel"],
       isRequired: true,
       rules:{
-        required: { value:true, message: "You should define counsel"},
+        required: { value:true, message: "กรุณาระบุเหตุผลที่ไม่ยินยอม"},
         maxLength:256,
       },
       inputTextAreaProps:{

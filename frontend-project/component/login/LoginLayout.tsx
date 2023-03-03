@@ -39,7 +39,7 @@ const LayoutLogin = () => {
     {
       type: "text",
       fieldID: "username",
-      label: "Username",
+      label: "ชื่อผู้ใช้",
       errors: errors["username"],
       inputClassName:"login",
     },
@@ -47,7 +47,7 @@ const LayoutLogin = () => {
       type: "password",
       fieldID: "password",
       inputClassName:"login",
-      label: "Password",
+      label: "รหัสผ่าน",
       errors: errors["password"],
       inputPasswordProps:{
         feedback:false
