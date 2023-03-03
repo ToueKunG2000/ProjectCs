@@ -445,7 +445,7 @@ const PanelShowVessel = (props: AddPageProps) => {
           />
           </div>
         </PopupPage>
-        {(user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5 ) && (
+        {( user?.positionId == 4 || user?.positionId == 5 ) && (
           <div className={styles["left"]}>
             {isShowLeft == false &&
              <Card className={styles["hidden-left"]}

@@ -161,7 +161,7 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                     }
                   </h2>
                 </Card>
-                { (user?.positionId == 3 || user?.positionId == 4 || user?.positionId == 5) &&  <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
+                { ( user?.positionId == 4 || user?.positionId == 5) &&  <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
                 }
                 </div>
               </div>
