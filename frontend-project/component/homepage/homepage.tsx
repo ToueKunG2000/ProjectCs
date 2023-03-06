@@ -94,7 +94,7 @@ const HomePageLayout = (props: HomePageProps) => {
       )
 
       }
-      {page == 9 && (showPosition == 5) &&
+      {page == 9 && (showPosition == 4 || showPosition == 5) &&
       (
         <div>
           <PanelShowGraph setPage={setPage} />

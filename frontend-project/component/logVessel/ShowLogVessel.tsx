@@ -68,6 +68,10 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
     setPage(1);
   };
 
+  const OnClickWatchGraph = () => {
+    setPage(9);
+  }
+
   const ButtonPanel = (data: any) => {
     return (
       <div className="flex justify-content-center">
@@ -150,6 +154,7 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
           label="ย้อนกลับ"
           onClick={OnGoBack}
         />
+        <Button label="ดูกราฟ" className="p-button-primary" onClick={OnClickWatchGraph}/>
         <div className="flex justify-content-center">
           <form>
             <DynamicHorizonInput
