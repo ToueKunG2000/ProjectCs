@@ -23,6 +23,16 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("userStatus",userPayload.getUserStatus());
         query.setParameter("userId",userPayload.getUserId());
+        query.executeUpdate();
+    }
+
+    @Modifying
+    @Transactional
+    public void disableUserStatus(UserPayload userPayload){
+        String sql = "UPDATE TB_USERS SET user_status = :userStatus, ves_id = :vesId WHERE user_id = :userId ";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("userStatus",userPayload.getUserStatus());
+        query.setParameter("userId",userPayload.getUserId());
         query.setParameter("vesId",null);
         query.executeUpdate();
     }
