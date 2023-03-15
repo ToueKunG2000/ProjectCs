@@ -17,9 +17,6 @@ public class TbStatus implements Serializable {
     @Column(name = "status_id", nullable = false)
     private int statusId;
     @Basic
-    @Column(name = "status_code", nullable = true, length = 20)
-    private String statusCode;
-    @Basic
     @Column(name = "status_desc", nullable = true, length = 20)
     private String statusDesc;
 
@@ -27,11 +24,11 @@ public class TbStatus implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbStatus tbStatus)) return false;
-        return getStatusId() == tbStatus.getStatusId() && Objects.equals(getStatusCode(), tbStatus.getStatusCode()) && Objects.equals(getStatusDesc(), tbStatus.getStatusDesc());
+        return getStatusId() == tbStatus.getStatusId() && Objects.equals(getStatusDesc(), tbStatus.getStatusDesc());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getStatusId(), getStatusCode(), getStatusDesc());
+        return Objects.hash(getStatusId(), getStatusDesc());
     }
 }

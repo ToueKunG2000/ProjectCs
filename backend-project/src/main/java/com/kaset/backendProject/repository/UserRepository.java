@@ -2,6 +2,7 @@ package com.kaset.backendProject.repository;
 
 import com.kaset.backendProject.model.entity.TbUsers;
 import com.kaset.backendProject.model.payload.DropdownPayload;
+import com.kaset.backendProject.model.payload.UserList;
 import com.kaset.backendProject.model.payload.UserPayload;
 import com.kaset.backendProject.repositoryImpl.CustomUserRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -33,5 +34,8 @@ public interface UserRepository extends JpaRepository<TbUsers, Integer>, CustomU
 
     @Query(nativeQuery = true)
     List<String> checkUsernameDup();
+
+    @Query(nativeQuery = true)
+    String getUserInfo(@Param(value = "userId")Integer userId);
 
 }

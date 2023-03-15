@@ -2,7 +2,7 @@ import { Card } from "primereact/card";
 import { Image } from "primereact/image";
 import { SetStateAction, Dispatch, useEffect, useState } from "react";
 import styles from "../../styles/DynamicDisplay.module.css";
-import { AddVesselForm, UserForm, VesselForm } from "./interface";
+import { AddEditVesselForm, UserForm, VesselForm } from "./interface";
 import { VesselServices } from "./../../services/vessel.service";
 import PopupPage from "./popupPage";
 import { PopupShowStatus } from "../vesselManage/PopupShowStatus";

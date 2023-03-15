@@ -47,6 +47,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       counsel:"",
       vesId:0,
       currentPosition:0,
+      commanderValidateUserId:undefined,
     },
   });
 
@@ -153,7 +154,18 @@ const PanelShowVessel = (props: AddPageProps) => {
       };
       vesselService.updateReport(request);
       window.location.reload();
-    } else {
+    } else if(user?.positionId == 3){
+      const request: UpdateForm = {
+        counsel: data?.counsel,
+        currentPosition: user?.positionId + 1,
+        vesId: vesselSelected,
+        rejectByPositionId: data?.rejectByPositionId,
+        commanderValidateUserId: user?.userId,
+      };
+      vesselService.updateReport(request);
+      window.location.reload();
+    }
+     else {
       const request: UpdateForm = {
         counsel: data?.counsel,
         currentPosition: user?.positionId + 1,
@@ -192,7 +204,7 @@ const PanelShowVessel = (props: AddPageProps) => {
       data: data?.pump == undefined ? "0" : data?.pump,
     },
     {
-      label: "หางเสือ",
+      label: "เครื่องหางเสือ",
       type: "label",
       data: data?.rudder == undefined ? "0" : data?.rudder,
     },

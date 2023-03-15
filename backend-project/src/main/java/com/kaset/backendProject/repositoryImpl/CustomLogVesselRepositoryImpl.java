@@ -42,7 +42,7 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
                 " :usedOfBenzine, :usedOfDiesel, :usedOfGadinia, :usedOfTellus," +
                 " :usedOfFreshWater," +
                 " :leftOfBenzine, :leftOfDiesel, :leftOfGadinia, :leftOfTellus," +
-                " :leftOfFreshWater" +
+                " :leftOfFreshWater, :commanderValidateUserId" +
                 ")";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
@@ -81,6 +81,7 @@ public class CustomLogVesselRepositoryImpl implements CustomLogVesselRepository{
         query.setParameter("getOfTellus",vessel.getGetOfTellus());
         query.setParameter("getOfGadinia",vessel.getGetOfGadinia());
         query.setParameter("getOfFreshWater",vessel.getGetOfFreshWater());
+        query.setParameter("commanderValidateUserId", vessel.getCommanderValidateUserId());
         query.executeUpdate();
     }
 

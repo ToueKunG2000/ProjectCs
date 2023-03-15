@@ -83,7 +83,7 @@ const LayoutLogin = () => {
           <div className="flex justify-content-center">
             <Button
               type="submit"
-              label="Login"
+              label="เข้าสู่ระบบ"
               className={styles["button"]}
             />
           </div>

@@ -286,7 +286,7 @@ const PanelReportVessel = (props: AddPageProps) => {
       },
     },
     {
-      label: "หางเสือ",
+      label: "เครื่องหางเสือ",
       type: "number",
       fieldID: "rudder",
       errors: errors["rudder"],

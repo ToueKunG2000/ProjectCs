@@ -20,7 +20,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
     private EntityManager entityManager;
     @Modifying
     @Transactional
-    public void updateToTbVessel(Vessel vessel){
+    public void createReport(Vessel vessel){
         String sql = "UPDATE TB_VESSELS SET air_compressor = :airCompressor,"+
                 " air_conditioner = :airConditioner, big_machine_used = :bigMachineUsed, "+
                 " current_position = :currentPosition, diesel_oil_separator = :dieselOilSeparator, "+
@@ -35,7 +35,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " give_of_gadinia = :giveOfGadinir, give_of_tellus = :giveOfTellus, "+
                 " give_of_fresh_water = :giveOfFreshWater, used_of_benzine = :usedOfBenzine, "+
                 " used_of_diesel = :usedOfDiesel, used_of_gadinia = :usedOfGadinia, "+
-                " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater"+
+                " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater, commander_validate_user_id = null"+
                 " WHERE ves_id = :vesId ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
@@ -85,7 +85,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 "0,0,0,0," +
                 "null,null,1,1,0," +
                 "0,0,0,0,0," +
-                "0,0,0,0,:vesPhoto,null) ";
+                "0,0,0,0,:vesPhoto,null,null) ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesName",addVesselPayload.getVesName());
         query.setParameter("bigMachineNum",addVesselPayload.getBigMachineNum());
@@ -114,7 +114,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater," +
                 " left_of_tellus = :leftOfTellus, left_of_fresh_water = :leftOfFreshWater," +
                 " left_of_benzine = :leftOfBenzine, left_of_diesel = :leftOfDiesel," +
-                " left_of_gadinia = :leftOfGadinia, reject_by_positionId = null "+
+                " left_of_gadinia = :leftOfGadinia, reject_by_positionId = null, commander_validate_user_id = null "+
                 " WHERE ves_id = :vesId ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
@@ -179,7 +179,7 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
                 " give_of_fresh_water = :giveOfFreshWater, used_of_benzine = :usedOfBenzine, "+
                 " used_of_diesel = :usedOfDiesel, used_of_gadinia = :usedOfGadinia, "+
                 " used_of_tellus = :usedOfTellus, used_of_fresh_water = :usedOfFreshWater, ves_status = :vesStatus, " +
-                " reject_by_positionId = null " +
+                " reject_by_positionId = null, commander_validate_user_id = null " +
                 " WHERE ves_id = :vesId ";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("vesId",vessel.getVesId());
@@ -239,7 +239,8 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
     @Transactional
     public void updateApproveInTbVessel(UpdateVesselPayload approveForm){
         String sql = "UPDATE TB_VESSELS SET current_position = :currentPosition, " +
-                " counsel = :counsel, reject_by_positionId = :rejectByPositionId WHERE ves_id = :vesId";
+                " counsel = :counsel, reject_by_positionId = :rejectByPositionId " +
+                " WHERE ves_id = :vesId";
         Query query = entityManager.createNativeQuery(sql);
         query.setParameter("currentPosition",approveForm.getCurrentPosition());
         query.setParameter("vesId",approveForm.getVesId());
@@ -248,5 +249,19 @@ public class CustomVesselRepositoryImpl implements CustomVesselRepository{
         query.executeUpdate();
     }
 
-
+    @Modifying
+    @Transactional
+    public void updateApproveInTbVesselWithCommander(UpdateVesselPayload approveForm){
+        String sql = "UPDATE TB_VESSELS SET current_position = :currentPosition, " +
+                " counsel = :counsel, reject_by_positionId = :rejectByPositionId, " +
+                " commander_validate_user_id = :commanderValidateUserId " +
+                " WHERE ves_id = :vesId";
+        Query query = entityManager.createNativeQuery(sql);
+        query.setParameter("currentPosition",approveForm.getCurrentPosition());
+        query.setParameter("vesId",approveForm.getVesId());
+        query.setParameter("counsel",approveForm.getCounsel());
+        query.setParameter("rejectByPositionId",approveForm.getRejectByPositionId());
+        query.setParameter("commanderValidateUserId",approveForm.getCommanderValidateUserId());
+        query.executeUpdate();
+    }
 }

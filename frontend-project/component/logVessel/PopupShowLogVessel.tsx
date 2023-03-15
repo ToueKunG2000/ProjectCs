@@ -1,26 +1,33 @@
 import {
   CheckLogMonthYearForm,
   DynamicInputItem,
+  ReportName,
   VesselForm,
 } from "../common/interface";
 import { useEffect, useState } from "react";
 import { VesselServices } from "./../../services/vessel.service";
-import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { UserServices } from "../../services/user.service";
 
 interface PopupShowLogVesselProps {
   request: CheckLogMonthYearForm;
 }
 const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
   const { request } = props;
+  const userService = new UserServices();
   const vesselService = new VesselServices();
   const [vesselData, setVesselData] = useState<VesselForm>();
+  const [userList,setUserList] = useState<ReportName>();
+
 
   useEffect(() => {
     const fetchData = () => {
       vesselService.getLogVessel(request).then((res) => {
         setVesselData(res.data);
+        userService.getUserInfo(res.data.commanderValidateUserId).then((res)=>{
+          setUserList(res.data);
+        })
       });
     };
     fetchData();
@@ -135,6 +142,10 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
           <Column header="เทลลัส (ลิตร)" align={"center"} field="tellus"/>
           <Column header="น้ำจืด (ตัน)" align={"center"} field="freshwater"/>
         </DataTable>
+        <h2 style={{textDecoration: 'underline'}}>ผู้ตรวจสอบ</h2>
+        <h2>ผบ. กตอ : {userList?.commanderName}</h2>
+        <h2>ผอ. การช่าง : {userList?.technicalName}</h2>
+        <h2>ผู้บังคับการเรือ : {userList?.commandOffName}</h2>
       </div>
     </>
   );

@@ -31,12 +31,17 @@ public class VesselServiceImpl {
         return oldVessel;
     }
 
-    public void updateToTbVessel(Vessel vessel){
-        vesselRepository.updateToTbVessel(vessel);
+    public void createReport(Vessel vessel){
+        vesselRepository.createReport(vessel);
     }
 
     public void updateApproveToTbVessel(UpdateVesselPayload approveForm){
-        vesselRepository.updateApproveInTbVessel(approveForm);
+        if(approveForm.getCommanderValidateUserId() != null){
+            vesselRepository.updateApproveInTbVesselWithCommander(approveForm);
+        }
+        else{
+            vesselRepository.updateApproveInTbVessel(approveForm);
+        }
     }
 
     public void resetReport(Vessel vessel){

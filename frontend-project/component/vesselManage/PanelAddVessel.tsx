@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { UserServices } from "../../services/user.service";
 import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import {
-  AddVesselForm,
+  AddEditVesselForm,
   DynamicInputItem,
   PanelProps,
 } from "../common/interface";
@@ -27,9 +27,9 @@ export const PanelAddVessel = (props: PanelAddVesselProps) => {
     userService.getUserDropdown(3).then((res) => setOptionCommander(res.data));
   }, []);
 
-  const { control, formState:{ errors }, setValue, handleSubmit } = useForm<AddVesselForm>();
+  const { control, formState:{ errors }, setValue, handleSubmit } = useForm<AddEditVesselForm>();
 
-  const OnSubmit = (e: AddVesselForm) => {
+  const OnSubmit = (e: AddEditVesselForm) => {
     console.log(e);
     vesselService.addVessel(e).then((res) => {
       console.log(res.data);

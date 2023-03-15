@@ -9,11 +9,13 @@ import DynamicHorizonInput from "../common/dynamicHorizonInput";
 import {
   CheckLogMonthYearForm,
   DynamicInputItem,
+  ReportName,
   VesselForm,
 } from "../common/interface";
 import { PDFView } from "../common/pdf/pdf";
 import PopupPage from "../common/popupPage";
 import PopupShowLogVessel from "./PopupShowLogVessel";
+import { UserServices } from "./../../services/user.service";
 
 interface ShowLogVesselProps {
   setPage: Dispatch<SetStateAction<number>>;
@@ -23,12 +25,14 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
   const { setPage } = props;
   const [isDownload, setIsDownload] = useState(false);
   const vesselService = new VesselServices();
+  const userService = new UserServices();
   const [logVessel, setLogVessel] = useState<VesselForm[]>([]);
   const [request, setRequest] = useState<CheckLogMonthYearForm>();
   const [vesselDropdown, setVesselDropdown] = useState<any[]>([]);
   const [visiblePopup, setVisiblePopup] = useState(false);
   const [selectLogVessel, setSelectLogVessel] = useState<VesselForm>();
   const [vesselLog, setVesselLog] = useState<VesselForm>();
+  const [userList,setUserList] = useState<ReportName>();
 
   const {
     control,
@@ -124,7 +128,12 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
     setIsDownload(true);
     vesselService.getLogVessel(data).then((res) => {
       setVesselLog(res.data);
-    });
+      userService.getUserInfo(res.data.commanderValidateUserId).then((res) => {
+        setUserList(res.data)
+      })
+    })
+
+  
   };
 
   return (
@@ -146,7 +155,7 @@ const ShowLogVessel = (props: ShowLogVesselProps) => {
         >
           <div className="flex align-items-center justify-content-between">
             <Button label="ย้อนกลับ" className="p-button-danger" onClick={(e) => setIsDownload(false)} />
-            <PDFView data={vesselLog!} />
+            <PDFView data={vesselLog!} userList={userList!}/>
           </div>
         </PopupPage>
         <Button

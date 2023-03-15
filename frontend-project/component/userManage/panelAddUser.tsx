@@ -22,7 +22,7 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
   const dynamicInput: DynamicInputItem[] = [
     {
       type: "text",
-      label: "Username",
+      label: "ชื่อผู้ใช้",
       fieldID: "username",
       errors: errors["username"],
       inputClassName:"space-bet",
@@ -37,7 +37,7 @@ export const PanelAddUser = (props: PanelAddUserProps) => {
     },
     {
       type: "password",
-      label: "password",
+      label: "รหัสผ่าน",
       fieldID: "password",
       inputClassName:"space-bet",
       errors: errors["password"],

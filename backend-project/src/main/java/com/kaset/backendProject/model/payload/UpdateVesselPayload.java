@@ -10,13 +10,17 @@ public class UpdateVesselPayload {
 
     private Integer rejectByPositionId;
 
+    private Integer commanderValidateUserId;
+
     public UpdateVesselPayload() {
     }
 
-    public UpdateVesselPayload(Integer vesId, Integer currentPosition, String counsel, Integer rejectByPositionId) {
+    public UpdateVesselPayload(Integer vesId, Integer currentPosition, String counsel, Integer rejectByPositionId, Integer commanderValidateUserId) {
         this.vesId = vesId;
         this.currentPosition = currentPosition;
         this.counsel = counsel;
         this.rejectByPositionId = rejectByPositionId;
+        this.commanderValidateUserId = commanderValidateUserId;
     }
+
 }

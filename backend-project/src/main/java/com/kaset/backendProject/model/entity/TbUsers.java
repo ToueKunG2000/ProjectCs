@@ -2,6 +2,7 @@ package com.kaset.backendProject.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.kaset.backendProject.model.payload.DropdownPayload;
+import com.kaset.backendProject.model.payload.UserList;
 import com.kaset.backendProject.model.payload.UserPayload;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -41,12 +42,23 @@ import java.util.Objects;
             name = "TbUsers.checkUserIdInVessel",
             query = "SELECT user_id FROM TB_USERS WHERE position_id = :positionId AND ves_id = :vesId ",
             resultSetMapping = "userId"
+    ),
+    @NamedNativeQuery(
+            name = "TbUsers.getUserInfo",
+            query = "SELECT CONCAT(TP.rank_th,' ',TU.first_name,' ',TU.last_name) as userName FROM TB_USERS TU" +
+                    " INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id " +
+                    " WHERE TU.user_id = :userId ",
+            resultSetMapping = "userInfo"
     )
 })
 @SqlResultSetMappings({
         @SqlResultSetMapping(name = "userId",columns = {
                 @ColumnResult(name = "user_id")
         }),
+        @SqlResultSetMapping(name = "userInfo",columns = {
+                @ColumnResult(name = "userName")
+        }
+        ),
         @SqlResultSetMapping(name = "usernameList",columns = {
                 @ColumnResult(name = "username")
         }),

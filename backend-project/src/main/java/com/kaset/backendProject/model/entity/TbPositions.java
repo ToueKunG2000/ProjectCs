@@ -23,9 +23,6 @@ public class TbPositions implements Serializable {
     @Column(name = "position_name_en", nullable = true, length = 100)
     private String positionNameEn;
     @Basic
-    @Column(name = "position_desc", nullable = true, length = 100)
-    private String positionDesc;
-    @Basic
     @Column(name = "rank_th", nullable = true, length = 20)
     private String rankTh;
     @Basic
@@ -37,11 +34,11 @@ public class TbPositions implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbPositions that)) return false;
-        return getPositionId() == that.getPositionId() && Objects.equals(getPositionNameTh(), that.getPositionNameTh()) && Objects.equals(getPositionNameEn(), that.getPositionNameEn()) && Objects.equals(getPositionDesc(), that.getPositionDesc()) && Objects.equals(getRankTh(), that.getRankTh()) && Objects.equals(getRankEn(), that.getRankEn());
+        return getPositionId() == that.getPositionId() && Objects.equals(getPositionNameTh(), that.getPositionNameTh()) && Objects.equals(getPositionNameEn(), that.getPositionNameEn()) && Objects.equals(getRankTh(), that.getRankTh()) && Objects.equals(getRankEn(), that.getRankEn());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPositionId(), getPositionNameTh(), getPositionNameEn(), getPositionDesc(), getRankTh(), getRankEn());
+        return Objects.hash(getPositionId(), getPositionNameTh(), getPositionNameEn(), getRankTh(), getRankEn());
     }
 }

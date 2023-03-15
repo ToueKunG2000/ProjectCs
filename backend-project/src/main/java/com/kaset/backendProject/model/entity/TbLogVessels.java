@@ -27,7 +27,7 @@ import java.util.Objects;
                         "give_of_benzine, give_of_gadinia, give_of_tellus, give_of_fresh_water, left_of_diesel," +
                         "left_of_benzine, left_of_gadinia, left_of_tellus, left_of_fresh_water," +
                         " used_of_diesel, used_of_benzine" +
-                        ",used_of_gadinia, used_of_tellus, used_of_fresh_water" +
+                        ",used_of_gadinia, used_of_tellus, used_of_fresh_water, commander_validate_user_id" +
                         "  FROM TB_LOG_VESSELS" +
                         " WHERE ves_id = :vesId AND month_year LIKE :monthYear "
             ),
@@ -89,7 +89,7 @@ import java.util.Objects;
                     @ColumnResult(name = "used_of_gadinia",type = BigDecimal.class),
                     @ColumnResult(name = "used_of_tellus",type = BigDecimal.class),
                     @ColumnResult(name = "used_of_fresh_water",type = BigDecimal.class),
-
+                    @ColumnResult(name = "commander_validate_user_id",type = Integer.class),
             })
     }),
     @SqlResultSetMapping(name = "GetVesId", columns = {
@@ -116,43 +116,43 @@ public class TbLogVessels implements Serializable {
     private String vesName;
     @Basic
     @Column(name = "big_machine_num")
-    private Integer bigMachineNum;
+    private int bigMachineNum;
     @Basic
     @Column(name = "electric_machine_num")
-    private Integer electricMachineNum;
+    private int electricMachineNum;
     @Basic
     @Column(name = "big_machine_used")
-    private Integer bigMachineUsed;
+    private int bigMachineUsed;
     @Basic
     @Column(name = "electric_machine_used")
-    private Integer electricMachineUsed;
+    private int electricMachineUsed;
     @Basic
     @Column(name = "air_conditioner")
-    private Integer airConditioner;
+    private int airConditioner;
     @Basic
     @Column(name = "air_compressor")
-    private Integer airCompressor;
+    private int airCompressor;
     @Basic
     @Column(name = "freezer")
-    private Integer freezer;
+    private int freezer;
     @Basic
     @Column(name = "ship_engine")
-    private Integer shipEngine;
+    private int shipEngine;
     @Basic
     @Column(name = "pump")
-    private Integer pump;
+    private int pump;
     @Basic
     @Column(name = "rudder")
-    private Integer rudder;
+    private int rudder;
     @Basic
     @Column(name = "water_purifier")
-    private Integer waterPurifier;
+    private int waterPurifier;
     @Basic
     @Column(name = "diesel_oil_seperator")
-    private Integer dieselOilSeperator;
+    private int dieselOilSeperator;
     @Basic
     @Column(name = "gear")
-    private Integer gear;
+    private int gear;
     @Basic
     @Column(name = "month_year")
     private String monthYear;
@@ -216,23 +216,15 @@ public class TbLogVessels implements Serializable {
     @Basic
     @Column(name = "left_of_fresh_water")
     private BigDecimal leftOfFreshWater;
+    @Basic
+    @Column(name = "commander_validate_user_id")
+    private Integer commanderValidateUserId;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TbLogVessels that)) return false;
-        return getLogId() == that.getLogId() && getVesId() == that.getVesId() && Objects.equals(getVesName(), that.getVesName()) && Objects.equals(getBigMachineNum(), that.getBigMachineNum()) && Objects.equals(getElectricMachineNum(), that.getElectricMachineNum()) && Objects.equals(getBigMachineUsed(), that.getBigMachineUsed()) && Objects.equals(getElectricMachineUsed(), that.getElectricMachineUsed()) && Objects.equals(getAirConditioner(), that.getAirConditioner()) && Objects.equals(getAirCompressor(), that.getAirCompressor()) && Objects.equals(getFreezer(), that.getFreezer()) && Objects.equals(getShipEngine(), that.getShipEngine()) && Objects.equals(getPump(), that.getPump()) && Objects.equals(getRudder(), that.getRudder()) && Objects.equals(getWaterPurifier(), that.getWaterPurifier()) && Objects.equals(getDieselOilSeperator(), that.getDieselOilSeperator()) && Objects.equals(getGear(), that.getGear()) && Objects.equals(getMonthYear(), that.getMonthYear()) && Objects.equals(getGetOfBenzine(), that.getGetOfBenzine()) && Objects.equals(getGetOfDiesel(), that.getGetOfDiesel()) && Objects.equals(getGetOfGadinia(), that.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), that.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), that.getGetOfFreshWater()) && Objects.equals(getGiveOfBenzine(), that.getGiveOfBenzine()) && Objects.equals(getGiveOfDiesel(), that.getGiveOfDiesel()) && Objects.equals(getGiveOfGadinia(), that.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), that.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), that.getGiveOfFreshWater()) && Objects.equals(getUsedOfBenzine(), that.getUsedOfBenzine()) && Objects.equals(getUsedOfDiesel(), that.getUsedOfDiesel()) && Objects.equals(getUsedOfGadinia(), that.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), that.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), that.getUsedOfFreshWater()) && Objects.equals(getLeftOfBenzine(), that.getLeftOfBenzine()) && Objects.equals(getLeftOfDiesel(), that.getLeftOfDiesel()) && Objects.equals(getLeftOfGadinia(), that.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), that.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), that.getLeftOfFreshWater());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getLogId(), getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeperator(), getGear(), getMonthYear(), getGetOfBenzine(), getGetOfDiesel(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfBenzine(), getGiveOfDiesel(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getUsedOfBenzine(), getUsedOfDiesel(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfBenzine(), getLeftOfDiesel(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater());
-    }
 
     public TbLogVessels() {
     }
 
-    public TbLogVessels(int logId, int vesId, String vesName, Integer bigMachineNum, Integer electricMachineNum, Integer bigMachineUsed, Integer electricMachineUsed, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeperator, Integer gear, String monthYear, BigDecimal getOfBenzine, BigDecimal getOfDiesel, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfBenzine, BigDecimal giveOfDiesel, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal usedOfBenzine, BigDecimal usedOfDiesel, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, BigDecimal leftOfBenzine, BigDecimal leftOfDiesel, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater) {
+    public TbLogVessels(int logId, int vesId, String vesName, int bigMachineNum, int electricMachineNum, int bigMachineUsed, int electricMachineUsed, int airConditioner, int airCompressor, int freezer, int shipEngine, int pump, int rudder, int waterPurifier, int dieselOilSeperator, int gear, String monthYear, BigDecimal getOfBenzine, BigDecimal getOfDiesel, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfBenzine, BigDecimal giveOfDiesel, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal usedOfBenzine, BigDecimal usedOfDiesel, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, BigDecimal leftOfBenzine, BigDecimal leftOfDiesel, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, Integer commanderValidateUserId) {
         this.logId = logId;
         this.vesId = vesId;
         this.vesName = vesName;
@@ -270,5 +262,18 @@ public class TbLogVessels implements Serializable {
         this.leftOfGadinia = leftOfGadinia;
         this.leftOfTellus = leftOfTellus;
         this.leftOfFreshWater = leftOfFreshWater;
+        this.commanderValidateUserId = commanderValidateUserId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TbLogVessels that)) return false;
+        return getLogId() == that.getLogId() && getVesId() == that.getVesId() && getBigMachineNum() == that.getBigMachineNum() && getElectricMachineNum() == that.getElectricMachineNum() && getBigMachineUsed() == that.getBigMachineUsed() && getElectricMachineUsed() == that.getElectricMachineUsed() && getAirConditioner() == that.getAirConditioner() && getAirCompressor() == that.getAirCompressor() && getFreezer() == that.getFreezer() && getShipEngine() == that.getShipEngine() && getPump() == that.getPump() && getRudder() == that.getRudder() && getWaterPurifier() == that.getWaterPurifier() && getDieselOilSeperator() == that.getDieselOilSeperator() && getGear() == that.getGear() && Objects.equals(getVesName(), that.getVesName()) && Objects.equals(getMonthYear(), that.getMonthYear()) && Objects.equals(getGetOfBenzine(), that.getGetOfBenzine()) && Objects.equals(getGetOfDiesel(), that.getGetOfDiesel()) && Objects.equals(getGetOfGadinia(), that.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), that.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), that.getGetOfFreshWater()) && Objects.equals(getGiveOfBenzine(), that.getGiveOfBenzine()) && Objects.equals(getGiveOfDiesel(), that.getGiveOfDiesel()) && Objects.equals(getGiveOfGadinia(), that.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), that.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), that.getGiveOfFreshWater()) && Objects.equals(getUsedOfBenzine(), that.getUsedOfBenzine()) && Objects.equals(getUsedOfDiesel(), that.getUsedOfDiesel()) && Objects.equals(getUsedOfGadinia(), that.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), that.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), that.getUsedOfFreshWater()) && Objects.equals(getLeftOfBenzine(), that.getLeftOfBenzine()) && Objects.equals(getLeftOfDiesel(), that.getLeftOfDiesel()) && Objects.equals(getLeftOfGadinia(), that.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), that.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), that.getLeftOfFreshWater()) && Objects.equals(getCommanderValidateUserId(), that.getCommanderValidateUserId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getLogId(), getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeperator(), getGear(), getMonthYear(), getGetOfBenzine(), getGetOfDiesel(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfBenzine(), getGiveOfDiesel(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getUsedOfBenzine(), getUsedOfDiesel(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfBenzine(), getLeftOfDiesel(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater(), getCommanderValidateUserId());
     }
 }

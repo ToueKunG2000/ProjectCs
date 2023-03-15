@@ -19,9 +19,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
     @Modifying
     @Transactional
     public void changeUserStatus(UserPayload userPayload){
-        String sql = "UPDATE TB_USERS SET user_status = :userStatus, ves_id = :vesId WHERE user_id = :userId ";
+        String sql = "UPDATE TB_USERS SET user_status = :userStatus WHERE user_id = :userId ";
         Query query = entityManager.createNativeQuery(sql);
-        query.setParameter("userStatus",userPayload.getUserStatus());
+        query.setParameter("userStatus",1);
         query.setParameter("userId",userPayload.getUserId());
         query.executeUpdate();
     }
@@ -31,7 +31,7 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
     public void disableUserStatus(UserPayload userPayload){
         String sql = "UPDATE TB_USERS SET user_status = :userStatus, ves_id = :vesId WHERE user_id = :userId ";
         Query query = entityManager.createNativeQuery(sql);
-        query.setParameter("userStatus",userPayload.getUserStatus());
+        query.setParameter("userStatus",2);
         query.setParameter("userId",userPayload.getUserId());
         query.setParameter("vesId",null);
         query.executeUpdate();

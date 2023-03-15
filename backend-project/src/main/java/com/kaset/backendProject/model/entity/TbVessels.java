@@ -58,7 +58,7 @@ import java.util.Objects;
                         " give_of_diesel, give_of_benzine, give_of_tellus, give_of_gadinia, give_of_fresh_water," +
                         " used_of_diesel, used_of_benzine, used_of_tellus, used_of_gadinia, used_of_fresh_water," +
                         " left_of_diesel, left_of_benzine, left_of_tellus, left_of_gadinia, left_of_fresh_water," +
-                        " month_year, counsel, current_position, reject_by_positionId " +
+                        " month_year, counsel, current_position, reject_by_positionId, commander_validate_user_id " +
                         " FROM TB_VESSELS WHERE ves_id = :vesId ",
                 resultSetMapping = "VesselInfo"
         )
@@ -140,7 +140,8 @@ import java.util.Objects;
                         @ColumnResult(name = "used_of_gadinia"),
                         @ColumnResult(name = "used_of_tellus"),
                         @ColumnResult(name = "used_of_fresh_water"),
-                        @ColumnResult(name = "reject_by_positionId")
+                        @ColumnResult(name = "reject_by_positionId"),
+                        @ColumnResult(name = "commander_validate_user_id"),
                     } )
             })
         }
@@ -230,7 +231,7 @@ public class TbVessels implements Serializable {
     private String counsel;
     @Basic
     @Column(name = "current_position")
-    private Integer currentPosition;
+    private int currentPosition;
     @Basic
     @Column(name = "ves_status")
     private Integer vesStatus;
@@ -270,17 +271,20 @@ public class TbVessels implements Serializable {
     @Basic
     @Column(name = "reject_by_positionId")
     private Integer rejectByPositionId;
+    @Basic
+    @Column(name = "commander_validate_user_id")
+    private Integer commanderValidateUserId;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof TbVessels tbVessels)) return false;
-        return getVesId() == tbVessels.getVesId() && getBigMachineNum() == tbVessels.getBigMachineNum() && getElectricMachineNum() == tbVessels.getElectricMachineNum() && getBigMachineUsed() == tbVessels.getBigMachineUsed() && getElectricMachineUsed() == tbVessels.getElectricMachineUsed() && getAirConditioner() == tbVessels.getAirConditioner() && getAirCompressor() == tbVessels.getAirCompressor() && getFreezer() == tbVessels.getFreezer() && getShipEngine() == tbVessels.getShipEngine() && getPump() == tbVessels.getPump() && getRudder() == tbVessels.getRudder() && getWaterPurifier() == tbVessels.getWaterPurifier() && getDieselOilSeparator() == tbVessels.getDieselOilSeparator() && getGear() == tbVessels.getGear() && Objects.equals(getVesName(), tbVessels.getVesName()) && Objects.equals(getGetOfDiesel(), tbVessels.getGetOfDiesel()) && Objects.equals(getGetOfBenzine(), tbVessels.getGetOfBenzine()) && Objects.equals(getGetOfGadinia(), tbVessels.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), tbVessels.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), tbVessels.getGetOfFreshWater()) && Objects.equals(getGiveOfDiesel(), tbVessels.getGiveOfDiesel()) && Objects.equals(getGiveOfBenzine(), tbVessels.getGiveOfBenzine()) && Objects.equals(getGiveOfGadinia(), tbVessels.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), tbVessels.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), tbVessels.getGiveOfFreshWater()) && Objects.equals(getMonthYear(), tbVessels.getMonthYear()) && Objects.equals(getCounsel(), tbVessels.getCounsel()) && Objects.equals(getCurrentPosition(), tbVessels.getCurrentPosition()) && Objects.equals(getVesStatus(), tbVessels.getVesStatus()) && Objects.equals(getUsedOfDiesel(), tbVessels.getUsedOfDiesel()) && Objects.equals(getUsedOfBenzine(), tbVessels.getUsedOfBenzine()) && Objects.equals(getUsedOfGadinia(), tbVessels.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), tbVessels.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), tbVessels.getUsedOfFreshWater()) && Objects.equals(getLeftOfDiesel(), tbVessels.getLeftOfDiesel()) && Objects.equals(getLeftOfBenzine(), tbVessels.getLeftOfBenzine()) && Objects.equals(getLeftOfGadinia(), tbVessels.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), tbVessels.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), tbVessels.getLeftOfFreshWater()) && Objects.equals(getVesPhoto(), tbVessels.getVesPhoto()) && Objects.equals(getRejectByPositionId(), tbVessels.getRejectByPositionId());
+        return getVesId() == tbVessels.getVesId() && getBigMachineNum() == tbVessels.getBigMachineNum() && getElectricMachineNum() == tbVessels.getElectricMachineNum() && getBigMachineUsed() == tbVessels.getBigMachineUsed() && getElectricMachineUsed() == tbVessels.getElectricMachineUsed() && getAirConditioner() == tbVessels.getAirConditioner() && getAirCompressor() == tbVessels.getAirCompressor() && getFreezer() == tbVessels.getFreezer() && getShipEngine() == tbVessels.getShipEngine() && getPump() == tbVessels.getPump() && getRudder() == tbVessels.getRudder() && getWaterPurifier() == tbVessels.getWaterPurifier() && getDieselOilSeparator() == tbVessels.getDieselOilSeparator() && getGear() == tbVessels.getGear() && getCurrentPosition() == tbVessels.getCurrentPosition() && Objects.equals(getVesName(), tbVessels.getVesName()) && Objects.equals(getGetOfDiesel(), tbVessels.getGetOfDiesel()) && Objects.equals(getGetOfBenzine(), tbVessels.getGetOfBenzine()) && Objects.equals(getGetOfGadinia(), tbVessels.getGetOfGadinia()) && Objects.equals(getGetOfTellus(), tbVessels.getGetOfTellus()) && Objects.equals(getGetOfFreshWater(), tbVessels.getGetOfFreshWater()) && Objects.equals(getGiveOfDiesel(), tbVessels.getGiveOfDiesel()) && Objects.equals(getGiveOfBenzine(), tbVessels.getGiveOfBenzine()) && Objects.equals(getGiveOfGadinia(), tbVessels.getGiveOfGadinia()) && Objects.equals(getGiveOfTellus(), tbVessels.getGiveOfTellus()) && Objects.equals(getGiveOfFreshWater(), tbVessels.getGiveOfFreshWater()) && Objects.equals(getMonthYear(), tbVessels.getMonthYear()) && Objects.equals(getCounsel(), tbVessels.getCounsel()) && Objects.equals(getVesStatus(), tbVessels.getVesStatus()) && Objects.equals(getUsedOfDiesel(), tbVessels.getUsedOfDiesel()) && Objects.equals(getUsedOfBenzine(), tbVessels.getUsedOfBenzine()) && Objects.equals(getUsedOfGadinia(), tbVessels.getUsedOfGadinia()) && Objects.equals(getUsedOfTellus(), tbVessels.getUsedOfTellus()) && Objects.equals(getUsedOfFreshWater(), tbVessels.getUsedOfFreshWater()) && Objects.equals(getLeftOfDiesel(), tbVessels.getLeftOfDiesel()) && Objects.equals(getLeftOfBenzine(), tbVessels.getLeftOfBenzine()) && Objects.equals(getLeftOfGadinia(), tbVessels.getLeftOfGadinia()) && Objects.equals(getLeftOfTellus(), tbVessels.getLeftOfTellus()) && Objects.equals(getLeftOfFreshWater(), tbVessels.getLeftOfFreshWater()) && Objects.equals(getVesPhoto(), tbVessels.getVesPhoto()) && Objects.equals(getRejectByPositionId(), tbVessels.getRejectByPositionId()) && Objects.equals(getCommanderValidateUserId(), tbVessels.getCommanderValidateUserId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeparator(), getGear(), getGetOfDiesel(), getGetOfBenzine(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfDiesel(), getGiveOfBenzine(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getMonthYear(), getCounsel(), getCurrentPosition(), getVesStatus(), getUsedOfDiesel(), getUsedOfBenzine(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfDiesel(), getLeftOfBenzine(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater(), getVesPhoto(), getRejectByPositionId());
+        return Objects.hash(getVesId(), getVesName(), getBigMachineNum(), getElectricMachineNum(), getBigMachineUsed(), getElectricMachineUsed(), getAirConditioner(), getAirCompressor(), getFreezer(), getShipEngine(), getPump(), getRudder(), getWaterPurifier(), getDieselOilSeparator(), getGear(), getGetOfDiesel(), getGetOfBenzine(), getGetOfGadinia(), getGetOfTellus(), getGetOfFreshWater(), getGiveOfDiesel(), getGiveOfBenzine(), getGiveOfGadinia(), getGiveOfTellus(), getGiveOfFreshWater(), getMonthYear(), getCounsel(), getCurrentPosition(), getVesStatus(), getUsedOfDiesel(), getUsedOfBenzine(), getUsedOfGadinia(), getUsedOfTellus(), getUsedOfFreshWater(), getLeftOfDiesel(), getLeftOfBenzine(), getLeftOfGadinia(), getLeftOfTellus(), getLeftOfFreshWater(), getVesPhoto(), getRejectByPositionId(), getCommanderValidateUserId());
     }
 }

@@ -54,6 +54,8 @@ public class Vessel {
     private String vesPhoto;
     private Integer rejectByPositionId;
 
+    private Integer commanderValidateUserId;
+
 
     public Vessel() {
     }
@@ -196,5 +198,125 @@ public class Vessel {
         this.usedOfFreshWater = usedOfFreshWater;
     }
 
+    public Vessel(Integer vesId, String vesName, Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, String monthYear, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, Integer commanderValidateUserId) {
+        this.vesId = vesId;
+        this.vesName = vesName;
+        this.bigMachineUsed = bigMachineUsed;
+        this.bigMachineNum = bigMachineNum;
+        this.electricMachineUsed = electricMachineUsed;
+        this.electricMachineNum = electricMachineNum;
+        this.airConditioner = airConditioner;
+        this.airCompressor = airCompressor;
+        this.freezer = freezer;
+        this.shipEngine = shipEngine;
+        this.pump = pump;
+        this.rudder = rudder;
+        this.waterPurifier = waterPurifier;
+        this.dieselOilSeparator = dieselOilSeparator;
+        this.gear = gear;
+        this.monthYear = monthYear;
+        this.getOfDiesel = getOfDiesel;
+        this.getOfBenzine = getOfBenzine;
+        this.getOfGadinia = getOfGadinia;
+        this.getOfTellus = getOfTellus;
+        this.getOfFreshWater = getOfFreshWater;
+        this.giveOfDiesel = giveOfDiesel;
+        this.giveOfBenzine = giveOfBenzine;
+        this.giveOfGadinia = giveOfGadinia;
+        this.giveOfTellus = giveOfTellus;
+        this.giveOfFreshWater = giveOfFreshWater;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.leftOfFreshWater = leftOfFreshWater;
+        this.usedOfDiesel = usedOfDiesel;
+        this.usedOfBenzine = usedOfBenzine;
+        this.usedOfGadinia = usedOfGadinia;
+        this.usedOfTellus = usedOfTellus;
+        this.usedOfFreshWater = usedOfFreshWater;
+        this.commanderValidateUserId = commanderValidateUserId;
+    }
 
+    public Vessel(String vesName, Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, String monthYear, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, Integer commanderValidateUserId) {
+        this.vesName = vesName;
+        this.bigMachineUsed = bigMachineUsed;
+        this.bigMachineNum = bigMachineNum;
+        this.electricMachineUsed = electricMachineUsed;
+        this.electricMachineNum = electricMachineNum;
+        this.airConditioner = airConditioner;
+        this.airCompressor = airCompressor;
+        this.freezer = freezer;
+        this.shipEngine = shipEngine;
+        this.pump = pump;
+        this.rudder = rudder;
+        this.waterPurifier = waterPurifier;
+        this.dieselOilSeparator = dieselOilSeparator;
+        this.gear = gear;
+        this.monthYear = monthYear;
+        this.getOfDiesel = getOfDiesel;
+        this.getOfBenzine = getOfBenzine;
+        this.getOfGadinia = getOfGadinia;
+        this.getOfTellus = getOfTellus;
+        this.getOfFreshWater = getOfFreshWater;
+        this.giveOfDiesel = giveOfDiesel;
+        this.giveOfBenzine = giveOfBenzine;
+        this.giveOfGadinia = giveOfGadinia;
+        this.giveOfTellus = giveOfTellus;
+        this.giveOfFreshWater = giveOfFreshWater;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.leftOfFreshWater = leftOfFreshWater;
+        this.usedOfDiesel = usedOfDiesel;
+        this.usedOfBenzine = usedOfBenzine;
+        this.usedOfGadinia = usedOfGadinia;
+        this.usedOfTellus = usedOfTellus;
+        this.usedOfFreshWater = usedOfFreshWater;
+        this.commanderValidateUserId = commanderValidateUserId;
+    }
+
+    public Vessel(Integer vesId, String vesName,Integer bigMachineUsed, Integer bigMachineNum, Integer electricMachineUsed, Integer electricMachineNum, Integer airConditioner, Integer airCompressor, Integer freezer, Integer shipEngine, Integer pump, Integer rudder, Integer waterPurifier, Integer dieselOilSeparator, Integer gear, Integer currentPosition, String monthYear, String counsel, BigDecimal getOfDiesel, BigDecimal getOfBenzine, BigDecimal getOfGadinia, BigDecimal getOfTellus, BigDecimal getOfFreshWater, BigDecimal giveOfDiesel, BigDecimal giveOfBenzine, BigDecimal giveOfGadinia, BigDecimal giveOfTellus, BigDecimal giveOfFreshWater, BigDecimal leftOfDiesel, BigDecimal leftOfBenzine, BigDecimal leftOfGadinia, BigDecimal leftOfTellus, BigDecimal leftOfFreshWater, BigDecimal usedOfDiesel, BigDecimal usedOfBenzine, BigDecimal usedOfGadinia, BigDecimal usedOfTellus, BigDecimal usedOfFreshWater, Integer rejectByPositionId, Integer commanderValidateUserId) {
+        this.vesId = vesId;
+        this.vesName = vesName;
+        this.bigMachineUsed = bigMachineUsed;
+        this.bigMachineNum = bigMachineNum;
+        this.electricMachineUsed = electricMachineUsed;
+        this.electricMachineNum = electricMachineNum;
+        this.airConditioner = airConditioner;
+        this.airCompressor = airCompressor;
+        this.freezer = freezer;
+        this.shipEngine = shipEngine;
+        this.pump = pump;
+        this.rudder = rudder;
+        this.waterPurifier = waterPurifier;
+        this.dieselOilSeparator = dieselOilSeparator;
+        this.gear = gear;
+        this.currentPosition = currentPosition;
+        this.monthYear = monthYear;
+        this.counsel = counsel;
+        this.getOfDiesel = getOfDiesel;
+        this.getOfBenzine = getOfBenzine;
+        this.getOfGadinia = getOfGadinia;
+        this.getOfTellus = getOfTellus;
+        this.getOfFreshWater = getOfFreshWater;
+        this.giveOfDiesel = giveOfDiesel;
+        this.giveOfBenzine = giveOfBenzine;
+        this.giveOfGadinia = giveOfGadinia;
+        this.giveOfTellus = giveOfTellus;
+        this.giveOfFreshWater = giveOfFreshWater;
+        this.leftOfDiesel = leftOfDiesel;
+        this.leftOfBenzine = leftOfBenzine;
+        this.leftOfGadinia = leftOfGadinia;
+        this.leftOfTellus = leftOfTellus;
+        this.leftOfFreshWater = leftOfFreshWater;
+        this.usedOfDiesel = usedOfDiesel;
+        this.usedOfBenzine = usedOfBenzine;
+        this.usedOfGadinia = usedOfGadinia;
+        this.usedOfTellus = usedOfTellus;
+        this.usedOfFreshWater = usedOfFreshWater;
+        this.rejectByPositionId = rejectByPositionId;
+        this.commanderValidateUserId = commanderValidateUserId;
+    }
 }

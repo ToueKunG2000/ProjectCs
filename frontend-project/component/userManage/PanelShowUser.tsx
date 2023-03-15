@@ -30,7 +30,7 @@ export const PanelShowUser = (props: PanelShowUserProps) => {
     return (
         <>
             <Button onClick={OnGoBack} label="ย้อนกลับ" className="p-button-danger" />
-            <Button onClick={OnAddUser} label="เพิ่มกำลังพล" className="p-button-success"/>
+            <Button onClick={OnAddUser} label="เพิ่มตำแหน่งประจำเรือ" className="p-button-success"/>
             <DynamicDisplay 
                 type="user"
                 dataUser={userList}

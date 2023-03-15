@@ -1,9 +1,10 @@
 package com.kaset.backendProject.serviceimpl;
 
 import com.kaset.backendProject.model.payload.DropdownPayload;
+import com.kaset.backendProject.model.payload.UserList;
 import com.kaset.backendProject.model.payload.UserPayload;
-import com.kaset.backendProject.model.payload.Vessel;
 import com.kaset.backendProject.repository.UserRepository;
+import com.kaset.backendProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserServiceImpl {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -26,7 +27,12 @@ public class UserServiceImpl {
     }
 
     public void changeUserStatus(UserPayload userPayload){
-        userRepository.changeUserStatus(userPayload);
+        if(userPayload.getUserStatus() == 1) {
+            userRepository.changeUserStatus(userPayload);
+
+        }else{
+            userRepository.disableUserStatus(userPayload);
+        }
     }
 
     public void addNewUser(UserPayload userPayload){
@@ -35,8 +41,7 @@ public class UserServiceImpl {
 
 
     public List<UserPayload> getAllUser(){
-        List<UserPayload> oldUser = userRepository.getAllUser();
-        return oldUser;
+        return  userRepository.getAllUser();
     }
 
     public List<DropdownPayload> getUserDropdown(Integer positionId){
@@ -48,6 +53,14 @@ public class UserServiceImpl {
 
     public Integer checkUserIdInVessel(Integer positionId, Integer vesId){
         return userRepository.checkUserIdInVessel(positionId,vesId);
+    }
+
+    public UserList getUserInfo(Integer userId){
+        UserList user = new UserList();
+        user.setCommandOffName(userRepository.getUserInfo(userId));
+        user.setCommanderName(userRepository.getUserInfo(1));
+        user.setTechnicalName(userRepository.getUserInfo(5));
+        return user;
     }
 
 }

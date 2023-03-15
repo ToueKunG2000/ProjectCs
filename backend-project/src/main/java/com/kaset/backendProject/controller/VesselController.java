@@ -1,8 +1,7 @@
 package com.kaset.backendProject.controller;
 
-import com.kaset.backendProject.model.entity.TbVessels;
 import com.kaset.backendProject.model.payload.*;
-import com.kaset.backendProject.serviceimpl.UserServiceImpl;
+import com.kaset.backendProject.service.UserService;
 import com.kaset.backendProject.serviceimpl.VesselServiceImpl;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +20,12 @@ public class VesselController {
     private VesselServiceImpl vesselService;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
-
+    //Report
     @PutMapping("/createReport")
-    public void updateToReport(@RequestBody Vessel vessel){
-        vesselService.updateToTbVessel(vessel);
+    public void createReport(@RequestBody Vessel vessel){
+        vesselService.createReport(vessel);
     }
 
     @PutMapping("/updateReport")
@@ -39,15 +38,17 @@ public class VesselController {
         vesselService.resetReport(vessel);
     }
 
+    @PostMapping("/addToLog")
+    public void addToTbLogVessel(@RequestBody Vessel vessel){
+        vesselService.insertToTbLogVessel(vessel);
+    }
+
+    //Data Vessel & Log
     @GetMapping("/getDataVessel")
     public ResponseEntity<Vessel> getDataVessel(@RequestParam(value = "vesId")Integer vesId){
         return new ResponseEntity<>(vesselService.getDataVessel(vesId),HttpStatus.OK);
     }
 
-    @PostMapping("/addToLog")
-    public void addToTbLogVessel(@RequestBody Vessel vessel){
-        vesselService.insertToTbLogVessel(vessel);
-    }
 
     @PostMapping("/getDataLog")
     public ResponseEntity<Vessel> getDataLog(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
@@ -68,14 +69,16 @@ public class VesselController {
     @PostMapping("/getLogVesselList")
     public ResponseEntity<List<LogVesselPayload>> getDataLogList(@RequestBody MonthYearVesIdPayload monthYearVesIdPayload){
         return new ResponseEntity<>(vesselService.getLogVesselList(monthYearVesIdPayload), HttpStatus.OK);
-
     }
+
+    //Dropdown Vessels List
 
     @GetMapping("/getDropdownVessel")
     public ResponseEntity<List<DropdownPayload>> getDropdownVessel(){
         return new ResponseEntity<>(vesselService.getDropdownVessel(), HttpStatus.OK);
     }
 
+    //Check MonthYear
 
     @GetMapping("/checkMonthYear")
     public List<Integer> checkMonthYear(@RequestParam(name = "monthYear")String monthYear){

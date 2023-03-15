@@ -79,6 +79,7 @@ export interface UpdateForm {
   counsel?: string;
   rejectByPositionId?: number;
   showCounsel? :string;
+  commanderValidateUserId?: number;
 }
 
 export interface CheckLogMonthYearForm {
@@ -87,7 +88,7 @@ export interface CheckLogMonthYearForm {
   vesNameTh?: string;
 }
 
-export interface AddVesselForm {
+export interface AddEditVesselForm {
   vesName: string;
   bigMachineNum: number;
   electricMachineNum: number;
@@ -155,6 +156,13 @@ export interface VesselForm extends VesselStatusForm {
   leftOfFreshWater: number;
   vesStatus: number;
   vesPhoto?: string;
+  commanderValidateUserId?: number;
+}
+
+export interface ReportName {
+  commanderName?: string;
+  technicalName?: string;
+  commandOffName?: string;
 }
 
 
