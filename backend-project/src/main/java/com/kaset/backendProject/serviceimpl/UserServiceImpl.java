@@ -6,6 +6,7 @@ import com.kaset.backendProject.model.payload.UserPayload;
 import com.kaset.backendProject.repository.UserRepository;
 import com.kaset.backendProject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public void addNewUser(UserPayload userPayload){
+        Pbkdf2PasswordEncoder encoder = Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+        String result = encoder.encode(userPayload.getPassword());
+        userPayload.setPassword(result);
         userRepository.insertNewUser(userPayload);
     }
 

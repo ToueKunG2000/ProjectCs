@@ -5,6 +5,7 @@ import com.kaset.backendProject.repository.UserRepository;
 import com.kaset.backendProject.service.LoginService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class LoginServiceImpl implements LoginService {
 
     public UserPayload checkUser(String username, String password){
         UserPayload user = userRepository.findUserByUsername(username);
-        if(user.getPassword().equals(password)){
+        Pbkdf2PasswordEncoder encoder = Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
+        if(encoder.matches(password,user.getPassword())){
             user.setPassword(null);
             return user;
         }
