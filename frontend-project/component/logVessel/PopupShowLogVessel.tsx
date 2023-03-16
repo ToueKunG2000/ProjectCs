@@ -127,7 +127,7 @@ const PopupShowLogVessel = (props: PopupShowLogVesselProps) => {
         <br/>
         <DataTable style={{width: '90%'}} showGridlines  value={usedElectricHourLower} >
           <Column style={{width:'25%'}} align={"center"} header="เครื่องแยกน้ำมันดีเซล" field="oilSeperator"/>
-          <Column style={{width:'25%'}} align={"center"} header="หางเสือ" field="rudder"/>
+          <Column style={{width:'25%'}} align={"center"} header="เครื่องหางเสือ" field="rudder"/>
           <Column style={{width:'25%'}} align={"center"} header="เรือยนต์" field="shipEngine"/>
           <Column style={{width:'25%'}} align={"center"} header="เครื่องกรองน้ำ" field="waterPurifier"/>
         </DataTable>

@@ -127,7 +127,7 @@ const MyDocument = (props: PDFViewProps): JSX.Element => {
             headerFixed
             fields={[
               "เครื่องแยกน้ำมันดีเซล",
-              "หางเสือ",
+              "เครื่องหางเสือ",
               "เรือยนต์",
               "เครื่องกรองน้ำ",
             ]}
