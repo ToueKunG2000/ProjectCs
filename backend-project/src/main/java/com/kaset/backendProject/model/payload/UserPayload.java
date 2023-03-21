@@ -24,6 +24,8 @@ public class UserPayload {
 
     private String userPhoto;
 
+    private String vesName;
+
     public UserPayload() {
     }
 
@@ -37,12 +39,13 @@ public class UserPayload {
         this.userPhoto = userPhoto;
     }
 
-    public UserPayload(Integer userId, String name, Integer positionId, Integer userStatus, String positionNameTh, String userPhoto) {
+    public UserPayload(Integer userId, String name, Integer positionId, Integer userStatus, String positionNameTh, String userPhoto, String vesName) {
         this.userId = userId;
         this.name = name;
         this.positionId = positionId;
         this.userStatus = userStatus;
         this.positionName = positionNameTh;
         this.userPhoto = userPhoto;
+        this.vesName = vesName;
     }
 }

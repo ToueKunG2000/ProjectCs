@@ -71,6 +71,7 @@ export interface UserForm {
   positionName: string;
   userStatus?: number;
   userPhoto: string;
+  vesName?: string;
 }
 
 export interface UpdateForm {

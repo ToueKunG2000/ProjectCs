@@ -29,8 +29,11 @@ import java.util.Objects;
     @NamedNativeQuery(
             name = "TbUsers.getAllUser",
             query = "SELECT user_id, CONCAT(TP.rank_th,' ',first_name,' ',last_name) as userName," +
-                    " TU.position_id as positionId, user_status, TP.position_name_th as positionName, CAST(user_photo as VARCHAR(max)) as userPhoto" +
-                    " FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id WHERE TU.position_id < 4",
+                    " TU.position_id as positionId, user_status, TP.position_name_th as positionName, CAST(user_photo as VARCHAR(max)) as userPhoto, " +
+                    " TV.ves_name as vesName " +
+                    " FROM TB_USERS TU INNER JOIN TB_POSITIONS TP on TP.position_id = TU.position_id  " +
+                    " LEFT JOIN TB_VESSELS TV on TV.ves_id = TU.ves_id" +
+                    " WHERE TU.position_id < 4",
             resultSetMapping = "userManage"),
     @NamedNativeQuery(
             name = "TbUsers.getUserDropdown",
@@ -80,8 +83,8 @@ import java.util.Objects;
                         @ColumnResult(name = "positionId"),
                         @ColumnResult(name = "user_status"),
                         @ColumnResult(name = "positionName"),
-                        @ColumnResult(name = "userPhoto",type = String.class)
-
+                        @ColumnResult(name = "userPhoto",type = String.class),
+                        @ColumnResult(name = "vesName",type = String.class)
                 })
         }),
         @SqlResultSetMapping(name = "userDropdown", classes = {

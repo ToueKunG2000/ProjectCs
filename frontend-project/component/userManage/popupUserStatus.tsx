@@ -30,7 +30,7 @@ export const PopupUserStatus = (props: PopupUserStatus) => {
         {type:"label", label:"ชื่อ" , data: selectedUser.name},
         {type:"label", label:"ตำแหน่ง" , data: selectedUser.positionName},
         {type:"dropdown", label:"สถานะปัจจุบัน", fieldID:"userStatus", errors:["userStatus"], options:status},
-
+        {type:"label", label: "เรือที่ประจำ", data:  selectedUser.vesName != undefined ? selectedUser.vesName : "ไม่มีเรือประจำ"}
     ];
     return (
         <>
