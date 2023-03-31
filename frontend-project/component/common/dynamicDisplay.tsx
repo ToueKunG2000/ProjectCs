@@ -160,6 +160,12 @@ const DynamicDisplay = (props: DynamicDisplayProps) => {
                       : "รอ ผบ.กตอ ตรวจ"
                     }
                   </h2>
+                  <h2>{ vessel.monthYear == null
+                  ? logVessel.includes(vessel?.vesId)
+                  ? `รอบที่ ${dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })}`
+                  : `รอบที่ ${dateNow.toLocaleString("th-TH", { month: "2-digit", year: "numeric" })}`
+                  : `รอบที่ ${vessel.monthYear}`
+                  }</h2>
                 </Card>
                 { ( user?.positionId == 4 || user?.positionId == 5) &&  <Button className={styles["button"]} onClick={(e)=>OnClickShowLeftPopup(e,vessel)} label="ตรวจสอบค่าคงเหลือ" />
                 }
